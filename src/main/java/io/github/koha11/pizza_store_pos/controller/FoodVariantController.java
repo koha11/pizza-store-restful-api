@@ -1,8 +1,7 @@
 package io.github.koha11.pizza_store_pos.controller;
 
-import io.github.koha11.pizza_store_pos.entity.employee.Employee;
-import io.github.koha11.pizza_store_pos.repository.EmployeeRepository;
-import io.github.koha11.pizza_store_pos.service.EmployeeService;
+import io.github.koha11.pizza_store_pos.entity.variant.FoodVariant;
+import io.github.koha11.pizza_store_pos.service.FoodVariantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
-public class EmployeeController {
+@RequestMapping("/food-variants")
+public class FoodVariantController {
     @Autowired
-    EmployeeService employeeService;
+    FoodVariantService foodVariantService;
 
     @GetMapping
-    public List<Employee> getAll() {
-        return employeeService.getAll();
+    List<FoodVariant> getAll() {
+        return foodVariantService.getAll();
     }
-
 }

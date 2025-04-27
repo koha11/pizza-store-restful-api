@@ -1,4 +1,4 @@
-package io.github.koha11.pizza_store_pos.entity.employee;
+package io.github.koha11.pizza_store_pos.entity.timesheet;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
