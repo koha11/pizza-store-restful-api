@@ -18,6 +18,7 @@ public class Food {
     private String foodId;
     private String foodTypeId;
     private String foodName;
+    private String foodImage;
     private String description;
     private int price;
 }

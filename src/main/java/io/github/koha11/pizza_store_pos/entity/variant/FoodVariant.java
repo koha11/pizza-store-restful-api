@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "foodvariants")
+@Table(name = "food_variants")
 @Entity
 @IdClass(FoodVariantId.class)
 public class FoodVariant {

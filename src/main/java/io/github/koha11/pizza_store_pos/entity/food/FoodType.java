@@ -14,10 +14,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "foodtypes")
+@Table(name = "food_types")
 @Entity
 public class FoodType {
     @Id
     private String foodTypeId;
     private String foodTypeName;
+    private String foodTypeImage;
 }

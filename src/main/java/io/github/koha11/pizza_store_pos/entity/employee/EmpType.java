@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "emptypes")
+@Table(name = "emp_types")
 @Entity
 public class EmpType {
     @Id
