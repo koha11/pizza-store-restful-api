@@ -2,17 +2,17 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.timesheet.WorkShift;
 import io.github.koha11.pizza_store_pos.repository.WorkShiftRepository;
+import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WorkShiftService {
-    @Autowired
-    private WorkShiftRepository workShiftRepo;
+public class WorkShiftService extends GenericService<WorkShift>{
 
-    public List<WorkShift> getAll() {
-        return workShiftRepo.findAll();
+    public WorkShiftService(JpaRepository<WorkShift, String> repo) {
+        super(repo);
     }
 }

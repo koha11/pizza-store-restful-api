@@ -2,40 +2,28 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.repository.FoodTypeRepository;
-import io.github.koha11.pizza_store_pos.util.IdGenerator;
+import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.function.Function;
 
 @Service
-public class FoodTypeService {
+public class FoodTypeService extends GenericService<FoodType>{
     @Autowired
     private FoodTypeRepository foodTypeRepo;
 
-    public List<FoodType> getAll() {
-        return foodTypeRepo.findAll();
+    public FoodTypeService(JpaRepository<FoodType, String> repo, FoodTypeRepository foodTypeRepo) {
+        super(repo);
+        this.foodTypeRepo = foodTypeRepo;
     }
 
-    public void create(FoodType ft) {
-        var foods = this.getAll();
-        var id = IdGenerator.generateId(FoodType.class, foods.size());
-        ft.setFoodTypeId(id);
-        foodTypeRepo.save(ft);
-    }
-
-    public void update(String ftId, FoodType ft) {
-        foodTypeRepo.save(ft);
-    }
-
-    public void delete(String ftId) {
-        Optional<FoodType> ftOpt = foodTypeRepo.findById(ftId);
-
-        ftOpt.ifPresentOrElse(foodType -> {
-            foodTypeRepo.delete(foodType);
-        }, () -> {
-            throw new IllegalStateException("Can not found this id");
-        });
+    @Override
+    public void create(FoodType t) {
+        var listOfT = this.getAll();
+        var id = Helper.generateId(FoodType.class, listOfT.size());
+        t.setFoodTypeId(id);
+        repo.save(t);
     }
 }

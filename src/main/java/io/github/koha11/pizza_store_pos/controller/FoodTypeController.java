@@ -2,6 +2,7 @@ package io.github.koha11.pizza_store_pos.controller;
 
 import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.service.FoodTypeService;
+import io.github.koha11.pizza_store_pos.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,27 +10,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/food-types")
-public class FoodTypeController {
+public class FoodTypeController extends GenericController<FoodType>{
     @Autowired
     private FoodTypeService foodTypeService;
 
-    @GetMapping
-    public List<FoodType> getAll() {
-        return foodTypeService.getAll();
+    public FoodTypeController(GenericService<FoodType> genericService) {
+        super(genericService);
     }
 
     @PostMapping
-    public void create(@RequestBody FoodType ft) {
-        foodTypeService.create(ft);
+    public void create(@RequestBody FoodType t) {
+        foodTypeService.create(t);
     }
 
-    @PutMapping("/edit/{ftId}")
-    public void update(@PathVariable String ftId ,@RequestBody FoodType ft) {
-        foodTypeService.update(ftId, ft);
-    }
-
-    @DeleteMapping("/delete/{ftId}")
-    public void delete(@PathVariable String ftId) {
-        foodTypeService.delete(ftId);
-    }
 }
