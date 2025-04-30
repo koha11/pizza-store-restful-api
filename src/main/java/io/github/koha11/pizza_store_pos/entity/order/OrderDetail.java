@@ -1,5 +1,6 @@
 package io.github.koha11.pizza_store_pos.entity.order;
 
+import io.github.koha11.pizza_store_pos.entity.food.Food;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,8 @@ public class OrderDetail {
     private String orderId;
     @Id
     private String foodId;
+    private String variantId;
+    private String note;
     private int amount;
     private int actualPrice;
 }

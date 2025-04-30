@@ -1,17 +1,110 @@
 package io.github.koha11.pizza_store_pos.service;
 
+import io.github.koha11.pizza_store_pos.entity.mapper.OrderDetailMapper;
+import io.github.koha11.pizza_store_pos.entity.order.OnTableOrderDetail;
 import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
+import io.github.koha11.pizza_store_pos.entity.seat.Seat;
+import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
+import io.github.koha11.pizza_store_pos.repository.OrderDetailRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class OrderDetailService extends GenericService<OrderDetail> {
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepo;
+
+    @Autowired
+    public OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private FoodService foodService;
+
+    @Autowired
+    private VariantService variantService;
 
     public OrderDetailService(JpaRepository<OrderDetail, String> repo) {
         super(repo);
     }
 
-    public void create() {
 
+    // GET METHODS
+
+    public List<OnTableOrderDetail> getByOrderId(String orderId) {
+        var ods = orderDetailRepo.findByOrderId(orderId);
+        List<OnTableOrderDetail> odsDTO = new ArrayList<>();
+
+        ods.forEach(od -> {
+            odsDTO.add(orderDetailMapper.orderDetailToDTO(od));
+        });
+
+        return odsDTO;
+    }
+
+    // POST METHODS
+    @Override
+    public void create(OrderDetail od) {
+        int actualPrice = calcActualPrice(od.getFoodId(), od.getAmount(), od.getVariantId());
+
+        od.setActualPrice(actualPrice);
+
+        orderDetailRepo.save(od);
+    }
+
+
+    // PUT/PATCH METHODS
+
+    public void increaseAmount(String orderId, String foodId) {
+        var odOpt = orderDetailRepo.findByIds(orderId, foodId);
+
+        odOpt.ifPresentOrElse(od -> {
+            od.setAmount(od.getAmount()+1);
+            }, () -> {
+            throw new IllegalStateException(notFoundIdMsg);
+            }
+        );
+    }
+
+    public void decreaseAmount(String orderId, String foodId) {
+        var odOpt = orderDetailRepo.findByIds(orderId, foodId);
+
+        odOpt.ifPresentOrElse(od -> {
+            if(od.getAmount() > 1)
+                od.setAmount(od.getAmount()-1);
+            }, () -> {
+                throw new IllegalStateException(notFoundIdMsg);
+            }
+        );
+    }
+
+    public void editOrderDetail(String variantId, String note) {
+
+    }
+
+    // DELETE METHODS
+    public void delete(String orderId, String foodId) {
+        var odOpt = orderDetailRepo.findByIds(orderId, foodId);
+
+        odOpt.ifPresentOrElse(od -> {
+                   orderDetailRepo.delete(od);
+                }, () -> {
+                    throw new IllegalStateException(notFoundIdMsg);
+                }
+        );
+    }
+
+    // HELPER METHODS
+    public int calcActualPrice(String foodId, int amount, String variantId) {
+        int foodPrice = foodService.getOne(foodId).getPrice();
+
+        if(variantId == null)
+            return foodPrice * amount;
+        else
+            return foodPrice * amount + variantService.getOne(variantId).getExtraPrice();
     }
 }

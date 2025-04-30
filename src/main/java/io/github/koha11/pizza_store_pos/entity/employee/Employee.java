@@ -17,7 +17,11 @@ import java.util.Date;
 public class Employee {
     @Id
     private String empId;
-    private String empTypeId;
+
+    @ManyToOne
+    @JoinColumn(name = "emp_type_id",
+            foreignKey = @ForeignKey(name = "fk_employee_emp_type"))
+    private EmpType empType;
     private String hardWorkShiftId;
     private String fullName;
     private String address;

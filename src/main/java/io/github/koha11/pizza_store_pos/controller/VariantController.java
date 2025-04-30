@@ -23,4 +23,9 @@ public class VariantController extends GenericController<Variant>{
     public void create(@RequestBody Variant f) {
         variantService.create(f);
     }
+
+    @GetMapping("/get-food-variants/{foodId}")
+    public List<Variant> getFoodVariants(@PathVariable String foodId) {
+        return variantService.getFoodVariants(foodId);
+    }
 }

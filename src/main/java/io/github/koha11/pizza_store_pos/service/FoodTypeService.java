@@ -26,4 +26,8 @@ public class FoodTypeService extends GenericService<FoodType>{
         t.setFoodTypeId(id);
         repo.save(t);
     }
+
+    public void getFoodVariants(String foodId) {
+
+    }
 }

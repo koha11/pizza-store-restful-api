@@ -6,8 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
     @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId")
     List<OrderDetail> findByOrderId(@Param("orderId") String orderId);
+
+    @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId and od.foodId = :foodId")
+    Optional<OrderDetail> findByIds(@Param("orderId") String orderId, @Param("foodId") String foodId);
 }

@@ -1,11 +1,7 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.food.Food;
-import io.github.koha11.pizza_store_pos.entity.order.Order;
-import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
-import io.github.koha11.pizza_store_pos.entity.order.OrderStatus;
-import io.github.koha11.pizza_store_pos.entity.order.PaymentMethod;
-import io.github.koha11.pizza_store_pos.repository.OrderDetailRepository;
+import io.github.koha11.pizza_store_pos.entity.mapper.OrderMapper;
+import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderService extends GenericService<Order>{
@@ -23,10 +18,13 @@ public class OrderService extends GenericService<Order>{
     private OrderRepository orderRepo;
 
     @Autowired
-    private OrderDetailRepository orderDetailRepo;
+    private FoodService foodService;
 
     @Autowired
-    private FoodService foodService;
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    public OrderMapper orderMapper;
 
     public OrderService(JpaRepository<Order, String> repo) {
         super(repo);
@@ -40,34 +38,48 @@ public class OrderService extends GenericService<Order>{
         orderRepo.save(order);
     }
 
-    public List<OrderDetail> getOrderDetails(String orderId) {
-        return orderDetailRepo.findByOrderId(orderId);
+    public OnTableOrder getCurrentSeatOrder(String seatId) {
+        var order = orderRepo.findBySeatId(seatId);
+
+        if(order.isPresent())
+        {
+            OnTableOrder orderDTO = orderMapper.orderToDTO(order.get());
+            List<OnTableOrderDetail> odsDTO = orderDetailService.getByOrderId(order.get().getOrderId());
+
+            orderDTO.setFoods(odsDTO);
+
+            return orderDTO;
+        }
+        else
+            throw new IllegalStateException(notFoundIdMsg);
     }
 
-    public void addFoods(List<OrderDetail> orderDetails, String orderId) {
-        var order = this.getOne(orderId);
+    public void adjustAmount(boolean isIncrease, String seatId, String foodId) {
+        var order = getCurrentSeatOrder(seatId);
+
+        if(isIncrease)
+            orderDetailService.increaseAmount(order.getOrderId(), foodId);
+        else
+            orderDetailService.decreaseAmount(order.getOrderId(), foodId);
+    }
+
+    public void deleteOrderDetail(String seatId, String foodId) {
+        var order = getCurrentSeatOrder(seatId);
+
+        orderDetailService.delete(order.getOrderId(), foodId);
+    }
+
+    public void addFoods(String seatId, List<OrderDetail> ods) {
+        var order = this.getOne(seatId);
 
         if(order.getStatus() == OrderStatus.UNFINISHED)
         {
-            orderDetails.forEach(orderDetail -> {
-                orderDetail.setOrderId(orderId);
-                orderDetail.setActualPrice(1);
-
-            });
-
-            orderDetailRepo.saveAll(orderDetails);
+               ods.forEach(od -> {
+                   orderDetailService.create(od);
+               });
         }
     }
 
-    public int calcActualPrice(String foodId, int amount) {
-        int actualPrice = 0;
-
-        var food = foodService.getOne(foodId);
-
-
-
-        return actualPrice;
-    }
 
     public void payOrder(String orderId, String cashierId, PaymentMethod paymentMethod, float discount, int surcharge) {
         var order = this.getOne(orderId);
@@ -86,14 +98,15 @@ public class OrderService extends GenericService<Order>{
     }
 
     public int calcOrderTotal(Order order) {
-        var orderDetails = this.getOrderDetails(order.getOrderId());
         var total = 0;
 
-        for (var od: orderDetails) {
-            total += od.getActualPrice();
-        }
-
-        total -= (int) (total * order.getDiscount()) + order.getSurcharge();
+//        var orderDetails = this.getOrderDetails(order.getOrderId());
+//
+//        for (var od: orderDetails) {
+//            total += od.getActualPrice();
+//        }
+//      
+//        total -= (int) (total * order.getDiscount()) + order.getSurcharge();
 
         return total;
     }

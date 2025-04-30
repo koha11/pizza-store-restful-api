@@ -22,7 +22,7 @@ public class EmployeeConfig {
 
             EmpType cashier = new EmpType("CASHIER", "Cashier", 7800000);
 
-            Employee khoa = new Employee("EMP001","CASHIER", "F1", "Trần Anh Khoa", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212123",
+            Employee khoa = new Employee("EMP001",cashier, "F1", "Trần Anh Khoa", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212123",
                     Date.valueOf("2004-06-09"),
                     Date.valueOf("2025-04-27")
             );
