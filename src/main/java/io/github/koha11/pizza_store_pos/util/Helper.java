@@ -8,10 +8,24 @@ import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 
 public class Helper {
+    // To get a string like "ddmmyy"
+    static public String getDateString(LocalDate localdate) {
+        StringBuilder sb = new StringBuilder();
+
+        String day = localdate.getDayOfMonth() >= 10 ? String.valueOf(localdate.getDayOfMonth()) : "0" + localdate.getDayOfMonth();
+
+        String month = localdate.getMonthValue() >= 10 ? String.valueOf(localdate.getMonthValue()) : "0" + localdate.getMonthValue();
+
+        String year = String.valueOf(localdate.getYear()).substring(2);
+
+        sb.append(day);
+        sb.append(month);
+        sb.append(year);
+
+        return sb.toString();
+    }
     static public <T> String generateId(T t, int length) {
         StringBuilder ch = new StringBuilder();
 
@@ -19,17 +33,7 @@ public class Helper {
         {
             ch.append("OR");
 
-            LocalDate today = LocalDate.now();
-
-            String day = today.getDayOfMonth() >= 10 ? String.valueOf(today.getDayOfMonth()) : "0" + today.getDayOfMonth();
-
-            String month = today.getMonthValue() >= 10 ? String.valueOf(today.getMonthValue()) : "0" + today.getMonthValue();
-
-            String year = String.valueOf(today.getYear()).substring(2);
-
-            ch.append(day);
-            ch.append(month);
-            ch.append(year);
+            ch.append(getDateString(LocalDate.now()));
 
             var sizeText = String.valueOf(length);
 

@@ -15,15 +15,19 @@ import org.springframework.context.annotation.Configuration;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 @Configuration
 public class SeatConfig {
     @Bean
     CommandLineRunner commandLineRunnerForSeat(SeatRepository seatRepo) {
         return args -> {
-            Seat t1 = new Seat("T01", SeatStatus.AVAILABLE, 4);
+            Seat t01 = new Seat("T01", SeatStatus.AVAILABLE, 4);
+            Seat t02 = new Seat("T02", SeatStatus.AVAILABLE, 2);
+            Seat t03 = new Seat("T03", SeatStatus.AVAILABLE, 4);
+            Seat t04 = new Seat("T04", SeatStatus.MAINTAIN, 8);
 
-            seatRepo.save(t1);
+            seatRepo.saveAll(List.of(t01, t02, t03, t04));
         };
     }
 }

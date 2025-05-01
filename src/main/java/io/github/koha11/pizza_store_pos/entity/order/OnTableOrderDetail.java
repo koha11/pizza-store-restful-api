@@ -8,8 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OnTableOrderDetail {
+    private String foodId;
     private String foodName;
     private String foodImage;
+    private String variantId;
     private String variantName;
     private String note;
     private int amount;

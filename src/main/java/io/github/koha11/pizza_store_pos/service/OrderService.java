@@ -2,6 +2,7 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.mapper.OrderMapper;
 import io.github.koha11.pizza_store_pos.entity.order.*;
+import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,10 +20,10 @@ public class OrderService extends GenericService<Order>{
     private OrderRepository orderRepo;
 
     @Autowired
-    private FoodService foodService;
+    private OrderDetailService orderDetailService;
 
     @Autowired
-    private OrderDetailService orderDetailService;
+    public SeatService seatService;
 
     @Autowired
     public OrderMapper orderMapper;
@@ -30,13 +32,7 @@ public class OrderService extends GenericService<Order>{
         super(repo);
     }
 
-    public void create(String seatId, String serverId) {
-        var listOfT = this.getAll();
-        String id = Helper.generateId(Order.class, listOfT.size());
-        Order order = new Order(id, seatId, serverId, null, Timestamp.valueOf(LocalDateTime.now()), null, OrderStatus.UNFINISHED, 0, 0, null, 0);
-
-        orderRepo.save(order);
-    }
+    //GET METHODS
 
     public OnTableOrder getCurrentSeatOrder(String seatId) {
         var order = orderRepo.findBySeatId(seatId);
@@ -54,6 +50,44 @@ public class OrderService extends GenericService<Order>{
             throw new IllegalStateException(notFoundIdMsg);
     }
 
+    public List<OnTableOrder> getOrdersByDate(LocalDate date) {
+        String todayString = Helper.getDateString(date);
+
+        List<Order> orders = orderRepo.findAllByDateString(todayString);
+
+        return orders.stream().map(order -> orderMapper.orderToDTO(order)).toList();
+    }
+
+    public List<OnTableOrder> getAllCurrentSeatOrder() {
+
+        return null;
+    }
+
+    // POST METHODS
+
+    public void create(String seatId, String serverId, List<OnTableOrderDetail> ods) {
+
+        if(!seatService.isAvailable(seatId))
+            throw new IllegalStateException("This seat is unavailable !!!");
+
+        // generate ID
+        var listOfT = this.getOrdersByDate(LocalDate.now());
+        String id = Helper.generateId(Order.class, listOfT.size());
+
+        // order detail process
+        ods.forEach(od -> orderDetailService.create(id,od));
+
+        // order process
+        Order order = new Order(id, seatId, serverId, null, Timestamp.valueOf(LocalDateTime.now()), null, OrderStatus.UNFINISHED, 0, 0, null, 0);
+
+        orderRepo.save(order);
+
+        // seat process
+        seatService.toggleStatus(seatId);
+    }
+
+    // PUT/PATCH METHODS
+
     public void adjustAmount(boolean isIncrease, String seatId, String foodId) {
         var order = getCurrentSeatOrder(seatId);
 
@@ -61,12 +95,6 @@ public class OrderService extends GenericService<Order>{
             orderDetailService.increaseAmount(order.getOrderId(), foodId);
         else
             orderDetailService.decreaseAmount(order.getOrderId(), foodId);
-    }
-
-    public void deleteOrderDetail(String seatId, String foodId) {
-        var order = getCurrentSeatOrder(seatId);
-
-        orderDetailService.delete(order.getOrderId(), foodId);
     }
 
     public void addFoods(String seatId, List<OrderDetail> ods) {
@@ -79,7 +107,6 @@ public class OrderService extends GenericService<Order>{
                });
         }
     }
-
 
     public void payOrder(String orderId, String cashierId, PaymentMethod paymentMethod, float discount, int surcharge) {
         var order = this.getOne(orderId);
@@ -96,6 +123,16 @@ public class OrderService extends GenericService<Order>{
             order.setTotal(this.calcOrderTotal(order));
         }
     }
+
+    // DELETE METHODS
+
+    public void deleteOrderDetail(String seatId, String foodId) {
+        var order = getCurrentSeatOrder(seatId);
+
+        orderDetailService.delete(order.getOrderId(), foodId);
+    }
+
+    // HELPER METHODS
 
     public int calcOrderTotal(Order order) {
         var total = 0;

@@ -8,6 +8,9 @@ import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController extends GenericController<Order>{
@@ -23,8 +26,19 @@ public class OrderController extends GenericController<Order>{
         return orderService.getCurrentSeatOrder(seatId);
     }
 
+    @GetMapping("/get-orders-by-date")
+    public List<OnTableOrder> getByDate(@RequestParam String dateString) {
+        try {
+            LocalDate date = LocalDate.parse(dateString);
+            return orderService.getOrdersByDate(date);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
     @PostMapping
     public void create(@RequestBody CreateOrderRequest t) {
-        orderService.create(t.getSeatId(),t.getServerId());
+        orderService.create(t.getSeatId(),t.getServerId(), t.getFoods());
     }
 }

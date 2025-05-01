@@ -56,6 +56,17 @@ public class OrderDetailService extends GenericService<OrderDetail> {
         orderDetailRepo.save(od);
     }
 
+    public void create(String orderId, OnTableOrderDetail odDTO) {
+        int actualPrice = calcActualPrice(odDTO.getFoodId(), odDTO.getAmount(), odDTO.getVariantId());
+
+        OrderDetail od = orderDetailMapper.DTOToOrderDetail(odDTO);
+
+        od.setActualPrice(actualPrice);
+        od.setOrderId(orderId);
+
+        orderDetailRepo.save(od);
+    }
+
 
     // PUT/PATCH METHODS
 
@@ -82,8 +93,17 @@ public class OrderDetailService extends GenericService<OrderDetail> {
         );
     }
 
-    public void editOrderDetail(String variantId, String note) {
+    public void editOrderDetail(String orderId, OnTableOrderDetail odDTO) {
+        var odOpt = orderDetailRepo.findByIds(orderId, odDTO.getFoodId());
 
+        odOpt.ifPresentOrElse(od -> {
+                    od.setNote(odDTO.getNote());
+                    od.setVariantId(odDTO.getVariantId());
+                    orderDetailRepo.save(od);
+                }, () -> {
+                    throw new IllegalStateException(notFoundIdMsg);
+                }
+        );
     }
 
     // DELETE METHODS
