@@ -21,13 +21,13 @@ public class OrderConfig {
     CommandLineRunner commandLineRunnerForOrder(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, BookedSeatRepository bookedSeatRepo) {
         return args -> {
 
-            OrderDetail od1 = new OrderDetail("OR2704250001", "F00001", "SIZE_M", "", 2, 135000*2);
+            OrderDetail od1 = new OrderDetail("OR2704250001", "F00001", "SIZE_M", "", 2, 135000*2, Timestamp.valueOf(LocalDateTime.now()));
 
-            OrderDetail od2 = new OrderDetail("OR2704250001", "F00002", "SIZE_M", "", 1, 98000*2);
+            OrderDetail od2 = new OrderDetail("OR2704250001", "F00002", "SIZE_M", "", 1, 98000*2, Timestamp.valueOf(LocalDateTime.now()));
 
-            Order order = new Order("OR2704250001", "T01", "EMP001", "EMP001", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()), OrderStatus.FINISHED , 0, 0, PaymentMethod.CASH, 0);
+            Order order = new Order("OR2704250001", "T01", "EMP001", "EMP001", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()), OrderStatus.FINISHED , 0, 0, PaymentMethod.CASH, 0, Timestamp.valueOf(LocalDateTime.now()));
 
-            BookedSeat bookedSeat = new BookedSeat("BS0001", null, null, "Anh Khoa", "0123456789");
+            BookedSeat bookedSeat = new BookedSeat("BS0001", null, null, "Anh Khoa", "0123456789", Timestamp.valueOf(LocalDateTime.now()));
 
             orderRepo.save(order);
             orderDetailRepo.saveAll(List.of(od1, od2));

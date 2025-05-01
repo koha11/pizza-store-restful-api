@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,11 +21,14 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
         super(repo);
     }
 
+    // POST METHODS
+
     @Override
     public void create(ViolationRecord t) {
         var listOfT = this.getAll();
         var id = Helper.generateId(ViolationRecord.class, listOfT.size());
         t.setViolationId(id);
+        t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }
 }

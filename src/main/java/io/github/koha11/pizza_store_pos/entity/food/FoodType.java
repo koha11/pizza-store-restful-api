@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -21,4 +22,5 @@ public class FoodType {
     private String foodTypeId;
     private String foodTypeName;
     private String foodTypeImage;
+    private Timestamp createdAt;
 }

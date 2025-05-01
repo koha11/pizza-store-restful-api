@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -22,4 +23,5 @@ public class ViolationRecord {
     private Date workingDate;
     private String violationId;
     private Time violationTime;
+    private Timestamp createdAt;
 }

@@ -5,6 +5,8 @@ import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +17,6 @@ public class SeatService extends GenericService<Seat>{
     }
 
     // GET METHODS
-
-    public boolean isAvailable(String seatId) {
-        var seat = getOne(seatId);
-
-        return seat.getSeatStatus() == SeatStatus.AVAILABLE;
-    }
 
     public List<String> getCurrentSeatIds() {
         List<Seat> seats = getAll();
@@ -34,6 +30,15 @@ public class SeatService extends GenericService<Seat>{
 
         return seatIds;
     }
+
+    // POST METHODS
+
+    @Override
+    public void create(Seat seat) {
+        seat.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        super.create(seat);
+    }
+
 
     // PUT/PATCH METHODS
 
@@ -57,6 +62,14 @@ public class SeatService extends GenericService<Seat>{
             seat.setSeatStatus(SeatStatus.MAINTAIN);
 
         repo.save(seat);
+    }
+
+    // HELPER METHODS
+
+    public boolean isAvailable(String seatId) {
+        var seat = getOne(seatId);
+
+        return seat.getSeatStatus() == SeatStatus.AVAILABLE;
     }
 }
 

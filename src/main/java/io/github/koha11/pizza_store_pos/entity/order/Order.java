@@ -28,4 +28,5 @@ public class Order {
     private int surcharge;
     private PaymentMethod paymentMethod;
     private int total;
+    private Timestamp createdAt;
 }

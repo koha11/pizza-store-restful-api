@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, String> {
-    @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId")
+    @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId ORDER BY od.createdAt")
     List<OrderDetail> findByOrderId(@Param("orderId") String orderId);
 
-    @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId and od.foodId = :foodId")
+    @Query("SELECT od FROM OrderDetail od WHERE od.orderId = :orderId and od.foodId = :foodId ORDER BY od.createdAt")
     Optional<OrderDetail> findByIds(@Param("orderId") String orderId, @Param("foodId") String foodId);
 }

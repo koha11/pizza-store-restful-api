@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -14,5 +16,11 @@ public class WorkShiftService extends GenericService<WorkShift>{
 
     public WorkShiftService(JpaRepository<WorkShift, String> repo) {
         super(repo);
+    }
+
+    @Override
+    public void create(WorkShift workShift) {
+        workShift.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        super.create(workShift);
     }
 }

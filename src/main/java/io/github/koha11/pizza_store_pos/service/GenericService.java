@@ -2,6 +2,7 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.util.Helper;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class GenericService<T> {
     }
 
     public List<T> getAll() {
-        return repo.findAll();
+        return repo.findAll(Sort.by("createdAt"));
     }
 
     public T getOne(String id) {
