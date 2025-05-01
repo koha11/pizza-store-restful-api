@@ -20,4 +20,5 @@ public class Account {
     private String email;
     private String pwd;
     private Timestamp lastAccess;
+    private Timestamp createdAt;
 }

@@ -1,8 +1,6 @@
 package io.github.koha11.pizza_store_pos.controller;
 
-import io.github.koha11.pizza_store_pos.entity.order.CreateOrderRequest;
-import io.github.koha11.pizza_store_pos.entity.order.OnTableOrder;
-import io.github.koha11.pizza_store_pos.entity.order.Order;
+import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +35,43 @@ public class OrderController extends GenericController<Order>{
         }
     }
 
+    @GetMapping("/get-on-table-orders")
+    public List<OnTableOrder> getUnfinishedOrders() {
+        return orderService.getAllCurrentSeatOrder();
+    }
+
+    @GetMapping("/get-finished-orders")
+    public List<OrderStatistic> getFinishedOrders() {
+        return orderService.getFinishedOrders();
+    }
+
     @PostMapping
     public void create(@RequestBody CreateOrderRequest t) {
-        orderService.create(t.getSeatId(),t.getServerId(), t.getFoods());
+        orderService.create(t.getSeatId(),t.getServerId(),t.getFoods());
+    }
+
+    @PostMapping("/add-food/{seatId}")
+    public void addFood(@PathVariable String seatId, @RequestBody OnTableOrderDetail od) {
+        orderService.addFoodOrder(seatId,od);
+    }
+
+    @PutMapping("/edit-food-order/{seatId}")
+    public void editFoodOrder(@PathVariable String seatId, @RequestBody OnTableOrderDetail od) {
+        orderService.editFoodOrder(seatId, od);
+    }
+
+    @PutMapping("/adjust-amount/{seatId}")
+    public void adjustAmount(@PathVariable String seatId, @RequestParam boolean isIncrease, @RequestParam String foodId) {
+        orderService.adjustAmount(isIncrease,seatId,foodId);
+    }
+
+    @PutMapping("/pay-order/{seatId}")
+    public void payOrder(@PathVariable String seatId, @RequestBody OrderPayment op) {
+        orderService.payOrder(seatId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
+    }
+
+    @DeleteMapping("/remove-food-order/{seatId}")
+    public void removeFoodOrder(@PathVariable String seatId, @RequestParam String foodId) {
+        orderService.removeFoodOrder(seatId, foodId);
     }
 }

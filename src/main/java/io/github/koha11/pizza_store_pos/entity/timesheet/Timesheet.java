@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -24,4 +25,5 @@ public class Timesheet {
     private String workShiftId;
     private int workingHours;
     private int overtimeWorkingHours;
+    private Timestamp createdAt;
 }

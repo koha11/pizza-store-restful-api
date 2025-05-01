@@ -3,8 +3,6 @@ package io.github.koha11.pizza_store_pos.service;
 import io.github.koha11.pizza_store_pos.entity.mapper.OrderDetailMapper;
 import io.github.koha11.pizza_store_pos.entity.order.OnTableOrderDetail;
 import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
-import io.github.koha11.pizza_store_pos.entity.seat.Seat;
-import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import io.github.koha11.pizza_store_pos.repository.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,7 +33,7 @@ public class OrderDetailService extends GenericService<OrderDetail> {
 
     // GET METHODS
 
-    public List<OnTableOrderDetail> getByOrderId(String orderId) {
+    public List<OnTableOrderDetail> getAllByOrderId(String orderId) {
         var ods = orderDetailRepo.findByOrderId(orderId);
         List<OnTableOrderDetail> odsDTO = new ArrayList<>();
 

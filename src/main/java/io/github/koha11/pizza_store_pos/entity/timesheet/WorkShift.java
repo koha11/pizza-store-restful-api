@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +21,5 @@ public class WorkShift {
     private String workShiftName;
     private Time startTime;
     private Time endTime;
+    private Timestamp createdAt;
 }

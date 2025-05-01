@@ -29,4 +29,5 @@ public class Employee {
     private String cccd;
     private Date dob;
     private Date firstDayWork;
+    private Timestamp createdAt;
 }

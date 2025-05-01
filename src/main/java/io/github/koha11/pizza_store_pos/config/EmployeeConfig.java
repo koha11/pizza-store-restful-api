@@ -12,19 +12,22 @@ import org.springframework.context.annotation.Configuration;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Configuration
 public class EmployeeConfig {
     @Bean
     CommandLineRunner commandLineRunnerForEmp(EmpTypeRepository empTypeRepository, WorkShiftRepository workShiftRepository, EmployeeRepository employeeRepository) {
         return args -> {
-            WorkShift f1 = new WorkShift("F1", "Ca cứng ban ngày", Time.valueOf("10:00:00"), Time.valueOf("18:00:00"));
+            WorkShift f1 = new WorkShift("F1", "Ca cứng ban ngày", Time.valueOf("10:00:00"), Time.valueOf("18:00:00"), Timestamp.valueOf(LocalDateTime.now()));
 
-            EmpType cashier = new EmpType("CASHIER", "Cashier", 7800000);
+            EmpType cashier = new EmpType("CASHIER", "Cashier", 7800000, Timestamp.valueOf(LocalDateTime.now()));
 
             Employee khoa = new Employee("EMP001",cashier, "F1", "Trần Anh Khoa", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212123",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27")
+                    Date.valueOf("2025-04-27"),
+                    Timestamp.valueOf(LocalDateTime.now())
             );
 
             workShiftRepository.save(f1);

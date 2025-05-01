@@ -30,18 +30,21 @@ public abstract class OrderDetailMapper {
     @Named("getFoodName")
     protected String getFoodName(String foodId) {
         Food food = foodService.getOne(foodId);
-        return food != null ? food.getFoodName() : null;
+        return food != null ? food.getFoodName() : "";
     }
 
     @Named("getFoodImage")
     protected String getFoodImage(String foodId) {
         Food food = foodService.getOne(foodId);
-        return food != null ? food.getFoodImage() : null;
+        return food != null ? food.getFoodImage() : "";
     }
 
     @Named("getVariantName")
     protected String getVariantName(String variantId) {
+        if(variantId == null)
+            return null;
+
         Variant variant = variantService.getOne(variantId);
-        return variant != null ? variant.getVariantName() : null;
+        return variant != null ? variant.getVariantName() : "";
     }
 }

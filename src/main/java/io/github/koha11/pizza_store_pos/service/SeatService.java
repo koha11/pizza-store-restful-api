@@ -5,6 +5,9 @@ import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class SeatService extends GenericService<Seat>{
     public SeatService(JpaRepository<Seat, String> repo) {
@@ -19,6 +22,19 @@ public class SeatService extends GenericService<Seat>{
         return seat.getSeatStatus() == SeatStatus.AVAILABLE;
     }
 
+    public List<String> getCurrentSeatIds() {
+        List<Seat> seats = getAll();
+
+        List<String> seatIds = new ArrayList<>();
+
+        seats.forEach(seat -> {
+            if (seat.getSeatStatus() == SeatStatus.UNAVAILABLE)
+                 seatIds.add(seat.getSeatId());
+        });
+
+        return seatIds;
+    }
+
     // PUT/PATCH METHODS
 
     public void toggleStatus(String seatId) {
@@ -26,9 +42,10 @@ public class SeatService extends GenericService<Seat>{
 
         if(seat.getSeatStatus() == SeatStatus.AVAILABLE)
             seat.setSeatStatus(SeatStatus.UNAVAILABLE);
-
-        if(seat.getSeatStatus() == SeatStatus.UNAVAILABLE)
+        else if(seat.getSeatStatus() == SeatStatus.UNAVAILABLE)
             seat.setSeatStatus(SeatStatus.AVAILABLE);
+
+        repo.save(seat);
     }
 
     public void toggleMaintain(String seatId) {
@@ -38,6 +55,8 @@ public class SeatService extends GenericService<Seat>{
             seat.setSeatStatus(SeatStatus.AVAILABLE);
         else
             seat.setSeatStatus(SeatStatus.MAINTAIN);
+
+        repo.save(seat);
     }
 }
 

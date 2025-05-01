@@ -18,7 +18,7 @@ public class AccountConfig {
     @Bean
     CommandLineRunner commandLineRunnerForAccount(AccountRepository accountRepo) {
         return args -> {
-            Account account = new Account("EMP001", "khoatran.96204@gmail.com", "1", Timestamp.valueOf(LocalDateTime.now()));
+            Account account = new Account("EMP001", "khoatran.96204@gmail.com", "1", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
 
             accountRepo.save(account);
         };
