@@ -27,6 +27,8 @@ public class OrderService extends GenericService<Order>{
     @Autowired
     public OrderMapper orderMapper;
 
+    private final String unavailableSeatMsg = "This seat is unavailable!!!";
+
     public OrderService(JpaRepository<Order, String> repo) {
         super(repo);
     }
@@ -34,16 +36,23 @@ public class OrderService extends GenericService<Order>{
     //GET METHODS
 
     public OnTableOrder getCurrentSeatOrder(String seatId) {
+        var order = getOrderBySeatId(seatId);
+
+        OnTableOrder orderDTO = orderMapper.orderToDTO(order);
+
+        List<OnTableOrderDetail> odsDTO = orderDetailService.getAllByOrderId(order.getOrderId());
+
+        orderDTO.setFoods(odsDTO);
+
+        return orderDTO;
+    }
+
+    public Order getOrderBySeatId(String seatId) {
         var order = orderRepo.findBySeatId(seatId);
 
         if(order.isPresent())
         {
-            OnTableOrder orderDTO = orderMapper.orderToDTO(order.get());
-            List<OnTableOrderDetail> odsDTO = orderDetailService.getAllByOrderId(order.get().getOrderId());
-
-            orderDTO.setFoods(odsDTO);
-
-            return orderDTO;
+            return order.get();
         }
         else
             throw new IllegalStateException(notFoundIdMsg);
@@ -83,7 +92,6 @@ public class OrderService extends GenericService<Order>{
 
     public void create(String seatId, String serverId, List<OnTableOrderDetail> ods) {
 
-        String unavailableSeatMsg = "This seat is unavailable!!!";
         if(!seatService.isAvailable(seatId))
             throw new IllegalStateException(unavailableSeatMsg);
 
@@ -142,6 +150,30 @@ public class OrderService extends GenericService<Order>{
             order.setStatus(OrderStatus.FINISHED);
             seatService.toggleStatus(seatId);
         }
+    }
+
+    public void changeSeat(String seatId, String changedSeatId) {
+        var order = getOrderBySeatId(seatId);
+
+        if (seatService.isAvailable(changedSeatId))
+        {
+            order.setSeatId(changedSeatId);
+            seatService.toggleStatus(changedSeatId);
+            seatService.toggleStatus(seatId);
+            orderRepo.save(order);
+        }
+        else
+            throw new IllegalStateException(unavailableSeatMsg);
+    }
+
+    public void moveFoodsToDiffSeat(String seatId, List<OnTableOrderDetail> ods, String changedSeatId, String serverId) {
+        var order = getOrderBySeatId(seatId);
+
+        ods.forEach(od -> {
+            orderDetailService.delete(order.getOrderId(),od.getFoodId());
+        });
+
+        create(changedSeatId,serverId,ods);
     }
 
     // DELETE METHODS

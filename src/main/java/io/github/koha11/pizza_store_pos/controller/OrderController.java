@@ -45,6 +45,7 @@ public class OrderController extends GenericController<Order>{
         return orderService.getFinishedOrders();
     }
 
+
     @PostMapping
     public void create(@RequestBody CreateOrderRequest t) {
         orderService.create(t.getSeatId(),t.getServerId(),t.getFoods());
@@ -68,6 +69,16 @@ public class OrderController extends GenericController<Order>{
     @PutMapping("/pay-order/{seatId}")
     public void payOrder(@PathVariable String seatId, @RequestBody OrderPayment op) {
         orderService.payOrder(seatId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
+    }
+
+    @PutMapping("/change-seat/{seatId}")
+    public void changeSeat(@PathVariable String seatId, @RequestParam String changedSeatId) {
+        orderService.changeSeat(seatId,changedSeatId);
+    }
+
+    @PutMapping("/move-foods/{seatId}")
+    public void moveFoodsToDiffSeat(@PathVariable String seatId, @RequestBody MoveFoodsOrderRequest request) {
+        orderService.moveFoodsToDiffSeat(seatId, request.getFoods(), request.getChangedSeatId(), request.getServerId());
     }
 
     @DeleteMapping("/remove-food-order/{seatId}")
