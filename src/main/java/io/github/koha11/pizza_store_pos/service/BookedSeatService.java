@@ -21,6 +21,11 @@ public class BookedSeatService extends GenericService<BookedSeat>{
         super(repo);
     }
 
+    public List<BookedSeat> getBookedSeatByDateAndSeat(Timestamp bookedTime, String seatId) {
+
+        return null;
+    }
+
     @Override
     public void create(BookedSeat t) {
         var listOfT = this.getAll();

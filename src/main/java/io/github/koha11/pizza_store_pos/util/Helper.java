@@ -26,6 +26,7 @@ public class Helper {
 
         return sb.toString();
     }
+
     static public <T> String generateId(T t, int length) {
         StringBuilder ch = new StringBuilder();
 
@@ -53,9 +54,6 @@ public class Helper {
 
             if(t == BookedSeat.class)
                 ch.append("BS");
-
-            if(t == Variant.class)
-                ch.append("V");
 
             var sizeText = String.valueOf(length);
 

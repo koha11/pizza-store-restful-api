@@ -27,7 +27,7 @@ public class OrderConfig {
 
             Order order = new Order("OR2704250001", "T01", "EMP001", "EMP001", Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()), OrderStatus.FINISHED , 0, 0, PaymentMethod.CASH, 0, Timestamp.valueOf(LocalDateTime.now()));
 
-            BookedSeat bookedSeat = new BookedSeat("BS0001", null, null, "Anh Khoa", "0123456789", Timestamp.valueOf(LocalDateTime.now()));
+            BookedSeat bookedSeat = new BookedSeat("BS0001", null, null, "Anh Khoa", "0123456789", Timestamp.valueOf("2025-05-01 18:00:00") ,Timestamp.valueOf(LocalDateTime.now()));
 
             orderRepo.save(order);
             orderDetailRepo.saveAll(List.of(od1, od2));

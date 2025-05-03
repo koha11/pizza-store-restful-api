@@ -21,5 +21,6 @@ public class BookedSeat {
     private String orderId;
     private String customerFullName;
     private String customerPhone;
+    private Timestamp bookedTime;
     private Timestamp createdAt;
 }

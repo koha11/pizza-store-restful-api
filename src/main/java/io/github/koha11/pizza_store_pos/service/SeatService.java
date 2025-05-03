@@ -39,7 +39,6 @@ public class SeatService extends GenericService<Seat>{
         super.create(seat);
     }
 
-
     // PUT/PATCH METHODS
 
     public void toggleStatus(String seatId) {
