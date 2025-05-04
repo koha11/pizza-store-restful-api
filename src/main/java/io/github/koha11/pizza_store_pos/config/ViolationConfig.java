@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Configuration
@@ -24,7 +25,7 @@ public class ViolationConfig {
         return args -> {
             Violation violation = new Violation("V00001", "Đi trễ quá 30 phút", 100000, Timestamp.valueOf(LocalDateTime.now()));
 
-            ViolationRecord violationRecord = new ViolationRecord("VR0001", "EMP001", Date.valueOf("2025-04-27"), "V00001", Time.valueOf("15:30:00"), Timestamp.valueOf(LocalDateTime.now())
+            ViolationRecord violationRecord = new ViolationRecord("VR0001", "EMP001", LocalDate.parse("2025-04-27"), violation, Time.valueOf("15:30:00"), Timestamp.valueOf(LocalDateTime.now())
             );
 
             violationRepo.save(violation);

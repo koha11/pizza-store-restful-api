@@ -6,6 +6,8 @@ import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.entity.order.BookedSeat;
 import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
+import io.github.koha11.pizza_store_pos.entity.violation.Violation;
+import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;
 
 import java.time.LocalDate;
 
@@ -54,6 +56,12 @@ public class Helper {
 
             if(t == BookedSeat.class)
                 ch.append("BS");
+
+            if(t == ViolationRecord.class)
+                ch.append("VR");
+
+            if(t == Violation.class)
+                ch.append("V");
 
             var sizeText = String.valueOf(length);
 
