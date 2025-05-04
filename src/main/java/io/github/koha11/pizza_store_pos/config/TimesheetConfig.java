@@ -13,16 +13,20 @@ import org.springframework.context.annotation.Configuration;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Configuration
 public class TimesheetConfig {
     @Bean
     CommandLineRunner commandLineRunnerForTimesheet(TimesheetRepository timesheetRepo) {
         return args -> {
-            Timesheet timesheet = new Timesheet("EMP001", Date.valueOf("2025-04-27"), "F1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
+            Timesheet ts1 = new Timesheet("EMP001", LocalDate.parse("2025-04-27"), "F1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
 
-            timesheetRepo.save(timesheet);
+            Timesheet ts2 = new Timesheet("EMP002", LocalDate.parse("2025-04-27"), "P1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
+
+            timesheetRepo.saveAll(List.of(ts1,ts2));
         };
     }
 }

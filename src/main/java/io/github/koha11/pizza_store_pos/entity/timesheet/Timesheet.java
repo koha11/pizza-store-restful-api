@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -21,7 +22,7 @@ public class Timesheet {
     @Id
     private String empId;
     @Id
-    private Date workingDate;
+    private LocalDate workingDate;
     private String workShiftId;
     private int workingHours;
     private int overtimeWorkingHours;

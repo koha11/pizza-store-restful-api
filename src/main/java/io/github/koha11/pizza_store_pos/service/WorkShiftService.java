@@ -23,4 +23,18 @@ public class WorkShiftService extends GenericService<WorkShift>{
         workShift.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         super.create(workShift);
     }
+
+    public int getWSWorkingTime(String workShiftId) {
+        if(workShiftId == null)
+            return 0;
+
+        WorkShift ws = getOne(workShiftId);
+
+        long startTime = ws.getStartTime().getTime();
+
+        long endTime = ws.getEndTime().getTime();
+
+
+        return (int) (endTime - startTime)/(1000 * 60 * 60);
+    }
 }
