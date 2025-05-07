@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +38,18 @@ public class OrderService extends GenericService<Order>{
     }
 
     //GET METHODS
-    public List<OrderStatistic> getOrders(OrderStatus status, LocalDate date) {
+    public List<OrderStatistic> getOrders(OrderStatus status, LocalDate dateStart, LocalDate dateEnd) {
         List<Order> orders;
-        String dateString;
 
-        if(date != null)
-        {
-            dateString = Helper.getDateString(date);
-            orders = orderRepo.findAllByDateString(dateString);
-        }
-        else
-            orders = getAll();
+        dateStart = dateStart == null ? LocalDate.from(getAll().getFirst().getTimeIn()) : dateStart;
+
+        dateEnd = dateEnd == null ? LocalDate.from(getAll().getLast().getTimeIn()) : dateEnd;
+
+        LocalDateTime datetimeStart = LocalDateTime.of(dateStart, LocalTime.parse("00:00:00"));
+
+        LocalDateTime datetimeEnd = LocalDateTime.of(dateEnd, LocalTime.parse("23:59:59"));
+
+        orders = orderRepo.findAllByDate(datetimeStart, datetimeEnd);
 
         if(status != null)
             orders = orders.stream().filter(order -> order.getStatus() == status).toList();
@@ -108,7 +111,7 @@ public class OrderService extends GenericService<Order>{
         ods.forEach(od -> orderDetailService.create(id,od));
 
         // order process
-        Order order = new Order(id, seatId, serverId, null, Timestamp.valueOf(LocalDateTime.now()), null, OrderStatus.UNFINISHED, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
 
         orderRepo.save(order);
 
@@ -144,7 +147,7 @@ public class OrderService extends GenericService<Order>{
 
         if(order.getStatus() == OrderStatus.UNFINISHED)
         {
-            order.setTimeOut(Timestamp.valueOf(LocalDateTime.now()));
+            order.setTimeOut(LocalDateTime.now());
             order.setTotal(this.calcOrderTotal(seatId));
 
             order.setCashierId(cashierId);

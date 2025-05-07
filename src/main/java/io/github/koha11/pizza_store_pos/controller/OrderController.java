@@ -21,14 +21,9 @@ public class OrderController extends GenericController<Order>{
     }
 
     @GetMapping("/get-orders")
-    public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") String dateString) {
-        try {
-            LocalDate date = LocalDate.parse(dateString);
-            return orderService.getOrders(status, date);
-        }
-        catch (Exception e) {
-            throw new IllegalStateException(e.getMessage());
-        }
+    public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") LocalDate dateStart, @RequestParam(required = false, name = "de") LocalDate dateEnd) {
+
+        return orderService.getOrders(status, dateStart, dateEnd);
     }
 
     @GetMapping("/get-by-seat-id/{seatId}")

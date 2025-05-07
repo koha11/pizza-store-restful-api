@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -16,8 +17,8 @@ public class OrderStatistic {
     private OrderStatus status;
     private String serverName;
     private String cashierName;
-    private Timestamp timeIn;
-    private Timestamp timeOut;
+    private LocalDateTime timeIn;
+    private LocalDateTime timeOut;
     private List<OnTableOrderDetail> foods;
     private float discount;
     private int surcharge;
