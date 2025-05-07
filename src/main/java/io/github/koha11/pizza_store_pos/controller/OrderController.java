@@ -31,7 +31,6 @@ public class OrderController extends GenericController<Order>{
         return orderService.getCurrentSeatOrder(seatId);
     }
 
-
     @PostMapping
     public void create(@RequestBody CreateOrderRequest t) {
         orderService.create(t.getSeatId(),t.getServerId(),t.getFoods());

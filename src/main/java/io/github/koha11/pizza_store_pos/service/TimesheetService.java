@@ -47,7 +47,7 @@ public class TimesheetService extends GenericService<Timesheet>{
 
     public List<Timesheet> getTimesheetByMonth(Month month, int year) {
         LocalDate startDate = LocalDate.of(year,month, 1);
-        LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).getMonthValue());
+        LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
 
         return timesheetRepo.findAllByMonth(startDate, endDate);
     }
@@ -57,6 +57,7 @@ public class TimesheetService extends GenericService<Timesheet>{
     }
 
     // POST METHODS
+
     public void create(String empId, LocalDate workingDate, String wsId) {
         int workingHours = workShiftService.getWSWorkingTime(wsId);
 

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -25,6 +26,6 @@ public class ViolationRecord {
     private LocalDate workingDate;
     @ManyToOne
     private Violation violation;
-    private Time violationTime;
+    private LocalTime violationTime;
     private Timestamp createdAt;
 }
