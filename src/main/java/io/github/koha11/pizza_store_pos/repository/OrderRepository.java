@@ -15,9 +15,4 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     @Query("SELECT o from Order o where o.orderId like %:dateString% ORDER BY o.createdAt  ")
     List<Order> findAllByDateString(@Param("dateString") String dateString);
-
-    @Query("SELECT o from Order o where o.status = :status ORDER BY o.createdAt")
-    List<Order> findAllByStatus(OrderStatus status);
-
-
 }

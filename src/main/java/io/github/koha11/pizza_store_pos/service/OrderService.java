@@ -5,6 +5,7 @@ import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +38,18 @@ public class OrderService extends GenericService<Order>{
     //GET METHODS
     public List<OrderStatistic> getOrders(OrderStatus status, LocalDate date) {
         List<Order> orders;
+        String dateString;
 
-        if(status == null)
-            orders = getAll();
+        if(date != null)
+        {
+            dateString = Helper.getDateString(date);
+            orders = orderRepo.findAllByDateString(dateString);
+        }
         else
-            orders = orderRepo.findAllByStatus(status);
+            orders = getAll();
 
+        if(status != null)
+            orders = orders.stream().filter(order -> order.getStatus() == status).toList();
 
         return orders.stream().map(order -> {
             OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);

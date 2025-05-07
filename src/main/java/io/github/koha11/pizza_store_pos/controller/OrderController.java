@@ -4,6 +4,7 @@ import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -20,21 +21,10 @@ public class OrderController extends GenericController<Order>{
     }
 
     @GetMapping("/get-orders")
-    public List<OrderStatistic> getOrders(@RequestParam(required = false) OrderStatus status, @RequestParam(required = false, name = "ds") String dateString) {
+    public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") String dateString) {
         try {
             LocalDate date = LocalDate.parse(dateString);
             return orderService.getOrders(status, date);
-        }
-        catch (Exception e) {
-            throw new IllegalStateException(e.getMessage());
-        }
-    }
-
-    @GetMapping("/get-orders/{dateString}")
-    public List<OnTableOrder> getByDate(@PathVariable String dateString) {
-        try {
-            LocalDate date = LocalDate.parse(dateString);
-            return orderService.getOrdersByDate(date);
         }
         catch (Exception e) {
             throw new IllegalStateException(e.getMessage());
