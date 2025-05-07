@@ -1,6 +1,7 @@
 package io.github.koha11.pizza_store_pos.repository;
 
 import io.github.koha11.pizza_store_pos.entity.order.Order;
+import io.github.koha11.pizza_store_pos.entity.order.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,8 +16,8 @@ public interface OrderRepository extends JpaRepository<Order, String> {
     @Query("SELECT o from Order o where o.orderId like %:dateString% ORDER BY o.createdAt  ")
     List<Order> findAllByDateString(@Param("dateString") String dateString);
 
-    @Query("SELECT o from Order o where o.status = 1 ORDER BY o.createdAt")
-    List<Order> findAllByStatus();
+    @Query("SELECT o from Order o where o.status = :status ORDER BY o.createdAt")
+    List<Order> findAllByStatus(OrderStatus status);
 
 
 }

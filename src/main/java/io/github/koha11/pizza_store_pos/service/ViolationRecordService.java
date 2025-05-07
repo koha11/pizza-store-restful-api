@@ -68,5 +68,4 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
         return 0;
     }
 
-
 }

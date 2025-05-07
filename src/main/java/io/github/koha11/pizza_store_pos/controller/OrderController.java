@@ -20,16 +20,18 @@ public class OrderController extends GenericController<Order>{
     }
 
     @GetMapping("/get-orders")
-    public List<OrderStatistic> getOrders() {
-        return orderService.getOrders();
-    }
-    @GetMapping("/get-order/{seatId}")
-    public OnTableOrder getBySeatId(@PathVariable String seatId) {
-        return orderService.getCurrentSeatOrder(seatId);
+    public List<OrderStatistic> getOrders(@RequestParam(required = false) OrderStatus status, @RequestParam(required = false, name = "ds") String dateString) {
+        try {
+            LocalDate date = LocalDate.parse(dateString);
+            return orderService.getOrders(status, date);
+        }
+        catch (Exception e) {
+            throw new IllegalStateException(e.getMessage());
+        }
     }
 
-    @GetMapping("/get-orders-by-date")
-    public List<OnTableOrder> getByDate(@RequestParam String dateString) {
+    @GetMapping("/get-orders/{dateString}")
+    public List<OnTableOrder> getByDate(@PathVariable String dateString) {
         try {
             LocalDate date = LocalDate.parse(dateString);
             return orderService.getOrdersByDate(date);
@@ -39,14 +41,9 @@ public class OrderController extends GenericController<Order>{
         }
     }
 
-    @GetMapping("/get-on-table-orders")
-    public List<OnTableOrder> getUnfinishedOrders() {
-        return orderService.getAllCurrentSeatOrder();
-    }
-
-    @GetMapping("/get-finished-orders")
-    public List<OrderStatistic> getFinishedOrders() {
-        return orderService.getFinishedOrders();
+    @GetMapping("/get-by-seat-id/{seatId}")
+    public OnTableOrder getBySeatId(@PathVariable String seatId) {
+        return orderService.getCurrentSeatOrder(seatId);
     }
 
 

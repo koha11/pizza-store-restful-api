@@ -35,8 +35,15 @@ public class OrderService extends GenericService<Order>{
     }
 
     //GET METHODS
-    public List<OrderStatistic> getOrders() {
-        List<Order> orders = orderRepo.findAll();
+    public List<OrderStatistic> getOrders(OrderStatus status, LocalDate date) {
+        List<Order> orders;
+
+        if(status == null)
+            orders = getAll();
+        else
+            orders = orderRepo.findAllByStatus(status);
+
+
         return orders.stream().map(order -> {
             OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);
 
@@ -77,28 +84,6 @@ public class OrderService extends GenericService<Order>{
         List<Order> orders = orderRepo.findAllByDateString(todayString);
 
         return orders.stream().map(order -> orderMapper.orderToDTO(order)).toList();
-    }
-
-    public List<OnTableOrder> getAllCurrentSeatOrder() {
-        List<String> currentSeatIds = seatService.getCurrentSeatIds();
-
-        return currentSeatIds.stream().map(seatId ->
-             getCurrentSeatOrder(seatId)
-        ).toList();
-    }
-
-    public List<OrderStatistic> getFinishedOrders() {
-        List<Order> orders = orderRepo.findAllByStatus();
-
-        return orders.stream().map(order -> {
-            OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);
-
-            var foods = orderDetailService.getAllByOrderId(order.getOrderId());
-
-            orderStatistic.setFoods(foods);
-
-            return orderStatistic;
-        }).toList();
     }
 
     // POST METHODS

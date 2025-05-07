@@ -27,6 +27,6 @@ public abstract class OrderMapper {
     protected String getEmployeeName(String employeeId) {
         if (employeeId == null) return null;
         Employee emp = employeeService.getOne(employeeId);
-        return emp != null ? emp.getFullName() : null;
+        return emp.getFullName();
     }
 }
