@@ -5,12 +5,15 @@ import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,14 +38,21 @@ public class OrderService extends GenericService<Order>{
     }
 
     //GET METHODS
-    public List<OrderStatistic> getOrders(OrderStatus status, LocalDate date) {
+    public List<OrderStatistic> getOrders(OrderStatus status, LocalDate dateStart, LocalDate dateEnd) {
         List<Order> orders;
 
-        if(status == null)
-            orders = getAll();
-        else
-            orders = orderRepo.findAllByStatus(status);
+        dateStart = dateStart == null ? LocalDate.from(getAll().getFirst().getTimeIn()) : dateStart;
 
+        dateEnd = dateEnd == null ? LocalDate.from(getAll().getLast().getTimeIn()) : dateEnd;
+
+        LocalDateTime datetimeStart = LocalDateTime.of(dateStart, LocalTime.parse("00:00:00"));
+
+        LocalDateTime datetimeEnd = LocalDateTime.of(dateEnd, LocalTime.parse("23:59:59"));
+
+        orders = orderRepo.findAllByDate(datetimeStart, datetimeEnd);
+
+        if(status != null)
+            orders = orders.stream().filter(order -> order.getStatus() == status).toList();
 
         return orders.stream().map(order -> {
             OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);
@@ -101,7 +111,7 @@ public class OrderService extends GenericService<Order>{
         ods.forEach(od -> orderDetailService.create(id,od));
 
         // order process
-        Order order = new Order(id, seatId, serverId, null, Timestamp.valueOf(LocalDateTime.now()), null, OrderStatus.UNFINISHED, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
 
         orderRepo.save(order);
 
@@ -137,7 +147,7 @@ public class OrderService extends GenericService<Order>{
 
         if(order.getStatus() == OrderStatus.UNFINISHED)
         {
-            order.setTimeOut(Timestamp.valueOf(LocalDateTime.now()));
+            order.setTimeOut(LocalDateTime.now());
             order.setTotal(this.calcOrderTotal(seatId));
 
             order.setCashierId(cashierId);

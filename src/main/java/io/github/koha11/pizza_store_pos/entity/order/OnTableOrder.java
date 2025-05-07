@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,7 +15,7 @@ public class OnTableOrder {
     private String orderId;
     private String seatId;
     private String serverId;
-    private Timestamp timeIn;
+    private LocalDateTime timeIn;
     private List<OnTableOrderDetail> foods;
     private float discount;
     private int surcharge;
