@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,6 +35,18 @@ public class OrderService extends GenericService<Order>{
     }
 
     //GET METHODS
+    public List<OrderStatistic> getOrders() {
+        List<Order> orders = orderRepo.findAll();
+        return orders.stream().map(order -> {
+            OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);
+
+            var foods = orderDetailService.getAllByOrderId(order.getOrderId());
+
+            orderStatistic.setFoods(foods);
+
+            return orderStatistic;
+        }).toList();
+    }
 
     public OnTableOrder getCurrentSeatOrder(String seatId) {
         var order = getOrderBySeatId(seatId);

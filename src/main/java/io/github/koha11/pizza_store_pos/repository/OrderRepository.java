@@ -17,4 +17,6 @@ public interface OrderRepository extends JpaRepository<Order, String> {
 
     @Query("SELECT o from Order o where o.status = 1 ORDER BY o.createdAt")
     List<Order> findAllByStatus();
+
+
 }

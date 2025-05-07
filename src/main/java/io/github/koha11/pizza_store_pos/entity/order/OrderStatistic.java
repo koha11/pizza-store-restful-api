@@ -13,6 +13,7 @@ import java.util.List;
 public class OrderStatistic {
     private String orderId;
     private String seatId;
+    private OrderStatus status;
     private String serverName;
     private String cashierName;
     private Timestamp timeIn;

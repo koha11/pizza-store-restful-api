@@ -19,6 +19,10 @@ public class OrderController extends GenericController<Order>{
         super(genericService);
     }
 
+    @GetMapping("/get-orders")
+    public List<OrderStatistic> getOrders() {
+        return orderService.getOrders();
+    }
     @GetMapping("/get-order/{seatId}")
     public OnTableOrder getBySeatId(@PathVariable String seatId) {
         return orderService.getCurrentSeatOrder(seatId);

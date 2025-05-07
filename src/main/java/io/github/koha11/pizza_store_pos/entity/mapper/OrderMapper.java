@@ -20,11 +20,13 @@ public abstract class OrderMapper {
     @Mapping(source = "serverId", target = "serverName", qualifiedByName = "getEmployeeName")
     @Mapping(source = "cashierId", target = "cashierName", qualifiedByName = "getEmployeeName")
     public abstract OrderStatistic orderToStatistic(Order order);
+
     public abstract Order DTOToOrder(OnTableOrder onTableOrder);
 
     @Named("getEmployeeName")
     protected String getEmployeeName(String employeeId) {
+        if (employeeId == null) return null;
         Employee emp = employeeService.getOne(employeeId);
-        return emp != null ? emp.getFullName() : "";
+        return emp != null ? emp.getFullName() : null;
     }
 }
