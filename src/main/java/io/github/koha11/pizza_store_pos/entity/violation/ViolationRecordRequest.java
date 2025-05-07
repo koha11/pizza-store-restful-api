@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 @Data
@@ -15,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ViolationRecordRequest {
     private String empId;
-    private Date workingDate;
+    private LocalDate workingDate;
     private String violationId;
-    private Time violationTime;
+    private LocalTime violationTime;
 }
