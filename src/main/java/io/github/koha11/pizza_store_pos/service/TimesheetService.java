@@ -1,7 +1,10 @@
 package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
+import io.github.koha11.pizza_store_pos.entity.mapper.TimesheetMapper;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
+import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
+import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDetail;
 import io.github.koha11.pizza_store_pos.repository.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,10 +30,12 @@ public class TimesheetService extends GenericService<Timesheet>{
     @Autowired
     private WorkShiftService workShiftService;
 
+    @Autowired
+    protected TimesheetMapper mapper;
+
     public TimesheetService(JpaRepository<Timesheet, String> repo) {
         super(repo);
     }
-
 
     // GET METHODS
     public Timesheet getOne(String empId, LocalDate date) {
@@ -45,11 +51,20 @@ public class TimesheetService extends GenericService<Timesheet>{
         return timesheetRepo.findAllByDate(date);
     }
 
-    public List<Timesheet> getTimesheetByMonth(Month month, int year) {
+//    public List<Timesheet> getTimesheetByMonth(Month month, int year) {
+//        LocalDate startDate = LocalDate.of(year,month, 1);
+//        LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
+//
+//        return timesheetRepo.findAllByMonth(startDate, endDate);
+//    }
+
+    public List<TimesheetDTO> getTimesheetByMonth(Month month, int year) {
         LocalDate startDate = LocalDate.of(year,month, 1);
         LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
 
-        return timesheetRepo.findAllByMonth(startDate, endDate);
+        List<Timesheet> listOfTS = timesheetRepo.findAllByMonth(startDate, endDate);
+
+        return listOfTS.stream().map(timesheet -> mapper.timesheetToDTO(timesheet)).toList();
     }
 
     public List<Timesheet> getTimesheetOfEmp(String empId, LocalDate startDate, LocalDate endDate) {

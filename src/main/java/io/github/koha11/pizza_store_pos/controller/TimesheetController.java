@@ -2,6 +2,7 @@ package io.github.koha11.pizza_store_pos.controller;
 
 import ch.qos.logback.classic.pattern.DateConverter;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
+import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.TimesheetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class TimesheetController extends GenericController<Timesheet>{
     }
 
     @GetMapping("/get-all-by-month")
-    public List<Timesheet> getAllByMonth(@RequestParam Month month, @RequestParam int year) {
+    public List<TimesheetDTO> getAllByMonth(@RequestParam Month month, @RequestParam int year) {
         return timesheetService.getTimesheetByMonth(month, year);
     }
 
