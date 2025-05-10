@@ -74,7 +74,8 @@ public class TimesheetService extends GenericService<Timesheet>{
     // POST METHODS
 
     public void create(String empId, LocalDate workingDate, String wsId) {
-        int workingHours = workShiftService.getWSWorkingTime(wsId);
+//        int workingHours = workShiftService.getWSWorkingTime(wsId);
+        int workingHours = 0;
 
         Timesheet ts = new Timesheet(empId, workingDate,wsId, workingHours, 0, Timestamp.valueOf(LocalDateTime.now()));
 
