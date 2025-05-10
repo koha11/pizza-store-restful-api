@@ -40,12 +40,12 @@ public class TimesheetController extends GenericController<Timesheet>{
     }
 
     @PostMapping("/init-timesheet")
-    public void initTimesheetForNextMonth() {
+    public void initTimesheet() {
         LocalDate today = LocalDate.now();
-        Month nextMonth = today.getMonth().plus(1);
+        Month currentMonth = today.getMonth();
 
 //        if(today.getDayOfMonth() > 25)
-            timesheetService.addSheetForMonth(nextMonth, today.getYear());
+            timesheetService.addSheetForMonth(currentMonth, today.getYear());
     }
 
 }
