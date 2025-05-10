@@ -45,20 +45,20 @@ public class SeatService extends GenericService<Seat>{
         Seat seat = getOne(seatId);
 
         if(seat.getSeatStatus() == SeatStatus.AVAILABLE)
-            seat.setSeatStatus(SeatStatus.UNAVAILABLE);
-        else if(seat.getSeatStatus() == SeatStatus.UNAVAILABLE)
+            seat.setSeatStatus(SeatStatus.OCCUPIED);
+        else if(seat.getSeatStatus() == SeatStatus.OCCUPIED)
             seat.setSeatStatus(SeatStatus.AVAILABLE);
 
         repo.save(seat);
     }
 
-    public void toggleMaintain(String seatId) {
+    public void toggleUnavailable(String seatId) {
         Seat seat = getOne(seatId);
 
-        if(seat.getSeatStatus() == SeatStatus.MAINTAIN)
+        if(seat.getSeatStatus() == SeatStatus.UNAVAILABLE)
             seat.setSeatStatus(SeatStatus.AVAILABLE);
         else
-            seat.setSeatStatus(SeatStatus.MAINTAIN);
+            seat.setSeatStatus(SeatStatus.UNAVAILABLE);
 
         repo.save(seat);
     }

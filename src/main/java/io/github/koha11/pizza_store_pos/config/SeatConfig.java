@@ -27,7 +27,7 @@ public class SeatConfig {
             Seat t01 = new Seat("T01", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now()));
             Seat t02 = new Seat("T02", SeatStatus.AVAILABLE, 2, Timestamp.valueOf(LocalDateTime.now()));
             Seat t03 = new Seat("T03", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now()));
-            Seat t04 = new Seat("T04", SeatStatus.MAINTAIN, 8, Timestamp.valueOf(LocalDateTime.now()));
+            Seat t04 = new Seat("T04", SeatStatus.UNAVAILABLE, 8, Timestamp.valueOf(LocalDateTime.now()));
 
             seatRepo.saveAll(List.of(t01, t02, t03, t04));
         };
