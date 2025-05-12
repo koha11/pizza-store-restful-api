@@ -33,7 +33,7 @@ public class OrderController extends GenericController<Order>{
 
     @PostMapping
     public void create(@RequestBody CreateOrderRequest t) {
-        orderService.create(t.getSeatId(),t.getServerId(),t.getFoods());
+        orderService.create(t.getSeatId(),t.getServerId(), t.getNote(),t.getFoods());
     }
 
     @PostMapping("/add-food/{seatId}")

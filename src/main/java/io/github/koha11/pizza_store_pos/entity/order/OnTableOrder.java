@@ -17,6 +17,7 @@ public class OnTableOrder {
     private String serverId;
     private LocalDateTime timeIn;
     private List<OnTableOrderDetail> foods;
+    private String note;
     private float discount;
     private int surcharge;
     private PaymentMethod paymentMethod;

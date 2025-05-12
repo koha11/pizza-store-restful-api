@@ -25,6 +25,7 @@ public class Order {
     private LocalDateTime timeIn;
     private LocalDateTime timeOut;
     private OrderStatus status;
+    private String note;
     private float discount;
     private int surcharge;
     private PaymentMethod paymentMethod;

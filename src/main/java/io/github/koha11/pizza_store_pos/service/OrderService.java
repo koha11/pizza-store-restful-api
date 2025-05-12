@@ -98,7 +98,7 @@ public class OrderService extends GenericService<Order>{
 
     // POST METHODS
 
-    public void create(String seatId, String serverId, List<OnTableOrderDetail> ods) {
+    public void create(String seatId, String serverId, String note, List<OnTableOrderDetail> ods) {
 
         if(!seatService.isAvailable(seatId))
             throw new IllegalStateException(unavailableSeatMsg);
@@ -111,7 +111,7 @@ public class OrderService extends GenericService<Order>{
         ods.forEach(od -> orderDetailService.create(id,od));
 
         // order process
-        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, note, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
 
         orderRepo.save(order);
 
@@ -181,7 +181,7 @@ public class OrderService extends GenericService<Order>{
             orderDetailService.delete(order.getOrderId(),od.getFoodId());
         });
 
-        create(changedSeatId,serverId,ods);
+        create(changedSeatId,serverId,order.getNote(),ods);
     }
 
     // DELETE METHODS

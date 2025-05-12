@@ -14,5 +14,6 @@ import java.util.List;
 public class CreateOrderRequest {
     private String seatId;
     private String serverId;
+    private String note;
     private List<OnTableOrderDetail> foods;
 }

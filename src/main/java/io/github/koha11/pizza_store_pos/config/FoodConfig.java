@@ -16,10 +16,11 @@ public class FoodConfig {
     @Bean
     CommandLineRunner commandLineRunnerForFood(FoodRepository foodRepo, FoodTypeRepository foodTypeRepo) {
         return args -> {
-            FoodType pizza = new FoodType("FT0001", "Pizza", "", Timestamp.valueOf(LocalDateTime.now()));
-            Food peperoni = new Food("F00001", "FT0001", "Peperoni", "","Italian sausages, mozzarella.", 135000, Timestamp.valueOf(LocalDateTime.now()));
+            FoodType pizza = new FoodType("FT0001", "Pizza", "https://ilmio.vn/uploads/fnb-menu/pizza/giant-pizza-size42cm.jpg", Timestamp.valueOf(LocalDateTime.now()));
 
-            Food margherita = new Food("F00002", "FT0001", "Margherita", "", "A classic pizza originating in Naples Italy: Tomato sauce and mozzarella.", 98000, Timestamp.valueOf(LocalDateTime.now()));
+            Food peperoni = new Food("F00001", "FT0001", "Peperoni", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-pepperoni.jpg","Italian sausages, mozzarella.", 135000, Timestamp.valueOf(LocalDateTime.now()));
+
+            Food margherita = new Food("F00002", "FT0001", "Margherita", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-margherita.jpg", "A classic pizza originating in Naples Italy: Tomato sauce and mozzarella.", 98000, Timestamp.valueOf(LocalDateTime.now()));
 
             foodTypeRepo.save(pizza);
             foodRepo.saveAll(List.of(peperoni, margherita));

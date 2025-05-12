@@ -124,7 +124,7 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     public int calcActualPrice(String foodId, int amount, String variantId) {
         int foodPrice = foodService.getOne(foodId).getPrice();
 
-        if(variantId == null)
+        if(variantId == null || variantId.isEmpty())
             return foodPrice * amount;
         else
             return foodPrice * amount + variantService.getOne(variantId).getExtraPrice();

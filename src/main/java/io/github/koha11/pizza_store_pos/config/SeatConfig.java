@@ -24,10 +24,10 @@ public class SeatConfig {
     @Bean
     CommandLineRunner commandLineRunnerForSeat(SeatRepository seatRepo) {
         return args -> {
-            Seat t01 = new Seat("T01", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now()));
-            Seat t02 = new Seat("T02", SeatStatus.AVAILABLE, 2, Timestamp.valueOf(LocalDateTime.now()));
-            Seat t03 = new Seat("T03", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now()));
-            Seat t04 = new Seat("T04", SeatStatus.UNAVAILABLE, 8, Timestamp.valueOf(LocalDateTime.now()));
+            Seat t01 = new Seat("T01", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now().plusMinutes(1)));
+            Seat t02 = new Seat("T02", SeatStatus.AVAILABLE, 2, Timestamp.valueOf(LocalDateTime.now().plusMinutes(2)));
+            Seat t03 = new Seat("T03", SeatStatus.AVAILABLE, 4, Timestamp.valueOf(LocalDateTime.now().plusMinutes(3)));
+            Seat t04 = new Seat("T04", SeatStatus.UNAVAILABLE, 8, Timestamp.valueOf(LocalDateTime.now().plusMinutes(4)));
 
             seatRepo.saveAll(List.of(t01, t02, t03, t04));
         };

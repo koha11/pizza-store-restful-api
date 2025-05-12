@@ -41,7 +41,7 @@ public abstract class OrderDetailMapper {
 
     @Named("getVariantName")
     protected String getVariantName(String variantId) {
-        if(variantId == null)
+        if(variantId == null || variantId.isEmpty())
             return null;
 
         Variant variant = variantService.getOne(variantId);
