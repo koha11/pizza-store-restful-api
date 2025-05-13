@@ -111,7 +111,7 @@ public class OrderService extends GenericService<Order>{
         ods.forEach(od -> orderDetailService.create(id,od));
 
         // order process
-        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, note, 0, 0, null, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, note, 0, 0, null, calcOrderTotal(ods, 0, 0), Timestamp.valueOf(LocalDateTime.now()));
 
         orderRepo.save(order);
 
@@ -210,6 +210,18 @@ public class OrderService extends GenericService<Order>{
         }
 
         total -= (int) (total * order.getDiscount()) + order.getSurcharge();
+
+        return total;
+    }
+
+    public int calcOrderTotal(List<OnTableOrderDetail> ods, int surcharge, float discount) {
+        var total = 0;
+
+        for (var od: ods) {
+            total += od.getActualPrice();
+        }
+
+        total -= (int) (total * discount) + surcharge;
 
         return total;
     }
