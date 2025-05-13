@@ -118,7 +118,7 @@ public class OrderService extends GenericService<Order>{
         // seat process
         seatService.toggleStatus(seatId);
 
-        return orderMapper.orderToDTO(order);
+        return getCurrentSeatOrder(seatId);
     }
 
     public void addFoodOrder(String seatId, OnTableOrderDetail od) {

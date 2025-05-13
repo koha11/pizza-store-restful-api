@@ -2,6 +2,8 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.seat.Seat;
 import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
+import io.github.koha11.pizza_store_pos.repository.SeatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,9 @@ import java.util.List;
 
 @Service
 public class SeatService extends GenericService<Seat>{
+    @Autowired
+    private SeatRepository seatRepo;
+
     public SeatService(JpaRepository<Seat, String> repo) {
         super(repo);
     }
@@ -29,6 +34,10 @@ public class SeatService extends GenericService<Seat>{
         });
 
         return seatIds;
+    }
+
+    public List<Seat> getAll(SeatStatus status) {
+        return seatRepo.findAllByStatus(status);
     }
 
     // POST METHODS
