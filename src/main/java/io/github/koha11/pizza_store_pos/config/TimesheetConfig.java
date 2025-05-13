@@ -22,9 +22,9 @@ public class TimesheetConfig {
     @Bean
     CommandLineRunner commandLineRunnerForTimesheet(TimesheetRepository timesheetRepo) {
         return args -> {
-            Timesheet ts1 = new Timesheet("EMP001", LocalDate.parse("2025-04-27"), "F1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
+            Timesheet ts1 = new Timesheet("EMP001" , LocalDate.parse("2025-04-27"), false,  "F1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
 
-            Timesheet ts2 = new Timesheet("EMP002", LocalDate.parse("2025-04-27"), "P1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
+            Timesheet ts2 = new Timesheet("EMP002", LocalDate.parse("2025-04-27"), false,"P1", 8, 0, Timestamp.valueOf(LocalDateTime.now()));
 
             timesheetRepo.saveAll(List.of(ts1,ts2));
         };

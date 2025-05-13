@@ -2,6 +2,7 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.mapper.TimesheetMapper;
+import io.github.koha11.pizza_store_pos.entity.timesheet.AttendanceRequest;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDetail;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TimesheetService extends GenericService<Timesheet>{
@@ -64,7 +62,7 @@ public class TimesheetService extends GenericService<Timesheet>{
 
         List<Timesheet> listOfTS = timesheetRepo.findAllByMonth(startDate, endDate);
 
-        return listOfTS.stream().map(timesheet -> mapper.timesheetToDTO(timesheet)).toList();
+        return listOfTS.stream().sorted(Comparator.comparing(Timesheet::getWorkingDate)).map(timesheet -> mapper.timesheetToDTO(timesheet)).toList();
     }
 
     public List<Timesheet> getTimesheetOfEmp(String empId, LocalDate startDate, LocalDate endDate) {
@@ -72,12 +70,18 @@ public class TimesheetService extends GenericService<Timesheet>{
     }
 
     // POST METHODS
+    public void attendance(AttendanceRequest request) {
+        Timesheet timesheet = getOne(request.getEmpId(), request.getWorkingDate());
+        timesheet.setWorkingHours(8);
+        timesheet.setStatus(true);
+        timesheetRepo.save(timesheet);
+    }
 
     public void create(String empId, LocalDate workingDate, String wsId) {
 //        int workingHours = workShiftService.getWSWorkingTime(wsId);
         int workingHours = 0;
 
-        Timesheet ts = new Timesheet(empId, workingDate,wsId, workingHours, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Timesheet ts = new Timesheet(empId,  workingDate, false,wsId, workingHours, 0, Timestamp.valueOf(LocalDateTime.now()));
 
         timesheetRepo.save(ts);
     }

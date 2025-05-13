@@ -23,6 +23,7 @@ public class Timesheet {
     private String empId;
     @Id
     private LocalDate workingDate;
+    private boolean status = false;
     private String workShiftId;
     private int workingHours;
     private int overtimeWorkingHours;

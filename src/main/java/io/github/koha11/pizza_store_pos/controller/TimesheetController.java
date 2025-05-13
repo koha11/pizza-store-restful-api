@@ -1,6 +1,7 @@
 package io.github.koha11.pizza_store_pos.controller;
 
 import ch.qos.logback.classic.pattern.DateConverter;
+import io.github.koha11.pizza_store_pos.entity.timesheet.AttendanceRequest;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
 import io.github.koha11.pizza_store_pos.service.GenericService;
@@ -33,7 +34,10 @@ public class TimesheetController extends GenericController<Timesheet>{
     public List<TimesheetDTO> getAllByMonth(@RequestParam Month month, @RequestParam int year) {
         return timesheetService.getTimesheetByMonth(month, year);
     }
-
+    @PostMapping("/attendance")
+    public void attendance(@RequestBody AttendanceRequest request) {
+         timesheetService.attendance(request);
+    }
     @PostMapping
     public void create(@RequestBody Timesheet t) {
         timesheetService.create(t);
