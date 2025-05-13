@@ -98,7 +98,7 @@ public class OrderService extends GenericService<Order>{
 
     // POST METHODS
 
-    public void create(String seatId, String serverId, String note, List<OnTableOrderDetail> ods) {
+    public OnTableOrder create(String seatId, String serverId, String note, List<OnTableOrderDetail> ods) {
 
         if(!seatService.isAvailable(seatId))
             throw new IllegalStateException(unavailableSeatMsg);
@@ -117,6 +117,8 @@ public class OrderService extends GenericService<Order>{
 
         // seat process
         seatService.toggleStatus(seatId);
+
+        return orderMapper.orderToDTO(order);
     }
 
     public void addFoodOrder(String seatId, OnTableOrderDetail od) {
