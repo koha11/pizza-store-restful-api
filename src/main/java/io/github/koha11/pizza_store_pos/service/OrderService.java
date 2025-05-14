@@ -121,10 +121,12 @@ public class OrderService extends GenericService<Order>{
         return getCurrentSeatOrder(seatId);
     }
 
-    public void addFoodOrder(String seatId, OnTableOrderDetail od) {
+    public OnTableOrderDetail addFoodOrder(String seatId, OnTableOrderDetail od) {
         var order = getCurrentSeatOrder(seatId);
 
         orderDetailService.create(order.getOrderId(), od);
+
+        return od;
     }
 
     public void editFoodOrder(String seatId, OnTableOrderDetail odDTO) {
@@ -183,7 +185,11 @@ public class OrderService extends GenericService<Order>{
             orderDetailService.delete(order.getOrderId(),od.getFoodId());
         });
 
+        order.setTotal(calcOrderTotal(seatId));
+
         create(changedSeatId,serverId,order.getNote(),ods);
+
+        orderRepo.save(order);
     }
 
     // DELETE METHODS
