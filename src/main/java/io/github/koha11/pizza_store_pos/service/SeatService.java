@@ -37,6 +37,9 @@ public class SeatService extends GenericService<Seat>{
     }
 
     public List<Seat> getAll(SeatStatus status) {
+        if(status == null)
+            return getAll();
+
         return seatRepo.findAllByStatus(status);
     }
 

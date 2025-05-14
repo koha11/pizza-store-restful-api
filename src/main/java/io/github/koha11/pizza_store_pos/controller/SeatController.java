@@ -23,7 +23,8 @@ public class SeatController extends GenericController<Seat>{
     }
 
     @GetMapping("/filter")
-    public List<Seat> getAll(@RequestParam(name = "stt") SeatStatus status) {
+    public List<Seat> getAll(@RequestParam(name = "stt", required = false
+    ) SeatStatus status) {
         return seatService.getAll(status);
     }
 }
