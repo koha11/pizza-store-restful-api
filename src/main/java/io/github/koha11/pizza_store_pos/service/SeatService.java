@@ -36,11 +36,10 @@ public class SeatService extends GenericService<Seat>{
         return seatIds;
     }
 
-    public List<Seat> getAll(SeatStatus status) {
-        if(status == null)
-            return getAll();
+    public List<Seat> getAll(List<SeatStatus> statusList) {
+        List<Seat> seats = getAll();
 
-        return seatRepo.findAllByStatus(status);
+        return seats.stream().filter(seat -> statusList.contains(seat.getSeatStatus())).toList();
     }
 
     // POST METHODS
