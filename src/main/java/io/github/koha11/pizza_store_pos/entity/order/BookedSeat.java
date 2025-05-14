@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,6 @@ public class BookedSeat {
     private String orderId;
     private String customerFullName;
     private String customerPhone;
-    private Timestamp bookedTime;
+    private LocalDateTime bookedTime;
     private Timestamp createdAt;
 }
