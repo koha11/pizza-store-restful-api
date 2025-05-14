@@ -27,7 +27,11 @@ public class ViolationService extends GenericService<Violation>{
         var listOfT = this.getAll();
         var id = Helper.generateId(Violation.class, listOfT.size());
         t.setViolationId(id);
+        t.setViolationContent(t.getViolationContent());
+        t.setViolationFine(t.getViolationFine());
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }
+
+
 }

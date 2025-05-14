@@ -38,6 +38,10 @@ public class TimesheetController extends GenericController<Timesheet>{
     public void attendance(@RequestBody AttendanceRequest request) {
          timesheetService.attendance(request);
     }
+    @PostMapping("/absent")
+    public void markAbsent(@RequestBody AttendanceRequest request) {
+        timesheetService.markAbsent(request);
+    }
     @PostMapping
     public void create(@RequestBody Timesheet t) {
         timesheetService.create(t);
