@@ -116,11 +116,10 @@ public class TimesheetService extends GenericService<Timesheet>{
     }
 
     // Vang lam`
-    public void markAbsent(LocalDate date, String empId) {
-        Timesheet timesheet = getOne(empId, date);
-
+    public void markAbsent(AttendanceRequest request) {
+        Timesheet timesheet = getOne(request.getEmpId(), request.getWorkingDate());
+        timesheet.setStatus(true);
         timesheet.setWorkingHours(0);
-
         timesheetRepo.save(timesheet);
     }
 
