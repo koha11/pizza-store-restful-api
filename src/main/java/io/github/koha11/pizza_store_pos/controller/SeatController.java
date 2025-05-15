@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,5 +27,11 @@ public class SeatController extends GenericController<Seat>{
     public List<Seat> getAll(@RequestParam(name = "stt", required = false
     ) List<SeatStatus> statusList) {
         return seatService.getAll(statusList);
+    }
+
+    @GetMapping("/reservable-seats")
+    public List<Seat> getReservableSeat(@RequestParam(name = "rd"
+    ) LocalDateTime reservedDate, @RequestParam(name="s") int slots) {
+        return seatService.getReservableSeat(reservedDate, slots);
     }
 }

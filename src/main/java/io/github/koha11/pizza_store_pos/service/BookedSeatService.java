@@ -5,6 +5,7 @@ import io.github.koha11.pizza_store_pos.entity.order.BookedSeat;
 import io.github.koha11.pizza_store_pos.repository.BookedSeatRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +22,16 @@ public class BookedSeatService extends GenericService<BookedSeat>{
         super(repo);
     }
 
-    public List<BookedSeat> getBookedSeatByDateAndSeat(Timestamp bookedTime, String seatId) {
+    public List<BookedSeat> getBookedSeatsByDateAndSeat(LocalDateTime bookedTime, String seatId) {
+        List<BookedSeat> bookedSeats = getAll();
 
-        return null;
+        return bookedSeats.stream().filter(bookedSeat -> {
+            if(seatId.isEmpty())
+                return bookedSeat.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth();
+            else
+                return bookedSeat.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth() && bookedSeat.getSeatId().equals(seatId);
+
+        }).toList();
     }
 
     @Override
