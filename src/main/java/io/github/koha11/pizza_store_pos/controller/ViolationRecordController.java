@@ -30,8 +30,14 @@ public class ViolationRecordController extends GenericController<ViolationRecord
         return violationRecordService.getEmpVR(empId, sd, ed);
     }
 
+
+    @GetMapping("/employee/{empId}")
+    public List<ViolationRecord> getByEmpIdAndWorkingDate(@PathVariable String empId, @RequestParam LocalDate workingDate) {
+        return violationRecordService.getVRByEmpIdAndWorkingDate(empId, workingDate);
+    }
+
     @PostMapping
-    public void create(@RequestBody ViolationRecordRequest t) {
+    public void create(@RequestBody List<ViolationRecordRequest> t) {
         violationRecordService.create(t);
     }
 }

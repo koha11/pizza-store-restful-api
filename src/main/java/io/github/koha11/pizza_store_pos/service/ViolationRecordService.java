@@ -2,9 +2,11 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.mapper.ViolationRecordMapper;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
+import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecordRequest;
 import io.github.koha11.pizza_store_pos.repository.ViolationRecordRepository;
+import io.github.koha11.pizza_store_pos.repository.ViolationRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,6 +30,8 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
     @Qualifier("violationRecordMapperImpl")
     @Autowired
     public ViolationRecordMapper mapper;
+    @Autowired
+    private ViolationRepository violationRepository;
 
     public ViolationRecordService(JpaRepository<ViolationRecord, String> repo) {
         super(repo);
@@ -40,6 +46,9 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
         return violationRecordRepo.findAllByEmpId(empId, startDate, endDate);
     }
 
+    public List<ViolationRecord> getVRByEmpIdAndWorkingDate(String empId, LocalDate workingDate) {
+        return violationRecordRepo.findAllByEmpIdAndWorkingDate(empId, workingDate);
+    }
     // POST METHODS
 
     @Override
@@ -51,16 +60,29 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
         repo.save(t);
     }
 
-    public void create(ViolationRecordRequest violationRecordRequest) {
+    public void create(List<ViolationRecordRequest> violationRecordRequest) {
         var listOfT = this.getAll();
-        var t = mapper.DTOtoViolationRecord(violationRecordRequest);
+        int count = listOfT.size();
+        List<ViolationRecord> records = new ArrayList<ViolationRecord>();
+        for (int i = 0; i < violationRecordRequest.size(); i++) {
+            ViolationRecordRequest request  = violationRecordRequest.get(i);
+            Violation violation = violationRepository.findById(request.getViolationId()).orElse(null);
+            if(violation == null) {
+                return;
+            }
+            var id = Helper.generateId(ViolationRecord.class, count + i);
+            ViolationRecord violationRecord = new ViolationRecord();
+            violationRecord.setViolationRecordId(id);
+            violationRecord.setViolation(violation);
+            violationRecord.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+            violationRecord.setEmpId(request.getEmpId());
+            violationRecord.setWorkingDate(request.getWorkingDate());
+            violationRecord.setViolationTime(LocalTime.now());
+            records.add(violationRecord);
+        }
+        repo.saveAll(records);
 
-        var id = Helper.generateId(ViolationRecord.class, listOfT.size());
 
-        t.setViolationRecordId(id);
-        t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-
-        repo.save(t);
     }
 
     // HELPER METHODS
