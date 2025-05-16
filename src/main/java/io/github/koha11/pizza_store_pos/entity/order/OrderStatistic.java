@@ -15,6 +15,7 @@ public class OrderStatistic {
     private String orderId;
     private String seatId;
     private OrderStatus status;
+    private String note;
     private String serverName;
     private String cashierName;
     private LocalDateTime timeIn;

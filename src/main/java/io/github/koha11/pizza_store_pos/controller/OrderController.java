@@ -31,6 +31,11 @@ public class OrderController extends GenericController<Order>{
         return orderService.getCurrentSeatOrder(seatId);
     }
 
+    @GetMapping("/get-by-order-id/{orderId}")
+    public OrderStatistic getByOrderId(@PathVariable String orderId) {
+        return orderService.getOrderByOrderId(orderId);
+    }
+
     @PostMapping
     public OnTableOrder create(@RequestBody CreateOrderRequest t) {
         return orderService.create(t.getSeatId(),t.getServerId(), t.getNote(),t.getFoods());

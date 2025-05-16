@@ -54,27 +54,15 @@ public class OrderService extends GenericService<Order>{
         if(status != null)
             orders = orders.stream().filter(order -> order.getStatus() == status).toList();
 
-        return orders.stream().map(order -> {
-            OrderStatistic orderStatistic = orderMapper.orderToStatistic(order);
-
-            var foods = orderDetailService.getAllByOrderId(order.getOrderId());
-
-            orderStatistic.setFoods(foods);
-
-            return orderStatistic;
-        }).toList();
+        return orders.stream().map(order ->
+             orderMapper.orderToStatistic(order)
+        ).toList();
     }
 
     public OnTableOrder getCurrentSeatOrder(String seatId) {
         var order = getOrderBySeatId(seatId);
 
-        OnTableOrder orderDTO = orderMapper.orderToDTO(order);
-
-        List<OnTableOrderDetail> odsDTO = orderDetailService.getAllByOrderId(order.getOrderId());
-
-        orderDTO.setFoods(odsDTO);
-
-        return orderDTO;
+        return orderMapper.orderToDTO(order);
     }
 
     public Order getOrderBySeatId(String seatId) {
@@ -83,6 +71,17 @@ public class OrderService extends GenericService<Order>{
         if(order.isPresent())
         {
             return order.get();
+        }
+        else
+            throw new IllegalStateException(notFoundIdMsg);
+    }
+
+    public OrderStatistic getOrderByOrderId(String orderId) {
+        var order = orderRepo.findById(orderId);
+
+        if(order.isPresent())
+        {
+            return orderMapper.orderToStatistic(order.get());
         }
         else
             throw new IllegalStateException(notFoundIdMsg);
