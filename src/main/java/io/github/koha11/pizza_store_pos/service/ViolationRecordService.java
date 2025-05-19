@@ -77,12 +77,15 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
             violationRecord.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
             violationRecord.setEmpId(request.getEmpId());
             violationRecord.setWorkingDate(request.getWorkingDate());
-            violationRecord.setViolationTime(LocalTime.now());
+            violationRecord.setViolationTime(request.getViolationTime());
             records.add(violationRecord);
         }
         repo.saveAll(records);
 
 
+    }
+    public void delete(String violationRecordId) {
+        violationRecordRepo.deleteById(violationRecordId);
     }
 
     // HELPER METHODS
