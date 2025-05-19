@@ -40,4 +40,8 @@ public class ViolationRecordController extends GenericController<ViolationRecord
     public void create(@RequestBody List<ViolationRecordRequest> t) {
         violationRecordService.create(t);
     }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        violationRecordService.delete(id);
+    }
 }
