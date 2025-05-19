@@ -16,6 +16,13 @@ public class BookedSeatController extends GenericController<BookedSeat>{
         super(genericService);
     }
 
+    // GET METHODS
+    @GetMapping("/get-by-order-id/{orderId}")
+    public BookedSeat getByOrderId(@PathVariable String orderId) {
+        return bookedSeatService.getBookedSeatByOrderId(orderId);
+    }
+
+    // POST METHODS
     @PostMapping
     public void create(@RequestBody BookedSeat t) {
         bookedSeatService.create(t);

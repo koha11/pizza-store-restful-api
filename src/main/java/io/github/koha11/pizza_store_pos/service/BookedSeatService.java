@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookedSeatService extends GenericService<BookedSeat>{
@@ -22,6 +23,7 @@ public class BookedSeatService extends GenericService<BookedSeat>{
         super(repo);
     }
 
+    // GET METHODS
     public List<BookedSeat> getBookedSeatsByDateAndSeat(LocalDateTime bookedTime, String seatId) {
         List<BookedSeat> bookedSeats = getAll();
 
@@ -34,6 +36,16 @@ public class BookedSeatService extends GenericService<BookedSeat>{
         }).toList();
     }
 
+    public BookedSeat getBookedSeatByOrderId(String orderId) {
+        Optional<BookedSeat> bsOpt = bookedSeatRepo.findByOrderId(orderId);
+
+        if(bsOpt.isPresent()) {
+            return bsOpt.get();
+        }
+        else throw new IllegalStateException("Order Id not found");
+    }
+
+    // POST METHODS
     @Override
     public void create(BookedSeat t) {
         var listOfT = this.getAll();
