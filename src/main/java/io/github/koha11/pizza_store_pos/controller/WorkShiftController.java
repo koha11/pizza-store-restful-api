@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/work-shift")
+@RequestMapping("/work-shifts")
 public class WorkShiftController extends GenericController<WorkShift>{
     @Autowired
     private WorkShiftService workShiftService;
