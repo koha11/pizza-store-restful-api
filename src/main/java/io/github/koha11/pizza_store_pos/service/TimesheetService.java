@@ -5,14 +5,13 @@ import io.github.koha11.pizza_store_pos.entity.mapper.TimesheetMapper;
 import io.github.koha11.pizza_store_pos.entity.timesheet.*;
 import io.github.koha11.pizza_store_pos.repository.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class TimesheetService extends GenericService<Timesheet>{
@@ -22,8 +21,6 @@ public class TimesheetService extends GenericService<Timesheet>{
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private WorkShiftService workShiftService;
 
     @Autowired
     protected TimesheetMapper mapper;
@@ -123,7 +120,6 @@ public class TimesheetService extends GenericService<Timesheet>{
 
         timesheetRepo.save(timesheet);
     }
-
 
     // HELPER METHODS
     public boolean isExistMonthTimesheet(Month month, int year) {
