@@ -2,10 +2,7 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.mapper.TimesheetMapper;
-import io.github.koha11.pizza_store_pos.entity.timesheet.AttendanceRequest;
-import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
-import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
-import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDetail;
+import io.github.koha11.pizza_store_pos.entity.timesheet.*;
 import io.github.koha11.pizza_store_pos.repository.TimesheetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
@@ -105,13 +102,9 @@ public class TimesheetService extends GenericService<Timesheet>{
     }
 
     // PUT/PATCH METHODS
-    public void setWorkShift(LocalDate date, String empId, String workShiftId){
-        Timesheet timesheet = getOne(empId, date);
-        int workingHours = workShiftService.getWSWorkingTime(workShiftId);
-
-        timesheet.setWorkShiftId(workShiftId);
-        timesheet.setWorkingHours(workingHours);
-
+    public void setWorkShift(ShiftRegistrationRequest request){
+        Timesheet timesheet = getOne(request.getEmpId(), request.getWorkingDate());
+        timesheet.setWorkShiftId(request.getWorkShiftId());
         timesheetRepo.save(timesheet);
     }
 

@@ -15,6 +15,7 @@ import java.util.List;
 public class TimesheetDTO {
     private String empId;
     private String empName;
+    private String hardWorkShiftId;
     private boolean status;
     private String empTypeName;
     private LocalDate workingDate;

@@ -21,6 +21,7 @@ public abstract class TimesheetMapper {
 
     @Mapping(source = "empId", target = "empName", qualifiedByName = "getEmployeeName")
     @Mapping(source = "empId", target = "empTypeName", qualifiedByName = "getEmpTypeName")
+    @Mapping(source = "empId", target = "hardWorkShiftId", qualifiedByName = "getWorkShiftId")
     public abstract TimesheetDTO timesheetToDTO(Timesheet timesheet);
 
     public abstract TimesheetDetail timesheetToDetail(Timesheet timesheet);
@@ -33,7 +34,12 @@ public abstract class TimesheetMapper {
         Employee emp = employeeService.getOne(employeeId);
         return emp.getFullName();
     }
-
+    @Named("getWorkShiftId")
+    protected String getWorkShiftId(String employeeId) {
+        if (employeeId == null) return null;
+        Employee emp = employeeService.getOne(employeeId);
+        return emp.getHardWorkShiftId();
+    }
     @Named("getEmpTypeName")
     protected String getEmpTypeName(String employeeId) {
         if (employeeId == null) return null;
