@@ -128,13 +128,19 @@ public class OrderService extends GenericService<Order>{
         return od;
     }
 
+    // PUT/PATCH METHODS
+
+    public void editOnTableOrder(OnTableOrder orderDTO) {
+        Order order = orderMapper.DTOToOrder(orderDTO);
+
+        update(order.getOrderId(), order);
+    }
+
     public void editFoodOrder(String seatId, OnTableOrderDetail odDTO) {
         var order = getCurrentSeatOrder(seatId);
 
         orderDetailService.editOrderDetail(order.getOrderId(), odDTO);
     }
-
-    // PUT/PATCH METHODS
 
     public void adjustAmount(boolean isIncrease, String seatId, String foodId) {
         var order = getCurrentSeatOrder(seatId);

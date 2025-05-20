@@ -46,6 +46,11 @@ public class OrderController extends GenericController<Order>{
         return orderService.addFoodOrder(seatId,od);
     }
 
+    @PutMapping("/edit-on-table-order")
+    public void editOnTableOrder(@RequestBody OnTableOrder order) {
+        orderService.editOnTableOrder(order);
+    }
+
     @PutMapping("/edit-food-order/{seatId}")
     public void editFoodOrder(@PathVariable String seatId, @RequestBody OnTableOrderDetail od) {
         orderService.editFoodOrder(seatId, od);

@@ -29,7 +29,7 @@ public class Helper {
         return sb.toString();
     }
 
-    static public <T> String generateId(T t, int length) {
+        static public <T> String generateId(T t, int length) {
         StringBuilder ch = new StringBuilder();
 
         if(t == Order.class)
