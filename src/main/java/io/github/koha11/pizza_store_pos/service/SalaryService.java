@@ -49,11 +49,13 @@ public class SalaryService {
             List<ViolationRecord> violationRecords = violationRecordRepo.findAllByEmpId(ts.getEmpId(),startDate,endDate);
             Salary salary = salaryMap.get(ts.getEmpId());
             Employee emp = employeeRepo.findById(ts.getEmpId()).orElse(null);
+            EmpType empType = emp.getEmpType();
             if(salary == null) {
                 salary = new Salary();
                 salaryMap.put(ts.getEmpId(), salary);
                 salary.setEmpId(ts.getEmpId());
-                salary.setEmpType(emp.getEmpType());
+                salary.setEmpType(empType);
+                salary.setWorkShiftName(emp.getWorkShift().getWorkShiftName());
             }
             salary.setEmpName(emp.getFullName());
             salary.setMonth(month);
@@ -66,11 +68,12 @@ public class SalaryService {
                     salary.setTotalOffDay(salary.getTotalOffDay() + 1);
                 }
             }
+            salary.setTotalOvertimeWorkingHours(salary.getTotalOvertimeWorkingHours() + ts.getOvertimeWorkingHours());
             int totalFine = violationRecords.stream()
                     .mapToInt(vr -> vr.getViolation().getViolationFine())
                     .sum();
             salary.setTotalFine(totalFine);
-            int totalSalary = salary.getEmpType().getBasicSalary() + salary.getTotalOvertimeWorkingHours() - salary.getTotalFine();
+            int totalSalary = salary.getEmpType().getBasicSalary() + (salary.getTotalOvertimeWorkingHours() * salary.getEmpType().getOtSalary()) - salary.getTotalFine();
             salary.setTotalSalary(totalSalary);
         }
         salaryRepo.saveAll(new ArrayList<>(salaryMap.values()));
