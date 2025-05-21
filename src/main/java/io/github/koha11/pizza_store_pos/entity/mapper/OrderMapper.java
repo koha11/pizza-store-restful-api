@@ -7,10 +7,12 @@ import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.order.OrderStatistic;
 import io.github.koha11.pizza_store_pos.service.EmployeeService;
 import io.github.koha11.pizza_store_pos.service.OrderDetailService;
+import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 
@@ -22,7 +24,11 @@ public abstract class OrderMapper {
     @Autowired
     protected OrderDetailService orderDetailService;
 
+    @Autowired
+    protected OrderService orderService;
+
     @Mapping(source = "orderId", target = "foods", qualifiedByName = "getFoods")
+    @Mapping(target = "total",  expression = "java(orderService.calcOrderTotal(getFoods(order.getOrderId()), order.getSurcharge(), order.getDiscount()))")
     public abstract OnTableOrder orderToDTO(Order order);
 
     @Mapping(source = "serverId", target = "serverName", qualifiedByName = "getEmployeeName")
@@ -43,4 +49,10 @@ public abstract class OrderMapper {
     protected List<OnTableOrderDetail> getFoods(String orderId) {
         return orderDetailService.getAllByOrderId(orderId);
     }
+
+//    @Named("getOrderTotal")
+//    protected int getOrderTotal(Order order) {
+//        var ods = getFoods(order.getOrderId());
+//        return orderService.calcOrderTotal(ods, order.getSurcharge(), order.getDiscount());
+//    }
 }
