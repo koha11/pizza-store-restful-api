@@ -7,6 +7,7 @@ import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.service.FoodService;
+import io.github.koha11.pizza_store_pos.service.OrderDetailService;
 import io.github.koha11.pizza_store_pos.service.VariantService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,9 +22,14 @@ public abstract class OrderDetailMapper {
     @Autowired
     protected VariantService variantService;
 
+    @Autowired
+    protected OrderDetailService orderDetailService;
+
     @Mapping(source = "foodId", target = "foodName", qualifiedByName = "getFoodName")
     @Mapping(source = "foodId", target = "foodImage", qualifiedByName = "getFoodImage")
+    @Mapping(source = "foodId", target = "price", qualifiedByName = "getFoodPrice")
     @Mapping(source = "variantId", target = "variantName", qualifiedByName = "getVariantName")
+    @Mapping(target = "actualPrice",  expression = "java(orderDetailService.calcActualPrice(orderDetail.getFoodId(), orderDetail.getAmount(), orderDetail.getVariantId()))")
     public abstract OnTableOrderDetail orderDetailToDTO(OrderDetail orderDetail);
     public abstract OrderDetail DTOToOrderDetail(OnTableOrderDetail onTableOrder);
 
@@ -37,6 +43,12 @@ public abstract class OrderDetailMapper {
     protected String getFoodImage(String foodId) {
         Food food = foodService.getOne(foodId);
         return food != null ? food.getFoodImage() : "";
+    }
+
+    @Named("getFoodPrice")
+    protected int getFoodPrice(String foodId) {
+        Food food = foodService.getOne(foodId);
+        return food.getPrice();
     }
 
     @Named("getVariantName")

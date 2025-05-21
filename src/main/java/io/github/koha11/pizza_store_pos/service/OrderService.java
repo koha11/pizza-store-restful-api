@@ -134,16 +134,26 @@ public class OrderService extends GenericService<Order>{
 
     public OnTableOrder editOnTableOrder(OnTableOrder orderDTO) {
         Order order = getOrderBySeatId(orderDTO.getSeatId());
-        if(orderDTO.getDiscount() != 0)
+        OnTableOrder oldOrder = getCurrentSeatOrder(order.getSeatId());
+
+        if(orderDTO.getDiscount() != oldOrder.getDiscount())
             order.setDiscount(orderDTO.getDiscount());
 
-        if(orderDTO.getSurcharge() != 0)
+        if(orderDTO.getSurcharge() != oldOrder.getSurcharge())
             order.setSurcharge(orderDTO.getSurcharge());
 
-        if(orderDTO.getNote().isEmpty())
+        if(!orderDTO.getNote().equals(oldOrder.getNote()))
             order.setNote(orderDTO.getNote());
 
         update(order.getOrderId(), order);
+        orderDetailService.update(orderDTO.getFoods());
+
+        // remove food
+        oldOrder.getFoods().forEach(oldFood -> {
+            if(orderDTO.getFoods().contains(oldFood))
+                orderDetailService.delete(oldFood.getOrderId(), oldFood.getFoodId());
+        });
+
        return getCurrentSeatOrder(orderDTO.getSeatId());
     }
 
