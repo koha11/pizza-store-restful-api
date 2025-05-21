@@ -6,6 +6,7 @@ import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class OrderService extends GenericService<Order>{
     public SeatService seatService;
 
     @Autowired
+    @Lazy
     public OrderMapper orderMapper;
 
     private final String unavailableSeatMsg = "This seat is unavailable!!!";
@@ -130,10 +132,19 @@ public class OrderService extends GenericService<Order>{
 
     // PUT/PATCH METHODS
 
-    public void editOnTableOrder(OnTableOrder orderDTO) {
-        Order order = orderMapper.DTOToOrder(orderDTO);
+    public OnTableOrder editOnTableOrder(OnTableOrder orderDTO) {
+        Order order = getOrderBySeatId(orderDTO.getSeatId());
+        if(orderDTO.getDiscount() != 0)
+            order.setDiscount(orderDTO.getDiscount());
+
+        if(orderDTO.getSurcharge() != 0)
+            order.setSurcharge(orderDTO.getSurcharge());
+
+        if(orderDTO.getNote().isEmpty())
+            order.setNote(orderDTO.getNote());
 
         update(order.getOrderId(), order);
+       return getCurrentSeatOrder(orderDTO.getSeatId());
     }
 
     public void editFoodOrder(String seatId, OnTableOrderDetail odDTO) {
@@ -213,6 +224,7 @@ public class OrderService extends GenericService<Order>{
 
     // HELPER METHODS
 
+    // Tinh tong sau khi da order xong
     public int calcOrderTotal(String seatId) {
         var total = 0;
 
@@ -227,6 +239,7 @@ public class OrderService extends GenericService<Order>{
         return total;
     }
 
+    // Tinh tong khi order
     public int calcOrderTotal(List<OnTableOrderDetail> ods, int surcharge, float discount) {
         var total = 0;
 
@@ -234,7 +247,7 @@ public class OrderService extends GenericService<Order>{
             total += od.getActualPrice();
         }
 
-        total -= (int) (total * discount) + surcharge;
+        total = total - (int) (total * discount) + surcharge;
 
         return total;
     }
