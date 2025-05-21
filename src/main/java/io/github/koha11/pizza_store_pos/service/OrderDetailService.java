@@ -5,6 +5,7 @@ import io.github.koha11.pizza_store_pos.entity.order.OnTableOrderDetail;
 import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
 import io.github.koha11.pizza_store_pos.repository.OrderDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     private OrderDetailRepository orderDetailRepo;
 
     @Autowired
+    @Lazy
     public OrderDetailMapper orderDetailMapper;
 
     @Autowired
@@ -71,6 +73,16 @@ public class OrderDetailService extends GenericService<OrderDetail> {
 
 
     // PUT/PATCH METHODS
+
+
+    public void update(List<OnTableOrderDetail> foods) {
+        List<OrderDetail> ods = new ArrayList<>();
+        foods.forEach(food -> {
+            ods.add(orderDetailMapper.DTOToOrderDetail(food));
+        });
+
+        orderDetailRepo.saveAll(ods);
+    }
 
     public void increaseAmount(String orderId, String foodId) {
         var odOpt = orderDetailRepo.findByIds(orderId, foodId);
