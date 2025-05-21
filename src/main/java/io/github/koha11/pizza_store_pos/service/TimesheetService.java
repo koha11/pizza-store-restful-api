@@ -67,15 +67,18 @@ public class TimesheetService extends GenericService<Timesheet>{
     public void attendance(AttendanceRequest request) {
         Timesheet timesheet = getOne(request.getEmpId(), request.getWorkingDate());
         timesheet.setWorkingHours(8);
+        if(request.getOtHours() > 0) {
+            timesheet.setOvertimeWorkingHours(request.getOtHours());
+        }
         timesheet.setStatus(true);
         timesheetRepo.save(timesheet);
     }
 
-    public void create(String empId, LocalDate workingDate, String wsId) {
+    public void create(String empId, LocalDate workingDate, WorkShift ws) {
 //        int workingHours = workShiftService.getWSWorkingTime(wsId);
         int workingHours = 0;
 
-        Timesheet ts = new Timesheet(empId,  workingDate, false,wsId, workingHours, 0, Timestamp.valueOf(LocalDateTime.now()));
+        Timesheet ts = new Timesheet(empId,  workingDate, false,ws.getWorkShiftId(), workingHours, 0, Timestamp.valueOf(LocalDateTime.now()));
 
         timesheetRepo.save(ts);
     }
@@ -93,7 +96,7 @@ public class TimesheetService extends GenericService<Timesheet>{
 
             empList.forEach(emp -> {
                 if(!emp.getEmpType().getEmpTypeId().equals("ADMIN"))
-                    create(emp.getEmpId(),date,emp.getHardWorkShiftId());
+                    create(emp.getEmpId(),date,emp.getWorkShift());
             });
         }
     }
