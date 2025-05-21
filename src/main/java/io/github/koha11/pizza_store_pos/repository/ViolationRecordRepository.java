@@ -20,4 +20,7 @@ public interface ViolationRecordRepository extends JpaRepository<ViolationRecord
 
     @Query("select vr from ViolationRecord vr where vr.empId = :empId and vr.workingDate = :workingDate")
     List<ViolationRecord> findAllByEmpIdAndWorkingDate(String empId, LocalDate workingDate);
+
+    @Query("select vr from ViolationRecord vr where vr.workingDate >= :startDate and vr.workingDate <= :endDate")
+    List<ViolationRecord> findAllByMonthAndYear(LocalDate startDate,  LocalDate endDate);
 }
