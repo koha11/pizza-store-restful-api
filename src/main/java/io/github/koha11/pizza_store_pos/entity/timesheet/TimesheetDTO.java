@@ -15,11 +15,10 @@ import java.util.List;
 public class TimesheetDTO {
     private String empId;
     private String empName;
-    private String hardWorkShiftId;
     private boolean status;
     private String empTypeName;
     private LocalDate workingDate;
-    private String workShiftId;
+    private WorkShift workShift;
     private int workingHours;
     private int overtimeWorkingHours;
     private Timestamp createdAt;
