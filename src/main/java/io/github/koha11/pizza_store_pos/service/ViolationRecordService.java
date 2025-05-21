@@ -4,6 +4,7 @@ import io.github.koha11.pizza_store_pos.entity.mapper.ViolationRecordMapper;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;
+import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecordDTO;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecordRequest;
 import io.github.koha11.pizza_store_pos.repository.ViolationRecordRepository;
 import io.github.koha11.pizza_store_pos.repository.ViolationRepository;
@@ -16,9 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +47,15 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
 
     public List<ViolationRecord> getVRByEmpIdAndWorkingDate(String empId, LocalDate workingDate) {
         return violationRecordRepo.findAllByEmpIdAndWorkingDate(empId, workingDate);
+    }
+
+    public List<ViolationRecordDTO> getAllVRByMonthYear(Month month, int year){
+        LocalDate startDate = LocalDate.of(year,month, 1);
+        LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
+        List<ViolationRecordDTO> listVRDTO = violationRecordRepo.findAllByMonthAndYear(startDate, endDate)
+                .stream().map(violationRecord -> mapper.violationRecordToDTO(violationRecord)).toList();
+        return listVRDTO;
+
     }
     // POST METHODS
 
@@ -84,6 +92,9 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
 
 
     }
+
+
+
     public void delete(String violationRecordId) {
         violationRecordRepo.deleteById(violationRecordId);
     }

@@ -1,25 +1,27 @@
-package io.github.koha11.pizza_store_pos.entity.timesheet;
+package io.github.koha11.pizza_store_pos.entity.violation;
 
+import io.github.koha11.pizza_store_pos.entity.timesheet.WorkShift;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.List;
+import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TimesheetDTO {
+public class ViolationRecordDTO {
+    private String violationRecordId;
     private String empId;
     private String empName;
-    private boolean status;
     private String empTypeName;
-    private LocalDate workingDate;
     private WorkShift workShift;
-    private int workingHours;
-    private int overtimeWorkingHours;
+    private LocalDate workingDate;
+    private Violation violation;
+    private LocalTime violationTime;
     private Timestamp createdAt;
 }

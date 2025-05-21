@@ -18,6 +18,7 @@ public class Salary {
     @Id
     private String empId;
     private String empName;
+    private String workShiftName;
     @ManyToOne
     private EmpType empType;
     @Id

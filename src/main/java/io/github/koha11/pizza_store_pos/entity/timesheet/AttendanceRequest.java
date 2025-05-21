@@ -10,5 +10,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class AttendanceRequest {
     private String empId;
-    LocalDate workingDate;
+    private LocalDate workingDate;
+    private int otHours;
+
 }

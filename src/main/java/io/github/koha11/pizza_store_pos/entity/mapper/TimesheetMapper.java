@@ -7,6 +7,7 @@ import io.github.koha11.pizza_store_pos.entity.order.OrderStatistic;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDetail;
+import io.github.koha11.pizza_store_pos.entity.timesheet.WorkShift;
 import io.github.koha11.pizza_store_pos.service.EmployeeService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -21,7 +22,7 @@ public abstract class TimesheetMapper {
 
     @Mapping(source = "empId", target = "empName", qualifiedByName = "getEmployeeName")
     @Mapping(source = "empId", target = "empTypeName", qualifiedByName = "getEmpTypeName")
-    @Mapping(source = "empId", target = "hardWorkShiftId", qualifiedByName = "getWorkShiftId")
+    @Mapping(source = "empId", target = "workShift", qualifiedByName = "getWorkShift")
     public abstract TimesheetDTO timesheetToDTO(Timesheet timesheet);
 
     public abstract TimesheetDetail timesheetToDetail(Timesheet timesheet);
@@ -34,11 +35,11 @@ public abstract class TimesheetMapper {
         Employee emp = employeeService.getOne(employeeId);
         return emp.getFullName();
     }
-    @Named("getWorkShiftId")
-    protected String getWorkShiftId(String employeeId) {
+    @Named("getWorkShift")
+    protected WorkShift getWorkShift(String employeeId) {
         if (employeeId == null) return null;
         Employee emp = employeeService.getOne(employeeId);
-        return emp.getHardWorkShiftId();
+        return emp.getWorkShift();
     }
     @Named("getEmpTypeName")
     protected String getEmpTypeName(String employeeId) {
