@@ -22,7 +22,10 @@ public class Employee {
     @JoinColumn(name = "emp_type_id",
             foreignKey = @ForeignKey(name = "fk_employee_emp_type"))
     private EmpType empType;
-    private String hardWorkShiftId;
+    @ManyToOne
+    @JoinColumn(name = "work_shift_id",
+            foreignKey = @ForeignKey(name = "fk_employee_work_shift"))
+    private WorkShift workShift;
     private String fullName;
     private String address;
     private String phone;
