@@ -158,6 +158,18 @@ public class OrderService extends GenericService<Order>{
             }
         });
 
+        // neu xoa het tat ca mon
+        if(orderDTO.getFoods().isEmpty())
+        {
+            delete(order.getOrderId());
+            OnTableOrder emptyOrderDTO = new OnTableOrder();
+            emptyOrderDTO.setSeatId(order.getSeatId());
+            emptyOrderDTO.setServerId(order.getServerId());
+            emptyOrderDTO.setOrderId("");
+            emptyOrderDTO.setFoods(new ArrayList<>());
+            return emptyOrderDTO;
+        }
+
        return orderMapper.orderToDTO(order);
     }
 
