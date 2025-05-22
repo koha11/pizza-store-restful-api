@@ -119,7 +119,7 @@ public class OrderService extends GenericService<Order>{
         // seat process
         seatService.toggleStatus(seatId);
 
-        return getCurrentSeatOrder(seatId);
+        return orderMapper.orderToDTO(order);
     }
 
     public OnTableOrderDetail addFoodOrder(String seatId, OnTableOrderDetail od) {
@@ -148,13 +148,17 @@ public class OrderService extends GenericService<Order>{
         update(order.getOrderId(), order);
         orderDetailService.update(orderDTO.getFoods());
 
+        List<String> oldFoodIds = orderDTO.getFoods().stream().map(OnTableOrderDetail::getFoodId).toList();
+
         // remove food
         oldOrder.getFoods().forEach(oldFood -> {
-            if(orderDTO.getFoods().contains(oldFood))
+            if(!oldFoodIds.contains(oldFood.getFoodId()))
+            {
                 orderDetailService.delete(oldFood.getOrderId(), oldFood.getFoodId());
+            }
         });
 
-       return getCurrentSeatOrder(orderDTO.getSeatId());
+       return orderMapper.orderToDTO(order);
     }
 
     public void editFoodOrder(String seatId, OnTableOrderDetail odDTO) {
