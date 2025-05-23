@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,6 +37,8 @@ public class ViolationRecordController extends GenericController<ViolationRecord
     public List<ViolationRecordDTO> getAllByMonthYear(@RequestParam Month month, @RequestParam int year) {
         return violationRecordService.getAllVRByMonthYear(month, year);
     }
+
+
     @GetMapping("/employee/{empId}")
     public List<ViolationRecord> getByEmpIdAndWorkingDate(@PathVariable String empId, @RequestParam LocalDate workingDate) {
         return violationRecordService.getVRByEmpIdAndWorkingDate(empId, workingDate);

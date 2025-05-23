@@ -1,5 +1,6 @@
 package io.github.koha11.pizza_store_pos.service;
 
+import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.mapper.ViolationRecordMapper;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
@@ -26,9 +27,11 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
     @Autowired
     private ViolationRecordRepository violationRecordRepo;
 
+
     @Qualifier("violationRecordMapperImpl")
     @Autowired
     public ViolationRecordMapper mapper;
+
     @Autowired
     private ViolationRepository violationRepository;
 
@@ -48,6 +51,9 @@ public class ViolationRecordService extends GenericService<ViolationRecord>{
     public List<ViolationRecord> getVRByEmpIdAndWorkingDate(String empId, LocalDate workingDate) {
         return violationRecordRepo.findAllByEmpIdAndWorkingDate(empId, workingDate);
     }
+
+
+
 
     public List<ViolationRecordDTO> getAllVRByMonthYear(Month month, int year){
         LocalDate startDate = LocalDate.of(year,month, 1);
