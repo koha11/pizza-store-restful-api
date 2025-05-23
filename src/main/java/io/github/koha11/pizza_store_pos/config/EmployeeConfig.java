@@ -65,9 +65,15 @@ public class EmployeeConfig {
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+            Employee Admin = new Employee("EMP006",admin, null, "Admin", null, null,  null,
+                    Date.valueOf("2004-06-09"),
+                    Date.valueOf("2025-04-27"),
+                    Timestamp.valueOf(LocalDateTime.now())
+            );
+
             workShiftRepository.saveAll(List.of(f1, f2));
             empTypeRepository.saveAll(List.of(cashier, server, cooker, admin));
-            employeeRepository.saveAll(List.of(khoa, vinh, hieu, tam, trung));
+            employeeRepository.saveAll(List.of(khoa, vinh, hieu, tam, trung, Admin));
         };
     }
 }
