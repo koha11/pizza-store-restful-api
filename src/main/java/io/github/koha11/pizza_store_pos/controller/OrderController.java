@@ -8,6 +8,8 @@ import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 import java.util.List;
 
 @RestController
@@ -24,6 +26,10 @@ public class OrderController extends GenericController<Order>{
     public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") LocalDate dateStart, @RequestParam(required = false, name = "de") LocalDate dateEnd) {
 
         return orderService.getOrders(status, dateStart, dateEnd);
+    }
+    @GetMapping("/period")
+    public List<OrderStatistic> getOrdersByMonthAndYear(@RequestParam Month month, @RequestParam int year, @RequestParam boolean isCurrent) {
+        return orderService.getOrdersByMonthAndYear(month, year, isCurrent);
     }
 
     @GetMapping("/get-by-seat-id/{seatId}")

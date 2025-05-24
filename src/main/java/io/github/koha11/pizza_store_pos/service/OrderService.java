@@ -11,9 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +38,27 @@ public class OrderService extends GenericService<Order>{
     }
 
     //GET METHODS
+
+    public List<OrderStatistic> getOrdersByMonthAndYear(Month month, int year, boolean isCurrent) {
+        LocalDateTime datetimeStart;
+        LocalDateTime datetimeEnd;
+        if(isCurrent) {
+            LocalDate today = LocalDate.now();
+            datetimeStart = today.atTime(0, 0, 0);
+            datetimeEnd = today.atTime(23, 59, 59);
+        } else {
+            LocalDate startDate = LocalDate.of(year,month, 1);
+            LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
+            datetimeStart = startDate.atStartOfDay();
+            datetimeEnd = endDate.atTime(23, 59, 59);
+        }
+        List<Order> orders = orderRepo.findAllByDate(datetimeStart, datetimeEnd);
+        orders = orders.stream().filter(order -> order.getStatus() == OrderStatus.FINISHED).toList();
+        return orders.stream().map(order -> orderMapper.orderToStatistic(order)).toList();
+    }
+
+
+
     public List<OrderStatistic> getOrders(OrderStatus status, LocalDate dateStart, LocalDate dateEnd) {
         List<Order> orders;
 
