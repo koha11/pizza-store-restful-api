@@ -22,6 +22,7 @@ public class BookedSeat {
     private String orderId;
     private String customerFullName;
     private String customerPhone;
+    private String note;
     private int slots;
     private LocalDateTime bookedTime;
     private Timestamp createdAt;
