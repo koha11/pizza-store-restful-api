@@ -1,20 +1,19 @@
 package io.github.koha11.pizza_store_pos.entity.food;
 
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "food_types")
 @Entity
 public class FoodType {
@@ -22,5 +21,15 @@ public class FoodType {
     private String foodTypeId;
     private String foodTypeName;
     private String foodTypeImage;
-    private Timestamp createdAt;
+    @OneToMany
+            (mappedBy = "foodTypeId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Food> foods;
+    private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
+
+    public FoodType(String foodTypeId, String foodTypeName, String foodTypeImage, Timestamp createdAt) {
+        this.foodTypeId = foodTypeId;
+        this.foodTypeName = foodTypeName;
+        this.foodTypeImage = foodTypeImage;
+        this.createdAt = createdAt;
+    }
 }

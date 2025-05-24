@@ -1,9 +1,6 @@
 package io.github.koha11.pizza_store_pos.entity.food;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,7 @@ import java.sql.Timestamp;
 @Entity
 public class Food {
     @Id
-    private String foodId;
+    private String foodId;// foreign key
     private String foodTypeId;
     private String foodName;
     private String foodImage;
