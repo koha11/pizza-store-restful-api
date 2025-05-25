@@ -1,12 +1,14 @@
 package io.github.koha11.pizza_store_pos.entity.mapper;
 
 import io.github.koha11.pizza_store_pos.entity.food.Food;
+import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.entity.order.OnTableOrder;
 import io.github.koha11.pizza_store_pos.entity.order.OnTableOrderDetail;
 import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.order.OrderDetail;
 import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.service.FoodService;
+import io.github.koha11.pizza_store_pos.service.FoodTypeService;
 import io.github.koha11.pizza_store_pos.service.OrderDetailService;
 import io.github.koha11.pizza_store_pos.service.VariantService;
 import org.mapstruct.Mapper;
@@ -20,6 +22,9 @@ public abstract class OrderDetailMapper {
     protected FoodService foodService;
 
     @Autowired
+    protected FoodTypeService foodTypeService;
+
+    @Autowired
     protected VariantService variantService;
 
     @Autowired
@@ -29,6 +34,7 @@ public abstract class OrderDetailMapper {
     @Mapping(source = "foodId", target = "foodImage", qualifiedByName = "getFoodImage")
     @Mapping(source = "foodId", target = "price", qualifiedByName = "getFoodPrice")
     @Mapping(source = "variantId", target = "variantName", qualifiedByName = "getVariantName")
+    @Mapping(source = "foodId", target = "foodTypeName", qualifiedByName = "getFoodTypeName")
     @Mapping(target = "actualPrice",  expression = "java(orderDetailService.calcActualPrice(orderDetail.getFoodId(), orderDetail.getAmount(), orderDetail.getVariantId()))")
     public abstract OnTableOrderDetail orderDetailToDTO(OrderDetail orderDetail);
     public abstract OrderDetail DTOToOrderDetail(OnTableOrderDetail onTableOrder);
@@ -44,7 +50,13 @@ public abstract class OrderDetailMapper {
         Food food = foodService.getOne(foodId);
         return food != null ? food.getFoodImage() : "";
     }
+    @Named("getFoodTypeName")
+    protected String getFoodTypeName(String foodId) {
+        Food food = foodService.getOne(foodId);
+        FoodType foodType = foodTypeService.getOne(food.getFoodTypeId());
+        return foodType != null ? foodType.getFoodTypeName() : "";
 
+    }
     @Named("getFoodPrice")
     protected int getFoodPrice(String foodId) {
         Food food = foodService.getOne(foodId);
