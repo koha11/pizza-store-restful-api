@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,7 +18,7 @@ import java.util.List;
 public class Order {
     @Id
     private String orderId;
-    private String seatId;
+    private String tableId;
     private String serverId;
     private String cashierId;
     private LocalDateTime timeIn;

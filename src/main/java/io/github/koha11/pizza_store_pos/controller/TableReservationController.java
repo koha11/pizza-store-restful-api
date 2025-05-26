@@ -19,7 +19,7 @@ public class TableReservationController extends GenericController<TableReservati
     // GET METHODS
     @GetMapping("/get-by-order-id/{orderId}")
     public TableReservation getByOrderId(@PathVariable String orderId) {
-        return tableReservationService.getBookedSeatByOrderId(orderId);
+        return tableReservationService.getTableReservationByOrderId(orderId);
     }
 
     // POST METHODS

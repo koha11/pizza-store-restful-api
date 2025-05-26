@@ -6,12 +6,10 @@ import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 import java.util.List;
 
 @RestController
@@ -43,9 +41,9 @@ public class OrderController extends GenericController<Order>{
         return orderService.getFoodTypeRevenueStatisticByMonthAndYear(month, year);
     }
 
-    @GetMapping("/get-by-seat-id/{seatId}")
-    public OnTableOrder getBySeatId(@PathVariable String seatId) {
-        return orderService.getCurrentSeatOrder(seatId);
+    @GetMapping("/get-by-table-id/{tableId}")
+    public OnTableOrder getByTableId(@PathVariable String tableId) {
+        return orderService.getCurrentTableOrder(tableId);
     }
 
     @GetMapping("/get-by-order-id/{orderId}")
@@ -55,12 +53,12 @@ public class OrderController extends GenericController<Order>{
 
     @PostMapping
     public OnTableOrder create(@RequestBody CreateOrderRequest t) {
-        return orderService.create(t.getSeatId(),t.getServerId(), t.getNote(),t.getFoods());
+        return orderService.create(t.getTableId(),t.getServerId(), t.getNote(),t.getFoods());
     }
 
-    @PostMapping("/add-food/{seatId}")
-    public OnTableOrderDetail addFood(@PathVariable String seatId, @RequestBody OnTableOrderDetail od) {
-        return orderService.addFoodOrder(seatId,od);
+    @PostMapping("/add-food/{tableId}")
+    public OnTableOrderDetail addFood(@PathVariable String tableId, @RequestBody OnTableOrderDetail od) {
+        return orderService.addFoodOrder(tableId,od);
     }
 
     @PutMapping("/edit-on-table-order")
@@ -68,33 +66,33 @@ public class OrderController extends GenericController<Order>{
         return orderService.editOnTableOrder(order);
     }
 
-    @PutMapping("/edit-food-order/{seatId}")
-    public void editFoodOrder(@PathVariable String seatId, @RequestBody OnTableOrderDetail od) {
-        orderService.editFoodOrder(seatId, od);
+    @PutMapping("/edit-food-order/{tableId}")
+    public void editFoodOrder(@PathVariable String tableId, @RequestBody OnTableOrderDetail od) {
+        orderService.editFoodOrder(tableId, od);
     }
 
-    @PutMapping("/adjust-amount/{seatId}")
-    public void adjustAmount(@PathVariable String seatId, @RequestParam boolean isIncrease, @RequestParam String foodId) {
-        orderService.adjustAmount(isIncrease,seatId,foodId);
+    @PutMapping("/adjust-amount/{tableId}")
+    public void adjustAmount(@PathVariable String tableId, @RequestParam boolean isIncrease, @RequestParam String foodId) {
+        orderService.adjustAmount(isIncrease, tableId,foodId);
     }
 
-    @PutMapping("/pay-order/{seatId}")
-    public void payOrder(@PathVariable String seatId, @RequestBody OrderPayment op) {
-        orderService.payOrder(seatId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
+    @PutMapping("/pay-order/{tableId}")
+    public void payOrder(@PathVariable String tableId, @RequestBody OrderPayment op) {
+        orderService.payOrder(tableId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
     }
 
-    @PutMapping("/change-seat/{seatId}")
-    public void changeSeat(@PathVariable String seatId, @RequestParam String changedSeatId) {
-        orderService.changeSeat(seatId,changedSeatId);
+    @PutMapping("/change-seat/{tableId}")
+    public void changeTable(@PathVariable String tableId, @RequestParam String changedTableId) {
+        orderService.changeTable(tableId, changedTableId);
     }
 
-    @PutMapping("/move-foods/{seatId}")
-    public void moveFoodsToDiffSeat(@PathVariable String seatId, @RequestBody MoveFoodsOrderRequest request) {
-        orderService.moveFoodsToDiffSeat(seatId, request.getFoods(), request.getChangedSeatId(), request.getServerId());
+    @PutMapping("/move-foods/{tableId}")
+    public void moveFoodsToDiffTable(@PathVariable String tableId, @RequestBody MoveFoodsOrderRequest request) {
+        orderService.moveFoodsToDiffTable(tableId, request.getFoods(), request.getChangedTableId(), request.getServerId());
     }
 
-    @DeleteMapping("/remove-food-order/{seatId}")
-    public void removeFoodOrder(@PathVariable String seatId, @RequestParam String foodId) {
-        orderService.removeFoodOrder(seatId, foodId);
+    @DeleteMapping("/remove-food-order/{tableId}")
+    public void removeFoodOrder(@PathVariable String tableId, @RequestParam String foodId) {
+        orderService.removeFoodOrder(tableId, foodId);
     }
 }

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class TableReservation {
     @Id
     private String tableReservationId;
-    private String seatId;
+    private String tableId;
     private String orderId;
     private String customerFullName;
     private String customerPhone;

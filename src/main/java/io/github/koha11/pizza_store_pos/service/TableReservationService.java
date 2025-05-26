@@ -15,27 +15,27 @@ import java.util.Optional;
 @Service
 public class TableReservationService extends GenericService<TableReservation>{
     @Autowired
-    private TableReservationRepository bookedSeatRepo;
+    private TableReservationRepository tableReservationRepo;
 
     public TableReservationService(JpaRepository<TableReservation, String> repo) {
         super(repo);
     }
 
     // GET METHODS
-    public List<TableReservation> getBookedSeatsByDateAndSeat(LocalDateTime bookedTime, String seatId) {
+    public List<TableReservation> getTableReservationsByDateAndTable(LocalDateTime bookedTime, String tableId) {
         List<TableReservation> tableReservations = getAll();
 
-        return tableReservations.stream().filter(bookedSeat -> {
-            if(seatId.isEmpty())
-                return bookedSeat.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth();
+        return tableReservations.stream().filter(tableReservation -> {
+            if(tableId.isEmpty())
+                return tableReservation.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth();
             else
-                return bookedSeat.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth() && bookedSeat.getSeatId().equals(seatId);
+                return tableReservation.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth() && tableReservation.getTableId().equals(tableId);
 
         }).toList();
     }
 
-    public TableReservation getBookedSeatByOrderId(String orderId) {
-        Optional<TableReservation> bsOpt = bookedSeatRepo.findByOrderId(orderId);
+    public TableReservation getTableReservationByOrderId(String orderId) {
+        Optional<TableReservation> bsOpt = tableReservationRepo.findByOrderId(orderId);
 
         if(bsOpt.isPresent()) {
             return bsOpt.get();

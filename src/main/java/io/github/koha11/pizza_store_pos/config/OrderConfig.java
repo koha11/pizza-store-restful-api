@@ -15,7 +15,7 @@ import java.util.List;
 @Configuration
 public class OrderConfig {
     @Bean
-    CommandLineRunner commandLineRunnerForOrder(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, TableReservationRepository bookedSeatRepo) {
+    CommandLineRunner commandLineRunnerForOrder(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, TableReservationRepository tableReservationRepo) {
         return args -> {
 
             OrderDetail od1 = new OrderDetail("OR2704250001", "F00001", "SIZE_M", "", 2, 135000*2, Timestamp.valueOf(LocalDateTime.now()));
@@ -36,7 +36,7 @@ public class OrderConfig {
 
             orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9));
             orderDetailRepo.saveAll(List.of(od1, od2));
-            bookedSeatRepo.save(tableReservation);
+            tableReservationRepo.save(tableReservation);
         };
     }
 }

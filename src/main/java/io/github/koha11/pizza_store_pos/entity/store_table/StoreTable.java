@@ -1,4 +1,4 @@
-package io.github.koha11.pizza_store_pos.entity.seat;
+package io.github.koha11.pizza_store_pos.entity.store_table;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,12 +12,12 @@ import java.sql.Timestamp;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "seats")
+@Table(name = "store_tables")
 @Entity
-public class Seat {
+public class StoreTable {
     @Id
-    private String seatId;
-    private SeatStatus seatStatus;
-    private int numberOfSeat;
+    private String tableId;
+    private TableStatus tableStatus;
+    private int seats;
     private Timestamp createdAt;
 }
