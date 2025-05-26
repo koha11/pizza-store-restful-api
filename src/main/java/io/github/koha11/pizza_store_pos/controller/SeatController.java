@@ -31,7 +31,7 @@ public class SeatController extends GenericController<Seat>{
 
     @GetMapping("/reservable-seats")
     public List<Seat> getReservableSeat(@RequestParam(name = "rd"
-    ) LocalDateTime reservedDate, @RequestParam(name="s") int slots) {
-        return seatService.getReservableSeat(reservedDate, slots);
+    ) LocalDateTime reservedDate, @RequestParam(name="dc") int dinerCount) {
+        return seatService.getReservableSeat(reservedDate, dinerCount);
     }
 }

@@ -1,16 +1,11 @@
 package io.github.koha11.pizza_store_pos.config;
 
-import io.github.koha11.pizza_store_pos.entity.food.Food;
 import io.github.koha11.pizza_store_pos.entity.order.*;
-import io.github.koha11.pizza_store_pos.entity.violation.Violation;
-import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;
 import io.github.koha11.pizza_store_pos.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,11 +30,11 @@ public class OrderConfig {
             Order order8 = new Order("OR2704250008", "T03", "EMP002", "EMP003", LocalDateTime.parse("2025-05-07T16:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 322000, Timestamp.valueOf(LocalDateTime.now()));
             Order order9 = new Order("OR2704250009", "T03", "EMP002", "EMP003", LocalDateTime.parse("2025-05-09T16:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 922000, Timestamp.valueOf(LocalDateTime.now()));
 
-            BookedSeat bookedSeat = new BookedSeat("BS0001", "T01", "OR2704250001", "Anh Khoa", "0123456789", "Have children",4, LocalDateTime.parse("2025-04-27T18:00:00") ,Timestamp.valueOf(LocalDateTime.now()));
+            TableReservation tableReservation = new TableReservation("TR0001", "T01", "OR2704250001", "Anh Khoa", "0123456789", "Have children",4, ReservationStatus.FINISHED, LocalDateTime.parse("2025-04-27T18:00:00") ,Timestamp.valueOf(LocalDateTime.now()));
 
             orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9));
             orderDetailRepo.saveAll(List.of(od1, od2));
-            bookedSeatRepo.save(bookedSeat);
+            bookedSeatRepo.save(tableReservation);
         };
     }
 }

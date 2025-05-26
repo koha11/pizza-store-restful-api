@@ -13,17 +13,18 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "booked_seat")
+@Table(name = "table_reservation")
 @Entity
-public class BookedSeat {
+public class TableReservation {
     @Id
-    private String bookedSeatId;
+    private String tableReservationId;
     private String seatId;
     private String orderId;
     private String customerFullName;
     private String customerPhone;
     private String note;
-    private int slots;
+    private int dinerCount;
+    private ReservationStatus status;
     private LocalDateTime bookedTime;
     private Timestamp createdAt;
 }

@@ -1,11 +1,9 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.food.FoodType;
-import io.github.koha11.pizza_store_pos.entity.order.BookedSeat;
+import io.github.koha11.pizza_store_pos.entity.order.TableReservation;
 import io.github.koha11.pizza_store_pos.repository.BookedSeatRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,19 +13,19 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookedSeatService extends GenericService<BookedSeat>{
+public class BookedSeatService extends GenericService<TableReservation>{
     @Autowired
     private BookedSeatRepository bookedSeatRepo;
 
-    public BookedSeatService(JpaRepository<BookedSeat, String> repo) {
+    public BookedSeatService(JpaRepository<TableReservation, String> repo) {
         super(repo);
     }
 
     // GET METHODS
-    public List<BookedSeat> getBookedSeatsByDateAndSeat(LocalDateTime bookedTime, String seatId) {
-        List<BookedSeat> bookedSeats = getAll();
+    public List<TableReservation> getBookedSeatsByDateAndSeat(LocalDateTime bookedTime, String seatId) {
+        List<TableReservation> tableReservations = getAll();
 
-        return bookedSeats.stream().filter(bookedSeat -> {
+        return tableReservations.stream().filter(bookedSeat -> {
             if(seatId.isEmpty())
                 return bookedSeat.getBookedTime().getDayOfMonth() == bookedTime.getDayOfMonth();
             else
@@ -36,8 +34,8 @@ public class BookedSeatService extends GenericService<BookedSeat>{
         }).toList();
     }
 
-    public BookedSeat getBookedSeatByOrderId(String orderId) {
-        Optional<BookedSeat> bsOpt = bookedSeatRepo.findByOrderId(orderId);
+    public TableReservation getBookedSeatByOrderId(String orderId) {
+        Optional<TableReservation> bsOpt = bookedSeatRepo.findByOrderId(orderId);
 
         if(bsOpt.isPresent()) {
             return bsOpt.get();
@@ -47,10 +45,10 @@ public class BookedSeatService extends GenericService<BookedSeat>{
 
     // POST METHODS
     @Override
-    public void create(BookedSeat t) {
+    public void create(TableReservation t) {
         var listOfT = this.getAll();
-        var id = Helper.generateId(BookedSeat.class, listOfT.size());
-        t.setBookedSeatId(id);
+        var id = Helper.generateId(TableReservation.class, listOfT.size());
+        t.setTableReservationId(id);
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }

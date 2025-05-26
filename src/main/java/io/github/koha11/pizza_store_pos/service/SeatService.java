@@ -1,6 +1,6 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.order.BookedSeat;
+import io.github.koha11.pizza_store_pos.entity.order.TableReservation;
 import io.github.koha11.pizza_store_pos.entity.seat.Seat;
 import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import io.github.koha11.pizza_store_pos.repository.SeatRepository;
@@ -47,17 +47,17 @@ public class SeatService extends GenericService<Seat>{
         return seats.stream().filter(seat -> statusList.contains(seat.getSeatStatus())).toList();
     }
 
-    public List<Seat> getReservableSeat(LocalDateTime reservedDate, int slots) {
+    public List<Seat> getReservableSeat(LocalDateTime reservedDate, int dinerCount) {
         // Lay tat ca ban nhung loai bo di nhung ban` dang bao tri
         List<Seat> seats = getAll(List.of(SeatStatus.AVAILABLE,SeatStatus.RESERVED,SeatStatus.OCCUPIED));
 
-        List<BookedSeat> bookedSeats = bookedSeatService.getBookedSeatsByDateAndSeat(reservedDate, "");
+        List<TableReservation> tableReservations = bookedSeatService.getBookedSeatsByDateAndSeat(reservedDate, "");
 
         // Lay ra nhung phieu dat ban co thoi gian chenh lech it hon 3 tieng so voi thoi gian dinh tao phieu va co seatId khac ""
-        List<String> sameSeatList = bookedSeats.stream().filter(bookedSeat -> Duration.between(bookedSeat.getBookedTime(), reservedDate).getSeconds() <= 3600*3 && !bookedSeat.getSeatId().isEmpty()).map(BookedSeat::getSeatId).toList();
+        List<String> sameSeatList = tableReservations.stream().filter(bookedSeat -> Duration.between(bookedSeat.getBookedTime(), reservedDate).getSeconds() <= 3600*3 && !bookedSeat.getSeatId().isEmpty()).map(TableReservation::getSeatId).toList();
 
         // Loc de lay ra so ban khong bi trung lich dat, co so luong cho ngoi thoa man voi so luong khach du kien
-        return seats.stream().filter(seat -> !sameSeatList.contains(seat.getSeatId()) && seat.getNumberOfSeat() >= slots).toList();
+        return seats.stream().filter(seat -> !sameSeatList.contains(seat.getSeatId()) && seat.getNumberOfSeat() >= dinerCount).toList();
     }
 
     // POST METHODS
