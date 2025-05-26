@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MoveFoodsOrderRequest {
-    private String changedSeatId;
+    private String changedTableId;
     private String serverId;
     private List<OnTableOrderDetail> foods;
 }

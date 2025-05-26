@@ -1,12 +1,8 @@
 package io.github.koha11.pizza_store_pos.config;
 
-import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.entity.user.Account;
 import io.github.koha11.pizza_store_pos.entity.user.Role;
 import io.github.koha11.pizza_store_pos.repository.AccountRepository;
-import io.github.koha11.pizza_store_pos.repository.BookedSeatRepository;
-import io.github.koha11.pizza_store_pos.repository.OrderDetailRepository;
-import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
