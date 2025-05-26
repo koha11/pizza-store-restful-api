@@ -27,9 +27,9 @@ public class OrderController extends GenericController<Order>{
 
         return orderService.getOrders(status, dateStart, dateEnd);
     }
-    @GetMapping("/period")
-    public List<OrderStatistic> getOrdersByMonthAndYear(@RequestParam Month month, @RequestParam int year, @RequestParam boolean isCurrent) {
-        return orderService.getOrdersByMonthAndYear(month, year, isCurrent);
+    @GetMapping("/today")
+    public List<OrderStatistic> getOrdersToday() {
+        return orderService.getOrdersToday();
     }
 
     @GetMapping("/statistic")

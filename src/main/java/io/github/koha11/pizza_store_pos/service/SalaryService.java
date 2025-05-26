@@ -73,7 +73,14 @@ public class SalaryService {
                     .mapToInt(vr -> vr.getViolation().getViolationFine())
                     .sum();
             salary.setTotalFine(totalFine);
-            int totalSalary = salary.getEmpType().getBasicSalary() + (salary.getTotalOvertimeWorkingHours() * salary.getEmpType().getOtSalary()) - salary.getTotalFine();
+            int hoursSalary = (int) Math.round(
+                    ((double) salary.getEmpType().getBasicSalary() / (26 * 8))
+                            * salary.getTotalOvertimeWorkingHours()
+                            * 1.5
+            );
+
+            int totalSalary = (int) Math.round((double) salary.getEmpType().getBasicSalary() + (salary.getTotalOvertimeWorkingHours() * hoursSalary) - salary.getTotalFine());
+            salary.setTotalOTSalary(hoursSalary);
             salary.setTotalSalary(totalSalary);
         }
         salaryRepo.saveAll(new ArrayList<>(salaryMap.values()));

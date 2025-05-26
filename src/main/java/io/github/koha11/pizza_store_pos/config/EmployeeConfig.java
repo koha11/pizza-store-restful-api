@@ -27,13 +27,13 @@ public class EmployeeConfig {
 
 
 
-            EmpType cashier = new EmpType("CASHIER", "Cashier",30000, 10000000, Timestamp.valueOf(LocalDateTime.now()));
+            EmpType cashier = new EmpType("CASHIER", "Cashier", 10000000, Timestamp.valueOf(LocalDateTime.now()));
 
-            EmpType server = new EmpType("SERVER", "Server", 30000, 5000000, Timestamp.valueOf(LocalDateTime.now()));
+            EmpType server = new EmpType("SERVER", "Server", 5000000, Timestamp.valueOf(LocalDateTime.now()));
 
-            EmpType cooker = new EmpType("CHEF", "Chef",50000, 8000000, Timestamp.valueOf(LocalDateTime.now()));
+            EmpType cooker = new EmpType("CHEF", "Chef", 8000000, Timestamp.valueOf(LocalDateTime.now()));
 
-            EmpType admin = new EmpType("ADMIN", "Admin",0, 0, Timestamp.valueOf(LocalDateTime.now()));
+            EmpType admin = new EmpType("ADMIN", "Admin", 0, Timestamp.valueOf(LocalDateTime.now()));
 
             Employee khoa = new Employee("EMP001",cashier, f1, "Trần Anh Khoa", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212123",
                     Date.valueOf("2004-06-09"),

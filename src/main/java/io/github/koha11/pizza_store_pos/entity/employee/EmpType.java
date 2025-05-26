@@ -18,7 +18,6 @@ public class EmpType {
     @Id
     private String empTypeId;
     private String empTypeName;
-    private int otSalary;
     private int basicSalary;
     private Timestamp createdAt;
 }

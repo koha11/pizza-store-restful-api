@@ -27,6 +27,7 @@ public class Salary {
     private int year;
     private int totalWorkingDay;
     private int totalOvertimeWorkingHours;
+    private int totalOTSalary;
     private int totalFine;
     private int totalOffDay;
     private int totalSalary;

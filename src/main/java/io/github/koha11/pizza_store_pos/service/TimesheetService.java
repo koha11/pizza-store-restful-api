@@ -74,6 +74,24 @@ public class TimesheetService extends GenericService<Timesheet>{
         timesheetRepo.save(timesheet);
     }
 
+    public void attendanceAll() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate dateOnly = now.toLocalDate();
+        List<Employee> listEmp = employeeService.getAll();
+        List<Timesheet> listTs = new ArrayList<>();
+        listEmp.forEach(emp -> {
+            if(!emp.getEmpType().getEmpTypeId().equals("ADMIN")) {
+                Timesheet timesheet = getOne(emp.getEmpId(), dateOnly);
+                if(timesheet.isStatus()) return;
+                timesheet.setWorkingHours(8);
+                timesheet.setStatus(true);
+                listTs.add(timesheet);
+            }
+        });
+        timesheetRepo.saveAll(listTs);
+
+    }
+
     public void create(String empId, LocalDate workingDate, WorkShift ws) {
 //        int workingHours = workShiftService.getWSWorkingTime(wsId);
         int workingHours = 0;
