@@ -7,19 +7,16 @@ import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.*;
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,13 +28,13 @@ public class OrderService extends GenericService<Order>{
     private OrderDetailService orderDetailService;
 
     @Autowired
-    public SeatService seatService;
+    public TableService tableService;
 
     @Autowired
     @Lazy
     public OrderMapper orderMapper;
 
-    private final String unavailableSeatMsg = "This seat is unavailable!!!";
+    private final String unavailableTableMsg = "This table is unavailable!!!";
 
     public OrderService(JpaRepository<Order, String> repo) {
         super(repo);
@@ -128,14 +125,14 @@ public class OrderService extends GenericService<Order>{
         ).toList();
     }
 
-    public OnTableOrder getCurrentSeatOrder(String seatId) {
-        var order = getOrderBySeatId(seatId);
+    public OnTableOrder getCurrentTableOrder(String tableId) {
+        var order = getOrderByTableId(tableId);
 
         return orderMapper.orderToDTO(order);
     }
 
-    public Order getOrderBySeatId(String seatId) {
-        var order = orderRepo.findBySeatId(seatId);
+    public Order getOrderByTableId(String tableId) {
+        var order = orderRepo.findByTableId(tableId);
 
         if(order.isPresent())
         {
@@ -168,8 +165,8 @@ public class OrderService extends GenericService<Order>{
 
     public OnTableOrder create(String seatId, String serverId, String note, List<OnTableOrderDetail> ods) {
 
-        if(!seatService.isAvailable(seatId))
-            throw new IllegalStateException(unavailableSeatMsg);
+        if(!tableService.isAvailable(seatId))
+            throw new IllegalStateException(unavailableTableMsg);
 
         // generate ID
         var listOfT = this.getOrdersByDate(LocalDate.now());
@@ -184,13 +181,13 @@ public class OrderService extends GenericService<Order>{
         orderRepo.save(order);
 
         // seat process
-        seatService.toggleStatus(seatId);
+        tableService.toggleStatus(seatId);
 
         return orderMapper.orderToDTO(order);
     }
 
     public OnTableOrderDetail addFoodOrder(String seatId, OnTableOrderDetail od) {
-        var order = getCurrentSeatOrder(seatId);
+        var order = getCurrentTableOrder(seatId);
 
         orderDetailService.create(order.getOrderId(), od);
 
@@ -200,8 +197,8 @@ public class OrderService extends GenericService<Order>{
     // PUT/PATCH METHODS
 
     public OnTableOrder editOnTableOrder(OnTableOrder orderDTO) {
-        Order order = getOrderBySeatId(orderDTO.getSeatId());
-        OnTableOrder oldOrder = getCurrentSeatOrder(order.getSeatId());
+        Order order = getOrderByTableId(orderDTO.getTableId());
+        OnTableOrder oldOrder = getCurrentTableOrder(order.getTableId());
 
         if(orderDTO.getDiscount() != oldOrder.getDiscount())
             order.setDiscount(orderDTO.getDiscount());
@@ -230,7 +227,7 @@ public class OrderService extends GenericService<Order>{
         {
             delete(order.getOrderId());
             OnTableOrder emptyOrderDTO = new OnTableOrder();
-            emptyOrderDTO.setSeatId(order.getSeatId());
+            emptyOrderDTO.setTableId(order.getTableId());
             emptyOrderDTO.setServerId(order.getServerId());
             emptyOrderDTO.setOrderId("");
             emptyOrderDTO.setFoods(new ArrayList<>());
@@ -241,13 +238,13 @@ public class OrderService extends GenericService<Order>{
     }
 
     public void editFoodOrder(String seatId, OnTableOrderDetail odDTO) {
-        var order = getCurrentSeatOrder(seatId);
+        var order = getCurrentTableOrder(seatId);
 
         orderDetailService.editOrderDetail(order.getOrderId(), odDTO);
     }
 
     public void adjustAmount(boolean isIncrease, String seatId, String foodId) {
-        var order = getCurrentSeatOrder(seatId);
+        var order = getCurrentTableOrder(seatId);
 
         if(isIncrease)
             orderDetailService.increaseAmount(order.getOrderId(), foodId);
@@ -256,7 +253,7 @@ public class OrderService extends GenericService<Order>{
     }
 
     public void payOrder(String seatId, String cashierId, PaymentMethod paymentMethod, float discount, int surcharge) {
-        var order = this.getOne(getCurrentSeatOrder(seatId).getOrderId());
+        var order = this.getOne(getCurrentTableOrder(seatId).getOrderId());
 
         if(order.getStatus() == OrderStatus.UNFINISHED)
         {
@@ -269,34 +266,34 @@ public class OrderService extends GenericService<Order>{
             order.setSurcharge(surcharge);
 
             order.setStatus(OrderStatus.FINISHED);
-            seatService.toggleStatus(seatId);
+            tableService.toggleStatus(seatId);
         }
     }
 
-    public void changeSeat(String seatId, String changedSeatId) {
-        var order = getOrderBySeatId(seatId);
+    public void changeTable(String tableId, String changedTableId) {
+        var order = getOrderByTableId(tableId);
 
-        if (seatService.isAvailable(changedSeatId))
+        if (tableService.isAvailable(changedTableId))
         {
-            order.setSeatId(changedSeatId);
-            seatService.toggleStatus(changedSeatId);
-            seatService.toggleStatus(seatId);
+            order.setTableId(changedTableId);
+            tableService.toggleStatus(changedTableId);
+            tableService.toggleStatus(tableId);
             orderRepo.save(order);
         }
         else
-            throw new IllegalStateException(unavailableSeatMsg);
+            throw new IllegalStateException(unavailableTableMsg);
     }
 
-    public void moveFoodsToDiffSeat(String seatId, List<OnTableOrderDetail> ods, String changedSeatId, String serverId) {
-        var order = getOrderBySeatId(seatId);
+    public void moveFoodsToDiffTable(String tableId, List<OnTableOrderDetail> ods, String changedTableId, String serverId) {
+        var order = getOrderByTableId(tableId);
 
         ods.forEach(od -> {
             orderDetailService.delete(order.getOrderId(),od.getFoodId());
         });
 
-        order.setTotal(calcOrderTotal(seatId));
+        order.setTotal(calcOrderTotal(tableId));
 
-        create(changedSeatId,serverId,order.getNote(),ods);
+        create(changedTableId,serverId,order.getNote(),ods);
 
         orderRepo.save(order);
     }
@@ -304,13 +301,13 @@ public class OrderService extends GenericService<Order>{
     // DELETE METHODS
 
     public void removeFoodOrder(String seatId, String foodId) {
-        var order = getCurrentSeatOrder(seatId);
+        var order = getCurrentTableOrder(seatId);
         orderDetailService.delete(order.getOrderId(), foodId);
     }
 
     public void delete(String id) {
         var order = getOne(id);
-        seatService.toggleStatus(order.getSeatId());
+        tableService.toggleStatus(order.getTableId());
         super.delete(id);
     }
 
@@ -321,7 +318,7 @@ public class OrderService extends GenericService<Order>{
     public int calcOrderTotal(String seatId) {
         var total = 0;
 
-        var order = getCurrentSeatOrder(seatId);
+        var order = getCurrentTableOrder(seatId);
 
         for (var od: order.getFoods()) {
             total += od.getActualPrice();
