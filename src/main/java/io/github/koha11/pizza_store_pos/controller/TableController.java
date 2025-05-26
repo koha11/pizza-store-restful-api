@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/store_tables")
+@RequestMapping("/tables")
 public class TableController extends GenericController<StoreTable>{
     @Autowired
     private TableService tableService;
