@@ -11,6 +11,7 @@ public class OnTableOrderDetail {
     private String orderId;
     private String foodId;
     private String foodName;
+    private String foodTypeName;
     private String foodImage;
     private int price;
     private String variantId;

@@ -2,6 +2,8 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.mapper.OrderMapper;
 import io.github.koha11.pizza_store_pos.entity.order.*;
+import io.github.koha11.pizza_store_pos.entity.statistic.FoodTypeStatistic;
+import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,11 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService extends GenericService<Order>{
@@ -57,7 +63,49 @@ public class OrderService extends GenericService<Order>{
         return orders.stream().map(order -> orderMapper.orderToStatistic(order)).toList();
     }
 
+    public List<RevenueStatistic> getRevenueStatisticByMonthAndYear(Month month, int year) {
+        List<Order> finishedOrders = getFinishedOrdersByMonthAndYear(month, year);
+        Map<Integer, Integer> groupedByDay = finishedOrders.stream()
+                .collect(Collectors.groupingBy(
+                        order -> order.getTimeIn().getDayOfMonth(),
+                        Collectors.summingInt(Order::getTotal)
+                ));
+         List<RevenueStatistic> list = groupedByDay.keySet().stream().map(integer -> {
+            int total = groupedByDay.get(integer);
+            return new RevenueStatistic(integer.toString(), total);
+        }) .sorted(Comparator.comparingInt(revenueStatistic -> Integer.parseInt(revenueStatistic.getDay()))).toList();
+         return list;
+    }
 
+    public List<Order> getFinishedOrdersByMonthAndYear(Month month, int year) {
+        LocalDateTime datetimeStart;
+        LocalDateTime datetimeEnd;
+        LocalDate startDate = LocalDate.of(year,month, 1);
+        LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
+        datetimeStart = startDate.atStartOfDay();
+        datetimeEnd = endDate.atTime(23, 59, 59);
+        List<Order> orders = orderRepo.findAllByDate(datetimeStart, datetimeEnd);
+        return orders.stream().filter(order -> order.getStatus() == OrderStatus.FINISHED).toList();
+    }
+
+    public List<FoodTypeStatistic> getFoodTypeRevenueStatisticByMonthAndYear(Month month, int year) {
+        List<Order> finishedOrders = getFinishedOrdersByMonthAndYear(month, year);
+        List<OrderStatistic> orderStatistics = finishedOrders.stream().map(order -> orderMapper.orderToStatistic(order)).toList();
+
+        Map<String, Integer> groupedByFoodType = orderStatistics.stream()
+                .flatMap(orderStatistic -> orderStatistic.getFoods().stream())
+                .collect(Collectors.groupingBy(
+                        OnTableOrderDetail::getFoodTypeName,
+                        Collectors.summingInt(food -> food.getActualPrice() * food.getAmount())
+                ));
+        List<FoodTypeStatistic> list = groupedByFoodType.keySet().stream().map(key -> {
+            int total = groupedByFoodType.get(key);
+            return new FoodTypeStatistic(key, total);
+        }).toList();
+        return list;
+
+
+    }
 
     public List<OrderStatistic> getOrders(OrderStatus status, LocalDate dateStart, LocalDate dateEnd) {
         List<Order> orders;

@@ -1,6 +1,8 @@
 package io.github.koha11.pizza_store_pos.controller;
 
 import io.github.koha11.pizza_store_pos.entity.order.*;
+import io.github.koha11.pizza_store_pos.entity.statistic.FoodTypeStatistic;
+import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,15 @@ public class OrderController extends GenericController<Order>{
     @GetMapping("/period")
     public List<OrderStatistic> getOrdersByMonthAndYear(@RequestParam Month month, @RequestParam int year, @RequestParam boolean isCurrent) {
         return orderService.getOrdersByMonthAndYear(month, year, isCurrent);
+    }
+
+    @GetMapping("/statistic")
+    public List<RevenueStatistic> getRevenueStatisticsByMonthAndYear(@RequestParam Month month, @RequestParam int year) {
+        return orderService.getRevenueStatisticByMonthAndYear(month, year);
+    }
+    @GetMapping("/statistic/food-type")
+    public List<FoodTypeStatistic> getFoodTypeRevenueStatisticByMonthAndYear(@RequestParam Month month, @RequestParam int year) {
+        return orderService.getFoodTypeRevenueStatisticByMonthAndYear(month, year);
     }
 
     @GetMapping("/get-by-seat-id/{seatId}")
