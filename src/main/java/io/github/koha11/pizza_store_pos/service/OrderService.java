@@ -45,21 +45,13 @@ public class OrderService extends GenericService<Order>{
 
     //GET METHODS
 
-    public List<OrderStatistic> getOrdersByMonthAndYear(Month month, int year, boolean isCurrent) {
+    public List<OrderStatistic> getOrdersToday() {
         LocalDateTime datetimeStart;
         LocalDateTime datetimeEnd;
-        if(isCurrent) {
-            LocalDate today = LocalDate.now();
-            datetimeStart = today.atTime(0, 0, 0);
-            datetimeEnd = today.atTime(23, 59, 59);
-        } else {
-            LocalDate startDate = LocalDate.of(year,month, 1);
-            LocalDate endDate = LocalDate.of(year,month, YearMonth.of(year, month).lengthOfMonth());
-            datetimeStart = startDate.atStartOfDay();
-            datetimeEnd = endDate.atTime(23, 59, 59);
-        }
+        LocalDate today = LocalDate.now();
+        datetimeStart = today.atTime(0, 0, 0);
+        datetimeEnd = today.atTime(23, 59, 59);
         List<Order> orders = orderRepo.findAllByDate(datetimeStart, datetimeEnd);
-        orders = orders.stream().filter(order -> order.getStatus() == OrderStatus.FINISHED).toList();
         return orders.stream().map(order -> orderMapper.orderToStatistic(order)).toList();
     }
 

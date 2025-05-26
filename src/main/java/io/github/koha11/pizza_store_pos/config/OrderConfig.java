@@ -23,7 +23,10 @@ public class OrderConfig {
 
             OrderDetail od1 = new OrderDetail("OR2704250001", "F00001", "SIZE_M", "", 2, 135000*2, Timestamp.valueOf(LocalDateTime.now()));
 
-            OrderDetail od2 = new OrderDetail("OR2704250001", "F00002", "SIZE_M", "", 1, 98000*2, Timestamp.valueOf(LocalDateTime.now()));
+            OrderDetail od2 = new OrderDetail("OR2704250001", "F00002", "SIZE_M", "", 3, 98000*3, Timestamp.valueOf(LocalDateTime.now()));
+            OrderDetail od3 = new OrderDetail("OR2704250004", "F00002", "SIZE_M", "", 2, 98000*2, Timestamp.valueOf(LocalDateTime.now()));
+            OrderDetail od4 = new OrderDetail("OR2704250005", "F00002", "SIZE_M", "", 5, 98000*5, Timestamp.valueOf(LocalDateTime.now()));
+            OrderDetail od5 = new OrderDetail("OR2704250010", "F00002", "SIZE_M", "", 4, 98000*4, Timestamp.valueOf(LocalDateTime.now()));
 
             Order order1 = new Order("OR2704250001", "T01", "EMP001", "EMP001", LocalDateTime.now(), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 521000, Timestamp.valueOf(LocalDateTime.now()));
             Order order2 = new Order("OR2704250002", "T02", "EMP002", "EMP001",LocalDateTime.parse("2025-02-15T14:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 738000, Timestamp.valueOf(LocalDateTime.parse("2025-02-15T14:00:00")));
@@ -34,11 +37,12 @@ public class OrderConfig {
             Order order7 = new Order("OR2704250007", "T03", "EMP002", "EMP003", LocalDateTime.parse("2025-05-06T16:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 752000, Timestamp.valueOf(LocalDateTime.now()));
             Order order8 = new Order("OR2704250008", "T03", "EMP002", "EMP003", LocalDateTime.parse("2025-05-07T16:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 322000, Timestamp.valueOf(LocalDateTime.now()));
             Order order9 = new Order("OR2704250009", "T03", "EMP002", "EMP003", LocalDateTime.parse("2025-05-09T16:00:00"), LocalDateTime.now(), OrderStatus.FINISHED, "", 0, 0, PaymentMethod.CASH, 922000, Timestamp.valueOf(LocalDateTime.now()));
+            Order order10 = new Order("OR2704250010", "T03", "EMP004", "EMP002", LocalDateTime.now(), LocalDateTime.now(), OrderStatus.UNFINISHED, "", 0, 0, PaymentMethod.CASH, 834000, Timestamp.valueOf(LocalDateTime.now()));
 
             BookedSeat bookedSeat = new BookedSeat("BS0001", "T01", "OR2704250001", "Anh Khoa", "0123456789", "Have children",4, LocalDateTime.parse("2025-04-27T18:00:00") ,Timestamp.valueOf(LocalDateTime.now()));
 
-            orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9));
-            orderDetailRepo.saveAll(List.of(od1, od2));
+            orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9, order10));
+            orderDetailRepo.saveAll(List.of(od1, od2, od3, od4, od5));
             bookedSeatRepo.save(bookedSeat);
         };
     }
