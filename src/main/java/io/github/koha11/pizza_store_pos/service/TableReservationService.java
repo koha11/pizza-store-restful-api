@@ -1,7 +1,7 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.order.TableReservation;
-import io.github.koha11.pizza_store_pos.repository.BookedSeatRepository;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
+import io.github.koha11.pizza_store_pos.repository.TableReservationRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BookedSeatService extends GenericService<TableReservation>{
+public class TableReservationService extends GenericService<TableReservation>{
     @Autowired
-    private BookedSeatRepository bookedSeatRepo;
+    private TableReservationRepository bookedSeatRepo;
 
-    public BookedSeatService(JpaRepository<TableReservation, String> repo) {
+    public TableReservationService(JpaRepository<TableReservation, String> repo) {
         super(repo);
     }
 

@@ -1,6 +1,8 @@
 package io.github.koha11.pizza_store_pos.config;
 
 import io.github.koha11.pizza_store_pos.entity.order.*;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.ReservationStatus;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
 import io.github.koha11.pizza_store_pos.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +15,7 @@ import java.util.List;
 @Configuration
 public class OrderConfig {
     @Bean
-    CommandLineRunner commandLineRunnerForOrder(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, BookedSeatRepository bookedSeatRepo) {
+    CommandLineRunner commandLineRunnerForOrder(OrderRepository orderRepo, OrderDetailRepository orderDetailRepo, TableReservationRepository bookedSeatRepo) {
         return args -> {
 
             OrderDetail od1 = new OrderDetail("OR2704250001", "F00001", "SIZE_M", "", 2, 135000*2, Timestamp.valueOf(LocalDateTime.now()));

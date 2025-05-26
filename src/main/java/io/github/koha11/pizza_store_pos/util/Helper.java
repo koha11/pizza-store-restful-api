@@ -3,7 +3,7 @@ package io.github.koha11.pizza_store_pos.util;
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.food.Food;
 import io.github.koha11.pizza_store_pos.entity.food.FoodType;
-import io.github.koha11.pizza_store_pos.entity.order.TableReservation;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
 import io.github.koha11.pizza_store_pos.entity.order.Order;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;

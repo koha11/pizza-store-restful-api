@@ -1,4 +1,4 @@
-package io.github.koha11.pizza_store_pos.entity.order;
+package io.github.koha11.pizza_store_pos.entity.table_reservation;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "table_reservation")
+@Table(name = "table_reservations")
 @Entity
 public class TableReservation {
     @Id

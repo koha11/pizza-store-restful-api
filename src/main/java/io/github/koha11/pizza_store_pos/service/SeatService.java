@@ -1,6 +1,6 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.order.TableReservation;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
 import io.github.koha11.pizza_store_pos.entity.seat.Seat;
 import io.github.koha11.pizza_store_pos.entity.seat.SeatStatus;
 import io.github.koha11.pizza_store_pos.repository.SeatRepository;
@@ -20,7 +20,7 @@ public class SeatService extends GenericService<Seat>{
     private SeatRepository seatRepo;
 
     @Autowired
-    private BookedSeatService bookedSeatService;
+    private TableReservationService tableReservationService;
 
     public SeatService(JpaRepository<Seat, String> repo) {
         super(repo);
@@ -51,7 +51,7 @@ public class SeatService extends GenericService<Seat>{
         // Lay tat ca ban nhung loai bo di nhung ban` dang bao tri
         List<Seat> seats = getAll(List.of(SeatStatus.AVAILABLE,SeatStatus.RESERVED,SeatStatus.OCCUPIED));
 
-        List<TableReservation> tableReservations = bookedSeatService.getBookedSeatsByDateAndSeat(reservedDate, "");
+        List<TableReservation> tableReservations = tableReservationService.getBookedSeatsByDateAndSeat(reservedDate, "");
 
         // Lay ra nhung phieu dat ban co thoi gian chenh lech it hon 3 tieng so voi thoi gian dinh tao phieu va co seatId khac ""
         List<String> sameSeatList = tableReservations.stream().filter(bookedSeat -> Duration.between(bookedSeat.getBookedTime(), reservedDate).getSeconds() <= 3600*3 && !bookedSeat.getSeatId().isEmpty()).map(TableReservation::getSeatId).toList();
