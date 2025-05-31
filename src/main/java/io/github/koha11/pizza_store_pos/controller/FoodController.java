@@ -22,4 +22,9 @@ public class FoodController extends GenericController<Food>{
     public void create(@RequestBody Food t) {
         foodService.create(t);
     }
+
+    @PutMapping("/update/{id}")
+    public Food updateFood(@PathVariable String id, @RequestBody Food t) {
+        return foodService.updateFood(t, id);
+    }
 }
