@@ -38,7 +38,7 @@ public class OrderConfig {
 
             TableReservation tableReservation = new TableReservation("TR0001", "T01", "OR2704250001", "Anh Khoa", "0123456789", "Have children",4, ReservationStatus.FINISHED, LocalDateTime.parse("2025-04-27T18:00:00") ,Timestamp.valueOf(LocalDateTime.now()));
 
-            orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9));
+            orderRepo.saveAll(List.of(order1, order2, order3, order4, order5, order6, order7, order8, order9, order10));
             orderDetailRepo.saveAll(List.of(od1, od2));
             tableReservationRepo.save(tableReservation);
         };

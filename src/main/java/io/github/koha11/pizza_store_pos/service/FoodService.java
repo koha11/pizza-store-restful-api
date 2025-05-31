@@ -21,6 +21,8 @@ public class FoodService extends GenericService<Food>{
     @Autowired
     private FoodRepository foodRepo;
 
+
+
     @Autowired
     private FoodTypeService foodTypeService;
 
@@ -36,6 +38,20 @@ public class FoodService extends GenericService<Food>{
         t.setFoodId(id);
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
+    }
+
+    public Food updateFood(Food t, String id) {
+       Food f = repo.findById(id).orElse(null);
+       if(f == null) {
+           return null;
+       }
+       f.setFoodName(t.getFoodName());
+       f.setDescription(t.getDescription());
+       f.setPrice(t.getPrice());
+       f.setFoodImage(t.getFoodImage());
+       f.setFoodTypeId(t.getFoodTypeId());
+       repo.save(f);
+       return f;
     }
 
 }
