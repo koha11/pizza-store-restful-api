@@ -44,6 +44,9 @@ public class TableService extends GenericService<StoreTable>{
     public List<StoreTable> getAll(List<TableStatus> statusList) {
         List<StoreTable> storeTables = getAll();
 
+        // Kiem tra cac ban duoc dat va doi trang thai cho no
+        ChangeTableStatusForReservation();
+
         return storeTables.stream().filter(storeTable -> statusList.contains(storeTable.getTableStatus())).toList();
     }
 
@@ -70,8 +73,8 @@ public class TableService extends GenericService<StoreTable>{
 
     // PUT/PATCH METHODS
 
-    public void toggleStatus(String seatId) {
-        StoreTable storeTable = getOne(seatId);
+    public void toggleStatus(String tableId) {
+        StoreTable storeTable = getOne(tableId);
 
         if(storeTable.getTableStatus() == TableStatus.AVAILABLE)
             storeTable.setTableStatus(TableStatus.OCCUPIED);
@@ -81,13 +84,21 @@ public class TableService extends GenericService<StoreTable>{
         repo.save(storeTable);
     }
 
-    public void toggleUnavailable(String seatId) {
-        StoreTable storeTable = getOne(seatId);
+    public void toggleUnavailable(String tableId) {
+        StoreTable storeTable = getOne(tableId);
 
         if(storeTable.getTableStatus() == TableStatus.UNAVAILABLE)
             storeTable.setTableStatus(TableStatus.AVAILABLE);
         else
             storeTable.setTableStatus(TableStatus.UNAVAILABLE);
+
+        repo.save(storeTable);
+    }
+
+    public void changeStatus(String tableId, TableStatus status) {
+        StoreTable storeTable = getOne(tableId);
+
+        storeTable.setTableStatus(status);
 
         repo.save(storeTable);
     }
@@ -98,6 +109,14 @@ public class TableService extends GenericService<StoreTable>{
         var seat = getOne(seatId);
 
         return seat.getTableStatus() == TableStatus.AVAILABLE;
+    }
+
+    public void ChangeTableStatusForReservation() {
+        var reservations = tableReservationService.getAll();
+
+        List<String> tableIds = reservations.stream().filter(tableReservation -> Duration.between(tableReservation.getBookedTime(), LocalDateTime.now()).getSeconds() <= 3600*3 && !tableReservation.getTableId().isEmpty()).map(TableReservation::getTableId).toList();
+
+        tableIds.forEach(id -> changeStatus(id, TableStatus.RESERVED));
     }
 }
 

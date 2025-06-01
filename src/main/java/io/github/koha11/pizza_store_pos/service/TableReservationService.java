@@ -52,4 +52,9 @@ public class TableReservationService extends GenericService<TableReservation>{
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }
+
+    // HELPER
+    public boolean check() {
+        return true;
+    }
 }
