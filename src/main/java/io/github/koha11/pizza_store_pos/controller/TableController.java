@@ -5,10 +5,7 @@ import io.github.koha11.pizza_store_pos.entity.store_table.TableStatus;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.TableService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,4 +31,18 @@ public class TableController extends GenericController<StoreTable>{
     ) LocalDateTime reservedDate, @RequestParam(name="dc") int dinerCount) {
         return tableService.getReservableTable(reservedDate, dinerCount);
     }
+
+    @PostMapping("/new")
+    public void addTable(@RequestBody StoreTable storeTable) {
+        tableService.create(storeTable);
+    }
+
+    @PutMapping("/{id}")
+    public StoreTable updateTable(@PathVariable String id, @RequestBody StoreTable storeTable) {
+        return tableService.update(id,storeTable);
+    }
+
+
+
+
 }

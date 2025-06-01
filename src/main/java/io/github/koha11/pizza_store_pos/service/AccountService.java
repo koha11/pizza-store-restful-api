@@ -41,10 +41,17 @@ public class AccountService extends GenericService<Account>{
 
     @Override
     public void create(Account ac) {
-        Account account = new Account();
-        ac.setEmpId(ac.getEmpId());
         ac.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        repo.save(account);
+        repo.save(ac);
     }
+
+    public Account updateAccount(Account ac) {
+        Account acExist = getOne(ac.getEmpId());
+        if(acExist == null) return null;
+        ac.setLastAccess(acExist.getLastAccess());
+        ac.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        return update(ac.getEmpId(), ac);
+    }
+
 
 }

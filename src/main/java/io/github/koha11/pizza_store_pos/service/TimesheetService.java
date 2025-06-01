@@ -120,11 +120,7 @@ public class TimesheetService extends GenericService<Timesheet>{
     }
 
     // PUT/PATCH METHODS
-    public void setWorkShift(ShiftRegistrationRequest request){
-        Timesheet timesheet = getOne(request.getEmpId(), request.getWorkingDate());
-        timesheet.setWorkShiftId(request.getWorkShiftId());
-        timesheetRepo.save(timesheet);
-    }
+
 
     // Vang lam`
     public void markAbsent(AttendanceRequest request) {

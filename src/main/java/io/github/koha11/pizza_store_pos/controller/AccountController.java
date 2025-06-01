@@ -33,4 +33,9 @@ public class AccountController extends GenericController<Account>{
     public AccountDTO login(@RequestBody LoginRequest request) {
         return accountService.getAccount(request);
     }
+
+    @PutMapping("/accounts")
+    public Account updateAccount(@RequestBody Account account) {
+        return accountService.updateAccount(account);
+    }
 }

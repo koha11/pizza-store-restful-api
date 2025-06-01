@@ -1,8 +1,6 @@
 package io.github.koha11.pizza_store_pos.controller;
 
-import ch.qos.logback.classic.pattern.DateConverter;
 import io.github.koha11.pizza_store_pos.entity.timesheet.AttendanceRequest;
-import io.github.koha11.pizza_store_pos.entity.timesheet.ShiftRegistrationRequest;
 import io.github.koha11.pizza_store_pos.entity.timesheet.Timesheet;
 import io.github.koha11.pizza_store_pos.entity.timesheet.TimesheetDTO;
 import io.github.koha11.pizza_store_pos.service.GenericService;
@@ -10,10 +8,8 @@ import io.github.koha11.pizza_store_pos.service.TimesheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -63,10 +59,6 @@ public class TimesheetController extends GenericController<Timesheet>{
             timesheetService.addSheetForMonth(currentMonth, today.getYear());
     }
 
-    @PostMapping("/shift-registration")
-    public void shiftRegistration(@RequestBody ShiftRegistrationRequest request) {
-        timesheetService.setWorkShift(request);
 
-    }
 
 }

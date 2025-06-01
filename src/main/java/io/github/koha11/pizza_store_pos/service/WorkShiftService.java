@@ -24,6 +24,12 @@ public class WorkShiftService extends GenericService<WorkShift>{
         super.create(workShift);
     }
 
+    @Override
+    public WorkShift update(String id, WorkShift workShift) {
+        workShift.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        return super.update(id, workShift);
+    }
+
     public int getWSWorkingTime(String workShiftId) {
         if(workShiftId == null)
             return 0;
