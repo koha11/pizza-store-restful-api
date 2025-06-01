@@ -17,8 +17,12 @@ public class AccountConfig {
     CommandLineRunner commandLineRunnerForAccount(AccountRepository accountRepo) {
         return args -> {
             Account account1 = new Account("EMP001", "khoatran.96204@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account2 = new Account("EMP006", "admin123@gmail.com", "admin123", Role.ADMIN, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            accountRepo.saveAll(List.of(account1, account2) );
+            Account account2 = new Account("EMP002", "abc@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account3 = new Account("EMP003", "test@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account4 = new Account("EMP004", "kasdomm@gmail.com", "1", Role.MANAGER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account5 = new Account("EMP005", "dm1kdks@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account6 = new Account("EMP006", "admin123@gmail.com", "admin123", Role.ADMIN, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            accountRepo.saveAll(List.of(account1, account2, account3, account4, account5, account6) );
         };
     }
 }

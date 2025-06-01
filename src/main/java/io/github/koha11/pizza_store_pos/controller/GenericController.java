@@ -23,8 +23,8 @@ public class GenericController<T> {
     }
 
     @PutMapping("/edit/{id}")
-    public void update(@PathVariable String id ,@RequestBody T t) {
-        genericService.update(id, t);
+    public T update(@PathVariable String id ,@RequestBody T t) {
+       return genericService.update(id, t);
     }
 
     @DeleteMapping("/delete/{id}")

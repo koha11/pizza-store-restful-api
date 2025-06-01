@@ -40,12 +40,13 @@ public class GenericService<T> {
         repo.save(t);
     }
 
-    public void update(String id, T t) {
+    public T update(String id, T t) {
         Optional<T> tOpt = repo.findById(id);
 
         tOpt.ifPresentOrElse(t1 ->  repo.save(t),() -> {
             throw new IllegalStateException(notFoundIdMsg);
         });
+        return t;
     }
 
     public void delete(String id) {

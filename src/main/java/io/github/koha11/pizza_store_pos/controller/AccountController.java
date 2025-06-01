@@ -20,6 +20,15 @@ public class AccountController extends GenericController<Account>{
         super(genericService);
     }
 
+    @GetMapping("/accounts")
+    public List<AccountDTO> getAccounts() {
+        return accountService.getAccounts();
+    }
+
+    @PostMapping("/accounts")
+    public void addAccount(@RequestBody Account account) {
+        accountService.create(account);
+    }
     @PostMapping("/login")
     public AccountDTO login(@RequestBody LoginRequest request) {
         return accountService.getAccount(request);

@@ -1,6 +1,7 @@
 package io.github.koha11.pizza_store_pos.controller;
 
 import io.github.koha11.pizza_store_pos.entity.food.Food;
+import io.github.koha11.pizza_store_pos.entity.food.FoodDTO;
 import io.github.koha11.pizza_store_pos.service.FoodService;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,12 @@ public class FoodController extends GenericController<Food>{
 
     public FoodController(GenericService<Food> genericService) {
         super(genericService);
+    }
+
+
+    @GetMapping("/dto")
+    public List<FoodDTO> getFoodsDTO() {
+        return foodService.getFoodDTOs();
     }
 
     @PostMapping

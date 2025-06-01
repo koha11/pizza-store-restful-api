@@ -22,7 +22,7 @@ public class FoodType {
     private String foodTypeName;
     private String foodTypeImage;
     @OneToMany
-            (mappedBy = "foodTypeId", cascade = CascadeType.ALL, orphanRemoval = true)
+            (mappedBy = "foodTypeId", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = Food.class)
     private List<Food> foods;
     private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
 

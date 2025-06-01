@@ -1,11 +1,9 @@
 package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.food.Food;
-import io.github.koha11.pizza_store_pos.entity.food.FoodType;
-import io.github.koha11.pizza_store_pos.entity.variant.FoodVariant;
-import io.github.koha11.pizza_store_pos.entity.variant.Variant;
+import io.github.koha11.pizza_store_pos.entity.food.FoodDTO;
+import io.github.koha11.pizza_store_pos.entity.mapper.FoodMapper;
 import io.github.koha11.pizza_store_pos.repository.FoodRepository;
-import io.github.koha11.pizza_store_pos.repository.FoodTypeRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,14 +12,14 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class FoodService extends GenericService<Food>{
     @Autowired
     private FoodRepository foodRepo;
 
-
+    @Autowired
+    private FoodMapper mapper;
 
     @Autowired
     private FoodTypeService foodTypeService;
@@ -31,6 +29,12 @@ public class FoodService extends GenericService<Food>{
         this.foodRepo = foodRepo;
     }
 
+    public List<FoodDTO> getFoodDTOs() {
+        List<Food> foods = foodRepo.findAll();
+        return foods.stream().map(food -> mapper.FoodToDTO(food)).toList();
+    }
+
+
     @Override
     public void create(Food t) {
         var listOfT = this.getAll();
@@ -39,6 +43,7 @@ public class FoodService extends GenericService<Food>{
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }
+
 
     public Food updateFood(Food t, String id) {
        Food f = repo.findById(id).orElse(null);
