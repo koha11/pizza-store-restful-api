@@ -43,6 +43,15 @@ public class TableReservationService extends GenericService<TableReservation>{
         else throw new IllegalStateException("Order Id not found");
     }
 
+    public TableReservation getReservationByTableId(String tableId) {
+        Optional<TableReservation> trOpt = tableReservationRepo.findByTableId(tableId);
+
+        if(trOpt.isPresent()) {
+            return trOpt.get();
+        }
+        else throw new IllegalStateException("Table Id not found");
+    }
+
     // POST METHODS
     @Override
     public void create(TableReservation t) {
@@ -51,5 +60,10 @@ public class TableReservationService extends GenericService<TableReservation>{
         t.setTableReservationId(id);
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
+    }
+
+    // HELPER
+    public boolean check() {
+        return true;
     }
 }

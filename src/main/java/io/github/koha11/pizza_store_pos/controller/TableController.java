@@ -29,7 +29,7 @@ public class TableController extends GenericController<StoreTable>{
         return tableService.getAll(statusList);
     }
 
-    @GetMapping("/reservable-table")
+    @GetMapping("/reservable-tables")
     public List<StoreTable> getReservableTable(@RequestParam(name = "rd"
     ) LocalDateTime reservedDate, @RequestParam(name="dc") int dinerCount) {
         return tableService.getReservableTable(reservedDate, dinerCount);

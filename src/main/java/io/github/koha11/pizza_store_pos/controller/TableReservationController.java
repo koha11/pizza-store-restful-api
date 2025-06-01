@@ -6,6 +6,8 @@ import io.github.koha11.pizza_store_pos.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/table-reservations")
 public class TableReservationController extends GenericController<TableReservation>{
@@ -20,6 +22,16 @@ public class TableReservationController extends GenericController<TableReservati
     @GetMapping("/get-by-order-id/{orderId}")
     public TableReservation getByOrderId(@PathVariable String orderId) {
         return tableReservationService.getTableReservationByOrderId(orderId);
+    }
+//    // GET METHODS
+//    @GetMapping("/get-upcoming-reservation")
+//    public List<TableReservation> getByOrderId(@PathVariable String orderId) {
+//        return tableReservationService.getTableReservationByOrderId(orderId);
+//    }
+
+    @GetMapping("/get-by-table-id/{tableId}")
+    public TableReservation getByTableId(@PathVariable String tableId) {
+        return tableReservationService.getReservationByTableId(tableId);
     }
 
     // POST METHODS
