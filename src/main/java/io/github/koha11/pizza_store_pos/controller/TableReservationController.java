@@ -29,6 +29,11 @@ public class TableReservationController extends GenericController<TableReservati
 //        return tableReservationService.getTableReservationByOrderId(orderId);
 //    }
 
+    @GetMapping("/get-by-table-id/{tableId}")
+    public TableReservation getByTableId(@PathVariable String tableId) {
+        return tableReservationService.getReservationByTableId(tableId);
+    }
+
     // POST METHODS
     @PostMapping
     public void create(@RequestBody TableReservation t) {
