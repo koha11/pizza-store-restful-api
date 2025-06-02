@@ -24,4 +24,9 @@ public class ViolationController extends GenericController<Violation>{
     public void create(@RequestBody Violation t) {
         violationService.create(t);
     }
+
+    @PutMapping("/{id}")
+    public Violation update(@PathVariable String id, @RequestBody Violation t) {
+        return violationService.update(id, t);
+    }
 }
