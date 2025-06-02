@@ -1,9 +1,12 @@
 package io.github.koha11.pizza_store_pos.service;
 
+import io.github.koha11.pizza_store_pos.entity.store_table.TableStatus;
+import io.github.koha11.pizza_store_pos.entity.table_reservation.ReservationStatus;
 import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
 import io.github.koha11.pizza_store_pos.repository.TableReservationRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,10 @@ import java.util.Optional;
 public class TableReservationService extends GenericService<TableReservation>{
     @Autowired
     private TableReservationRepository tableReservationRepo;
+
+    @Autowired
+    @Lazy
+    private TableService tableService;
 
     public TableReservationService(JpaRepository<TableReservation, String> repo) {
         super(repo);
@@ -60,6 +67,19 @@ public class TableReservationService extends GenericService<TableReservation>{
         t.setTableReservationId(id);
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
+    }
+
+    // PUT/PATCH METHODS
+    @Override
+    public TableReservation update(String id, TableReservation t) {
+        super.update(id, t);
+        if(t.getStatus() == ReservationStatus.CANCELED && !t.getTableId().isEmpty())
+        {
+            if(tableService.getOne(t.getTableId()).getTableStatus() == TableStatus.RESERVED)
+                tableService.changeStatus(t.getTableId(), TableStatus.AVAILABLE);
+        }
+
+        return t;
     }
 
     // HELPER
