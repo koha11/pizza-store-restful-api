@@ -1,5 +1,6 @@
 package io.github.koha11.pizza_store_pos.service;
 
+import io.github.koha11.pizza_store_pos.entity.table_reservation.ReservationStatus;
 import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservation;
 import io.github.koha11.pizza_store_pos.entity.store_table.StoreTable;
 import io.github.koha11.pizza_store_pos.entity.store_table.TableStatus;
@@ -58,7 +59,7 @@ public class TableService extends GenericService<StoreTable>{
         List<TableReservation> tableReservations = tableReservationService.getTableReservationsByDateAndTable(reservedDate, "");
 
         // Lay ra nhung phieu dat ban co thoi gian chenh lech it hon 3 tieng so voi thoi gian dinh tao phieu va co seatId khac ""
-        List<String> sameSeatList = tableReservations.stream().filter(tableReservation -> Duration.between(tableReservation.getBookedTime(), reservedDate).getSeconds() <= 3600*3 && !tableReservation.getTableId().isEmpty()).map(TableReservation::getTableId).toList();
+        List<String> sameSeatList = tableReservations.stream().filter(tableReservation -> Duration.between(tableReservation.getBookedTime(), reservedDate).getSeconds() <= 3600*3 && !tableReservation.getTableId().isEmpty() && tableReservation.getStatus() == ReservationStatus.UNFINISHED).map(TableReservation::getTableId).toList();
 
         // Loc de lay ra so ban khong bi trung lich dat, co so luong cho ngoi thoa man voi so luong khach du kien
         return storeTables.stream().filter(storeTable -> !sameSeatList.contains(storeTable.getTableId()) && storeTable.getSeats() >= dinerCount).toList();
@@ -117,16 +118,16 @@ public class TableService extends GenericService<StoreTable>{
 
     // HELPER METHODS
 
-    public boolean isAvailable(String seatId) {
-        var seat = getOne(seatId);
+    public boolean isAvailable(String tableId) {
+        var table = getOne(tableId);
 
-        return seat.getTableStatus() == TableStatus.AVAILABLE;
+        return table.getTableStatus() == TableStatus.AVAILABLE || table.getTableStatus() == TableStatus.RESERVED;
     }
 
     public void ChangeTableStatusForReservation() {
         var reservations = tableReservationService.getAll();
 
-        List<String> tableIds = reservations.stream().filter(tableReservation -> Duration.between(tableReservation.getBookedTime(), LocalDateTime.now()).getSeconds() <= 3600*3 && !tableReservation.getTableId().isEmpty()).map(TableReservation::getTableId).toList();
+        List<String> tableIds = reservations.stream().filter(tableReservation -> Duration.between(tableReservation.getBookedTime(), LocalDateTime.now()).getSeconds() <= 3600*3 && !tableReservation.getTableId().isEmpty() && tableReservation.getStatus() == ReservationStatus.UNFINISHED).map(TableReservation::getTableId).toList();
 
         tableIds.forEach(id -> changeStatus(id, TableStatus.RESERVED));
     }

@@ -4,6 +4,7 @@ import io.github.koha11.pizza_store_pos.entity.mapper.OrderMapper;
 import io.github.koha11.pizza_store_pos.entity.order.*;
 import io.github.koha11.pizza_store_pos.entity.statistic.FoodTypeStatistic;
 import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
+import io.github.koha11.pizza_store_pos.entity.store_table.TableStatus;
 import io.github.koha11.pizza_store_pos.repository.OrderRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,7 +174,7 @@ public class OrderService extends GenericService<Order>{
         orderRepo.save(order);
 
         // seat process
-        tableService.toggleStatus(seatId);
+        tableService.changeStatus(seatId, TableStatus.OCCUPIED);
 
         return orderMapper.orderToDTO(order);
     }
@@ -258,7 +259,7 @@ public class OrderService extends GenericService<Order>{
             order.setSurcharge(surcharge);
 
             order.setStatus(OrderStatus.FINISHED);
-            tableService.toggleStatus(seatId);
+            tableService.changeStatus(order.getTableId(), TableStatus.AVAILABLE);
         }
     }
 
