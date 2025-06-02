@@ -4,6 +4,7 @@ import io.github.koha11.pizza_store_pos.entity.table_reservation.TableReservatio
 import io.github.koha11.pizza_store_pos.entity.store_table.StoreTable;
 import io.github.koha11.pizza_store_pos.entity.store_table.TableStatus;
 import io.github.koha11.pizza_store_pos.repository.TableRepository;
+import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -67,11 +68,22 @@ public class TableService extends GenericService<StoreTable>{
 
     @Override
     public void create(StoreTable storeTable) {
+        var list = getAll();
+        var id = Helper.generateId(StoreTable.class, list.size());
+        storeTable.setTableId(id);
         storeTable.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
-        super.create(storeTable);
+        repo.save(storeTable);
     }
 
     // PUT/PATCH METHODS
+
+    @Override
+    public StoreTable update(String id,StoreTable storeTable) {
+        if(id == null) return null;
+        storeTable.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        return repo.save(storeTable);
+    }
+
 
     public void toggleStatus(String tableId) {
         StoreTable storeTable = getOne(tableId);
