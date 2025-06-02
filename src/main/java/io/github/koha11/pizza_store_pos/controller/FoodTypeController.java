@@ -23,4 +23,14 @@ public class FoodTypeController extends GenericController<FoodType>{
         foodTypeService.create(t);
     }
 
+    @PutMapping("/{id}")
+    public FoodType update(@PathVariable String id,@RequestBody FoodType t) {
+        return foodTypeService.update(id, t);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        foodTypeService.delete(id);
+    }
+
 }

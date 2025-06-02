@@ -30,6 +30,13 @@ public class FoodTypeService extends GenericService<FoodType>{
         repo.save(t);
     }
 
+
+    @Override
+    public FoodType update(String id, FoodType t) {
+        t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        return super.update(id, t);
+    }
+
     public void getFoodVariants(String foodId) {
 
     }
