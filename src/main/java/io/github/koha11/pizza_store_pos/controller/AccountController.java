@@ -24,6 +24,10 @@ public class AccountController extends GenericController<Account>{
     public List<AccountDTO> getAccounts() {
         return accountService.getAccounts();
     }
+    @GetMapping("/accounts/{id}")
+    public AccountDTO getAccount(@PathVariable String id) {
+        return accountService.getAccountById(id);
+    }
 
     @PostMapping("/accounts")
     public void addAccount(@RequestBody Account account) {

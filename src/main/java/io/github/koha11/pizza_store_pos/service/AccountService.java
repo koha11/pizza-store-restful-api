@@ -34,6 +34,11 @@ public class AccountService extends GenericService<Account>{
         return mapper.accountToAccountDTO(account);
     };
 
+    public AccountDTO getAccountById(String id) {
+        Account account =  accountRepository.findById(id).orElse(null);
+        return mapper.accountToAccountDTO(account);
+    };
+
     public List<AccountDTO> getAccounts() {
         List<Account> accounts = accountRepository.findAll().stream().filter(account -> !account.getRole().equals(Role.ADMIN)).toList();
         return accounts.stream().map(account -> mapper.accountToAccountDTO(account)).toList();

@@ -24,10 +24,15 @@ public class EmpTypeService extends GenericService<EmpType>{
 
     @Override
     public void create(EmpType t) {
-        var listOfT = this.getAll();
-        var id = Helper.generateId(EmpType.class, listOfT.size());
-        t.setEmpTypeId(id);
+        t.setEmpTypeId(t.getEmpTypeId());
         t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
         repo.save(t);
     }
+
+    @Override
+    public EmpType update(String id, EmpType t) {
+        t.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+        return super.update(id, t);
+    }
+
 }
