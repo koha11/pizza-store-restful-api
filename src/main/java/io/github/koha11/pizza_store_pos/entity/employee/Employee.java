@@ -31,6 +31,5 @@ public class Employee {
     private String phone;
     private String cccd;
     private Date dob;
-    private Date firstDayWork;
     private Timestamp createdAt;
 }

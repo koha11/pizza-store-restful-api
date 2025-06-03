@@ -37,37 +37,31 @@ public class EmployeeConfig {
 
             Employee khoa = new Employee("EMP001",cashier, f1, "Trần Anh Khoa", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212123",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             Employee vinh = new Employee("EMP002",server, f2, "Khanh Vinh", "Gam Cau ward, Nha Trang city", "0123456789",  "056121212111",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             Employee hieu = new Employee("EMP003",cooker, f1, "Tran Anh Hieu", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212141",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             Employee tam = new Employee("EMP004", cooker, f2, "Tran Anh Tam", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212141",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             Employee trung = new Employee("EMP005",cashier, f1, "Tran Anh Trung", "Ngoc Hiep ward, Nha Trang city", "0123456789",  "056121212141",
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             Employee Admin = new Employee("EMP006",admin, null, "Admin", null, null,  null,
                     Date.valueOf("2004-06-09"),
-                    Date.valueOf("2025-04-27"),
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
