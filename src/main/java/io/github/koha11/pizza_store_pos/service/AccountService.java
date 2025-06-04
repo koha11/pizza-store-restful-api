@@ -1,14 +1,11 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.employee.Employee;
-import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.entity.mapper.AccountMapper;
 import io.github.koha11.pizza_store_pos.entity.user.Account;
 import io.github.koha11.pizza_store_pos.entity.user.AccountDTO;
 import io.github.koha11.pizza_store_pos.entity.user.LoginRequest;
 import io.github.koha11.pizza_store_pos.entity.user.Role;
 import io.github.koha11.pizza_store_pos.repository.AccountRepository;
-import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +18,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountService extends GenericService<Account> implements UserDetailsService {
@@ -56,7 +52,7 @@ public class AccountService extends GenericService<Account> implements UserDetai
     };
 
     public List<AccountDTO> getAccounts() {
-        List<Account> accounts = accountRepository.findAll().stream().filter(account -> !account.getRole().equals(Role.ADMIN)).toList();
+        List<Account> accounts = accountRepository.findAll().stream().filter(account -> !account.getRole().equals(Role.ROLE_ADMIN)).toList();
         return accounts.stream().map(account -> mapper.accountToAccountDTO(account)).toList();
     }
 

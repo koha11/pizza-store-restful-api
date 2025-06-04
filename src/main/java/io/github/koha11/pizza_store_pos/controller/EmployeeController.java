@@ -5,6 +5,7 @@ import io.github.koha11.pizza_store_pos.entity.employee.EmployeeRequest;
 import io.github.koha11.pizza_store_pos.service.EmployeeService;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,6 @@ public class EmployeeController extends GenericController<Employee>{
     public EmployeeController(GenericService<Employee> genericService) {
         super(genericService);
     }
-
 
     @GetMapping("/dto")
     public List<Employee> getEmployees(){
