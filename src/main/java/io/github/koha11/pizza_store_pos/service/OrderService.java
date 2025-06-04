@@ -169,7 +169,7 @@ public class OrderService extends GenericService<Order>{
         ods.forEach(od -> orderDetailService.create(id,od));
 
         // order process
-        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, note, 0, 0, null, calcOrderTotal(ods, 0, 0), Timestamp.valueOf(LocalDateTime.now()));
+        Order order = new Order(id, seatId, serverId, null, LocalDateTime.now(), null, OrderStatus.UNFINISHED, note, 0, 0, calcOrderTotal(ods, 0, 0), Timestamp.valueOf(LocalDateTime.now()));
 
         orderRepo.save(order);
 
@@ -245,7 +245,7 @@ public class OrderService extends GenericService<Order>{
             orderDetailService.decreaseAmount(order.getOrderId(), foodId);
     }
 
-    public void payOrder(String seatId, String cashierId, PaymentMethod paymentMethod, float discount, int surcharge) {
+    public void payOrder(String seatId, String cashierId, float discount, int surcharge) {
         var order = this.getOne(getCurrentTableOrder(seatId).getOrderId());
 
         if(order.getStatus() == OrderStatus.UNFINISHED)
@@ -254,7 +254,6 @@ public class OrderService extends GenericService<Order>{
             order.setTotal(this.calcOrderTotal(seatId));
 
             order.setCashierId(cashierId);
-            order.setPaymentMethod(paymentMethod);
             order.setDiscount(discount);
             order.setSurcharge(surcharge);
 

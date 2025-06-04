@@ -19,7 +19,6 @@ public class OrderDetail {
     private String orderId;
     @Id
     private String foodId;
-    private String variantId;
     private String note;
     private int amount;
     private int actualPrice;

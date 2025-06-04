@@ -19,6 +19,5 @@ public class OnTableOrder {
     private String note;
     private float discount;
     private int surcharge;
-    private PaymentMethod paymentMethod;
     private int total;
 }

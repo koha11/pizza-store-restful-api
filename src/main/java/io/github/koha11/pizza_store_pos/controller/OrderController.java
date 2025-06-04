@@ -86,7 +86,7 @@ public class OrderController extends GenericController<Order>{
     @PutMapping("/pay-order/{tableId}")
     @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER')")
     public void payOrder(@PathVariable String tableId, @RequestBody OrderPayment op) {
-        orderService.payOrder(tableId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
+        orderService.payOrder(tableId,op.getCashierId(), op.getDiscount(), op.getSurcharge());
     }
 
     @PutMapping("/change-seat/{tableId}")

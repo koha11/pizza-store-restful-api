@@ -22,6 +22,5 @@ public class OrderStatistic {
     private List<OnTableOrderDetail> foods;
     private float discount;
     private int surcharge;
-    private PaymentMethod paymentMethod;
     private int total;
 }
