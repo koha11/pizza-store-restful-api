@@ -16,12 +16,12 @@ public class AccountConfig {
     @Bean
     CommandLineRunner commandLineRunnerForAccount(AccountRepository accountRepo) {
         return args -> {
-            Account account1 = new Account("EMP001", "khoatran.96204@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account2 = new Account("EMP002", "abc@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account3 = new Account("EMP003", "test@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account4 = new Account("EMP004", "kasdomm@gmail.com", "1", Role.MANAGER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account5 = new Account("EMP005", "dm1kdks@gmail.com", "1", Role.EMPLOYEE, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
-            Account account6 = new Account("EMP006", "admin123@gmail.com", "admin123", Role.ADMIN, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account1 = new Account("EMP001", "khoatran.96204@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account2 = new Account("EMP002", "abc@gmail.com", "1", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account3 = new Account("EMP003", "test@gmail.com", "1", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account4 = new Account("EMP004", "kasdomm@gmail.com", "1", Role.ROLE_SERVER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account5 = new Account("EMP005", "dm1kdks@gmail.com", "1", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+            Account account6 = new Account("EMP006", "admin123@gmail.com", "admin123", Role.ROLE_ADMIN, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
             accountRepo.saveAll(List.of(account1, account2, account3, account4, account5, account6) );
         };
     }

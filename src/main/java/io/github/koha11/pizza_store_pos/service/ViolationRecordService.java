@@ -2,7 +2,6 @@ package io.github.koha11.pizza_store_pos.service;
 
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.mapper.ViolationRecordMapper;
-import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecord;
 import io.github.koha11.pizza_store_pos.entity.violation.ViolationRecordDTO;

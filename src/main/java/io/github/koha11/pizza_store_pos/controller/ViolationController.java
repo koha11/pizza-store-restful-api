@@ -1,10 +1,10 @@
 package io.github.koha11.pizza_store_pos.controller;
 
-import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.ViolationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +21,7 @@ public class ViolationController extends GenericController<Violation>{
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void create(@RequestBody Violation t) {
         violationService.create(t);
     }

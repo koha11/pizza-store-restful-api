@@ -6,6 +6,7 @@ import io.github.koha11.pizza_store_pos.entity.statistic.RevenueStatistic;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -23,20 +24,26 @@ public class OrderController extends GenericController<Order>{
     }
 
     @GetMapping("/get-orders")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER', 'MANAGER')")
     public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") LocalDate dateStart, @RequestParam(required = false, name = "de") LocalDate dateEnd) {
 
         return orderService.getOrders(status, dateStart, dateEnd);
     }
+
     @GetMapping("/today")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER', 'MANAGER')")
     public List<OrderStatistic> getOrdersToday() {
         return orderService.getOrdersToday();
     }
 
     @GetMapping("/statistic")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER', 'MANAGER')")
     public List<RevenueStatistic> getRevenueStatisticsByMonthAndYear(@RequestParam Month month, @RequestParam int year) {
         return orderService.getRevenueStatisticByMonthAndYear(month, year);
     }
+
     @GetMapping("/statistic/food-type")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER', 'MANAGER')")
     public List<FoodTypeStatistic> getFoodTypeRevenueStatisticByMonthAndYear(@RequestParam Month month, @RequestParam int year) {
         return orderService.getFoodTypeRevenueStatisticByMonthAndYear(month, year);
     }
@@ -77,8 +84,9 @@ public class OrderController extends GenericController<Order>{
     }
 
     @PutMapping("/pay-order/{tableId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER')")
     public void payOrder(@PathVariable String tableId, @RequestBody OrderPayment op) {
-        orderService.payOrder(tableId,op.getCashierId(), op.getPaymentMethod(), op.getDiscount(), op.getSurcharge());
+        orderService.payOrder(tableId,op.getCashierId(), op.getDiscount(), op.getSurcharge());
     }
 
     @PutMapping("/change-seat/{tableId}")
@@ -92,6 +100,7 @@ public class OrderController extends GenericController<Order>{
     }
 
     @DeleteMapping("/remove-food-order/{tableId}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER')")
     public void removeFoodOrder(@PathVariable String tableId, @RequestParam String foodId) {
         orderService.removeFoodOrder(tableId, foodId);
     }

@@ -11,5 +11,4 @@ public class OrderPayment {
     private String cashierId;
     private float discount;
     private int surcharge;
-    private PaymentMethod paymentMethod;
 }

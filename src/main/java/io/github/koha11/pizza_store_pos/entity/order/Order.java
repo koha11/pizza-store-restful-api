@@ -27,7 +27,6 @@ public class Order {
     private String note;
     private float discount;
     private int surcharge;
-    private PaymentMethod paymentMethod;
     private int total;
     private Timestamp createdAt;
 }

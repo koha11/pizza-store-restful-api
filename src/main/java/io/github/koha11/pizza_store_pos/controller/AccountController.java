@@ -8,6 +8,7 @@ import io.github.koha11.pizza_store_pos.service.AccountService;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -32,6 +33,7 @@ public class AccountController extends GenericController<Account>{
     }
 
     @GetMapping("/accounts")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public List<AccountDTO> getAccounts() {
         return accountService.getAccounts();
     }
@@ -63,6 +65,7 @@ public class AccountController extends GenericController<Account>{
     }
 
     @PutMapping("/accounts")
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public Account updateAccount(@RequestBody Account account) {
         return accountService.updateAccount(account);
     }

@@ -4,6 +4,7 @@ import io.github.koha11.pizza_store_pos.entity.salary.Salary;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Month;
@@ -16,10 +17,12 @@ public class SalaryController {
     private SalaryService salaryService;
 
     @GetMapping()
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public List<Salary> getSalaryByMonthYear(@RequestParam Month month, @RequestParam int year) {
         return salaryService.getSalaryByMonthYear(month,year);
     }
     @PostMapping("/init")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void initSalary(@RequestParam Month month, @RequestParam int year) {
         salaryService.initSalarySheet(month,year);
     }

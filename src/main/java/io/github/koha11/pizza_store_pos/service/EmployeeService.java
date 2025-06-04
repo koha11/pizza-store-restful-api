@@ -1,15 +1,10 @@
 package io.github.koha11.pizza_store_pos.service;
 
-import io.github.koha11.pizza_store_pos.entity.employee.EmpType;
 import io.github.koha11.pizza_store_pos.entity.employee.Employee;
 import io.github.koha11.pizza_store_pos.entity.employee.EmployeeRequest;
-import io.github.koha11.pizza_store_pos.entity.food.FoodType;
 import io.github.koha11.pizza_store_pos.entity.mapper.EmployeeMapper;
-import io.github.koha11.pizza_store_pos.entity.timesheet.WorkShift;
 import io.github.koha11.pizza_store_pos.entity.user.Role;
-import io.github.koha11.pizza_store_pos.repository.EmpTypeRepository;
 import io.github.koha11.pizza_store_pos.repository.EmployeeRepository;
-import io.github.koha11.pizza_store_pos.repository.WorkShiftRepository;
 import io.github.koha11.pizza_store_pos.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,13 +13,13 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService extends GenericService<Employee>{
 
     @Autowired
     EmployeeMapper mapper;
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -40,7 +35,7 @@ public class EmployeeService extends GenericService<Employee>{
 
 
     public List<Employee> getEmployees(){
-        return employeeRepository.findAll().stream().filter(employee -> !employee.getEmpType().getEmpTypeId().equals(Role.ADMIN.name())).toList();
+        return employeeRepository.findAll().stream().filter(employee -> !employee.getEmpType().getEmpTypeId().equals(Role.ROLE_ADMIN.name())).toList();
     }
 
     public void addEmployee(EmployeeRequest employee){
