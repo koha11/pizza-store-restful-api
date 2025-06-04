@@ -2,10 +2,15 @@ package io.github.koha11.pizza_store_pos.controller;
 
 import io.github.koha11.pizza_store_pos.entity.user.Account;
 import io.github.koha11.pizza_store_pos.entity.user.AccountDTO;
+import io.github.koha11.pizza_store_pos.entity.user.AuthResponse;
 import io.github.koha11.pizza_store_pos.entity.user.LoginRequest;
 import io.github.koha11.pizza_store_pos.service.AccountService;
 import io.github.koha11.pizza_store_pos.service.GenericService;
+import io.github.koha11.pizza_store_pos.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +20,12 @@ import java.util.List;
 public class AccountController extends GenericController<Account>{
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public AccountController(GenericService<Account> genericService) {
         super(genericService);
@@ -29,9 +40,22 @@ public class AccountController extends GenericController<Account>{
     public void addAccount(@RequestBody Account account) {
         accountService.create(account);
     }
+
     @PostMapping("/login")
-    public AccountDTO login(@RequestBody LoginRequest request) {
-        return accountService.getAccount(request);
+    public AuthResponse login(@RequestBody LoginRequest request) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPwd())
+        );
+
+        if (authentication.isAuthenticated()) {
+            return new AuthResponse(1,jwtService.generateToken(
+                    request.getEmail()),
+                    1000000 * 60 * 30
+            );
+        } else {
+            return new AuthResponse(0,"", 0);
+        }
+//        return accountService.getAccount(request);
     }
 
     @PutMapping("/accounts")
