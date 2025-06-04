@@ -19,6 +19,9 @@ public class GenericService<T> {
         this.repo = repo;
     }
 
+    public GenericService() {
+    }
+
     public List<T> getAll() {
         return repo.findAll(Sort.by("createdAt"));
     }
