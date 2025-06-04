@@ -21,21 +21,25 @@ public class EmployeeController extends GenericController<Employee>{
     }
 
     @GetMapping("/dto")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public List<Employee> getEmployees(){
         return employeeService.getEmployees();
     }
 
     @PostMapping("/dto")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void addEmployee(@RequestBody EmployeeRequest employee){
          employeeService.addEmployee(employee);
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public void create(@RequestBody Employee t) {
         employeeService.create(t);
     }
 
     @PutMapping("/dto")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public Employee update(@RequestBody EmployeeRequest employee){
         return employeeService.updateEmployee(employee);
     }

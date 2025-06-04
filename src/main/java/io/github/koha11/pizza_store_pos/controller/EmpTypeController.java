@@ -7,6 +7,7 @@ import io.github.koha11.pizza_store_pos.repository.FoodTypeRepository;
 import io.github.koha11.pizza_store_pos.service.EmpTypeService;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class EmpTypeController extends GenericController<EmpType>{
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN')")
     public void create(@RequestBody EmpType t) {
         empTypeService.create(t);
     }
