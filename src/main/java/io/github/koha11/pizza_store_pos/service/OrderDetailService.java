@@ -27,9 +27,6 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     @Autowired
     private FoodService foodService;
 
-    @Autowired
-    private VariantService variantService;
-
     public OrderDetailService(JpaRepository<OrderDetail, String> repo) {
         super(repo);
     }
@@ -51,7 +48,7 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     // POST METHODS
     @Override
     public void create(OrderDetail od) {
-        int actualPrice = calcActualPrice(od.getFoodId(), od.getAmount(), od.getVariantId());
+        int actualPrice = calcActualPrice(od.getFoodId(), od.getAmount());
 
         od.setActualPrice(actualPrice);
         od.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
@@ -60,7 +57,7 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     }
 
     public void create(String orderId, OnTableOrderDetail odDTO) {
-        int actualPrice = calcActualPrice(odDTO.getFoodId(), odDTO.getAmount(), odDTO.getVariantId());
+        int actualPrice = calcActualPrice(odDTO.getFoodId(), odDTO.getAmount());
 
         OrderDetail od = orderDetailMapper.DTOToOrderDetail(odDTO);
 
@@ -112,7 +109,6 @@ public class OrderDetailService extends GenericService<OrderDetail> {
 
         odOpt.ifPresentOrElse(od -> {
                     od.setNote(odDTO.getNote());
-                    od.setVariantId(odDTO.getVariantId());
                     orderDetailRepo.save(od);
                 }, () -> {
                     throw new IllegalStateException(notFoundIdMsg);
@@ -133,12 +129,9 @@ public class OrderDetailService extends GenericService<OrderDetail> {
     }
 
     // HELPER METHODS
-    public int calcActualPrice(String foodId, int amount, String variantId) {
+    public int calcActualPrice(String foodId, int amount) {
         int foodPrice = foodService.getOne(foodId).getPrice();
 
-        if(variantId == null || variantId.isEmpty())
-            return foodPrice * amount;
-        else
-            return foodPrice * amount + variantService.getOne(variantId).getExtraPrice();
+        return foodPrice * amount;
     }
 }

@@ -1,6 +1,5 @@
 package io.github.koha11.pizza_store_pos.controller;
 
-import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import io.github.koha11.pizza_store_pos.entity.violation.Violation;
 import io.github.koha11.pizza_store_pos.service.GenericService;
 import io.github.koha11.pizza_store_pos.service.ViolationService;

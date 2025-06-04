@@ -1,6 +1,5 @@
 package io.github.koha11.pizza_store_pos.entity.food;
 
-import io.github.koha11.pizza_store_pos.entity.variant.Variant;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
