@@ -24,7 +24,6 @@ public class OrderController extends GenericController<Order>{
     }
 
     @GetMapping("/get-orders")
-    @PreAuthorize("hasAnyRole('ADMIN', 'CASHIER', 'MANAGER')")
     public List<OrderStatistic> getOrders(@RequestParam(required = false, name = "stt") OrderStatus status, @RequestParam(required = false, name = "ds") LocalDate dateStart, @RequestParam(required = false, name = "de") LocalDate dateEnd) {
 
         return orderService.getOrders(status, dateStart, dateEnd);
