@@ -27,4 +27,15 @@ public class EmpTypeController extends GenericController<EmpType>{
     public void create(@RequestBody EmpType t) {
         empTypeService.create(t);
     }
+
+    @PutMapping("/{id}")
+    public EmpType update(@PathVariable String id, EmpType t) {
+        return empTypeService.update(id, t);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) {
+        empTypeService.delete(id);
+    }
+
 }
