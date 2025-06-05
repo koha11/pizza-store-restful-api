@@ -20,9 +20,9 @@ public class FoodConfig {
 //
 //            FoodType desert = new FoodType("FT0002", "Desert", "https://ilmio.vn/uploads/fnb-menu/pizza/giant-pizza-size42cm.jpg", Timestamp.valueOf(LocalDateTime.now()));
 
-            Food peperoni = new Food("F00001", "FT0001", "Peperoni", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-pepperoni.jpg","Italian sausages, mozzarella.", 135000, Timestamp.valueOf(LocalDateTime.now()));
-
-            Food margherita = new Food("F00002", "FT0002", "Margherita", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-margherita.jpg", "A classic pizza originating in Naples Italy: Tomato sauce and mozzarella.", 98000, Timestamp.valueOf(LocalDateTime.now()));
+//            Food peperoni = new Food("F00001", "FT0001", "Peperoni", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-pepperoni.jpg","Italian sausages, mozzarella.", 135000, Timestamp.valueOf(LocalDateTime.now()));
+//
+//            Food margherita = new Food("F00002", "FT0002", "Margherita", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-margherita.jpg", "A classic pizza originating in Naples Italy: Tomato sauce and mozzarella.", 98000, Timestamp.valueOf(LocalDateTime.now()));
 
             FoodType appetizers = new FoodType(
                     "FT0001",
@@ -70,7 +70,7 @@ public class FoodConfig {
                     "F00001",
                     "FT0001",
                     "Pumpkin Soup",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/creamy-pumpkin-soup.jpg",
                     "TASTY CREAM PUMPKIN SOUP.",
                     49000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -80,7 +80,7 @@ public class FoodConfig {
                     "F00002",
                     "FT0001",
                     "Seafood Soup",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/seafood-soup.jpg",
                     "Seafood soup in spicy tomato sauce with shrimps, squid, and clams.",
                     115000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -90,7 +90,7 @@ public class FoodConfig {
                     "F00003",
                     "FT0001",
                     "Saute Di Vongole",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/saute-di-vongole.jpg",
                     "Steamed fresh clams with olive oil, garlic, chilli and parsley leaves.",
                     99000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -100,7 +100,7 @@ public class FoodConfig {
                     "F00004",
                     "FT0001",
                     "Misti Bruschette",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/misti-bruschette.jpg",
                     "3 kind of different bruschetta.",
                     98000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -110,7 +110,7 @@ public class FoodConfig {
                     "F00005",
                     "FT0001",
                     "Garlic Bread",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/garlic-bread.jpg",
                     "No description.",
                     38000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -120,7 +120,7 @@ public class FoodConfig {
                     "F00006",
                     "FT0001",
                     "Insalata Siciliana",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/insalata-siciliana.jpg",
                     "Mix Salad with tuna in oil.",
                     85000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -130,7 +130,7 @@ public class FoodConfig {
                     "F00007",
                     "FT0001",
                     "Shrimp Salad",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/shrimp-salad.jpg",
                     "No description.",
                     145000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -140,17 +140,18 @@ public class FoodConfig {
                     "F00008",
                     "FT0001",
                     "Beef Carpaccio",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/appetizers/beef-carpaccio.jpg",
                     "Beed carpaccio with rucola and parmesan, dressed with olive oil vinaigrette.",
                     145000,
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+// Spaghetti (FT0002)
             Food spaghettiBolognese = new Food(
                     "F00009",
                     "FT0002",
                     "Spaghetti Bolognese",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-bolognese.jpg",
                     "Traditional meat ragu sauce.",
                     127000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -160,7 +161,7 @@ public class FoodConfig {
                     "F00010",
                     "FT0002",
                     "Spaghetti Pomodoro",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-pomodoro.jpg",
                     "A simple tomato sauce with fresh basil.",
                     98000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -170,7 +171,7 @@ public class FoodConfig {
                     "F00011",
                     "FT0002",
                     "Spaghetti Pesto",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-pesto.jpg",
                     "Basil sauce, cheese and walnuts.",
                     169000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -180,7 +181,7 @@ public class FoodConfig {
                     "F00012",
                     "FT0002",
                     "Spaghetti All'acciuga",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-allacciuga.jpg",
                     "Spaghetti with olive oil, anchovies, garlic and chilli.",
                     125000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -190,7 +191,7 @@ public class FoodConfig {
                     "F00013",
                     "FT0002",
                     "Spaghetti Carbonara",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-carbonara.jpg",
                     "BACON, EGGS, CREAM.",
                     137000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -200,7 +201,7 @@ public class FoodConfig {
                     "F00014",
                     "FT0002",
                     "Spaghetti Vongole",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-vongole.jpg",
                     "STEAMED CLAMS WITH OLIVE OLIO, GARLIC, CHILI AMID FRESH PARLEYS.",
                     145000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -210,7 +211,7 @@ public class FoodConfig {
                     "F00015",
                     "FT0002",
                     "Spaghetti Marinara",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/spaghetti-marinara.jpg",
                     "MIXED SEAFOOD, DICED TOMATOES, GARLIC, CHILLI AND FRESH PARLEY.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -220,7 +221,7 @@ public class FoodConfig {
                     "F00016",
                     "FT0002",
                     "Penne Al Forno",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-al-forno.jpg",
                     "TRADITIONAL MINCED BEEF RAGU SAUCE, BAKED WITH CHEESE, TOPPED WITH CREAM SAUCE.",
                     165000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -230,7 +231,7 @@ public class FoodConfig {
                     "F00017",
                     "FT0002",
                     "Penne Arrabbiata",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-arrabbiata.jpg",
                     "Short pasta in a spicy, tomato sauce with chili and garlic.",
                     98000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -240,7 +241,7 @@ public class FoodConfig {
                     "F00018",
                     "FT0002",
                     "Penne Puttanesca",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-puttanesca.jpg",
                     "No description.",
                     137000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -250,7 +251,7 @@ public class FoodConfig {
                     "F00019",
                     "FT0002",
                     "Penne Alfredo",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-alfredo.jpg",
                     "CREAMY CHICKEN SAUCE, BROCCOLI AND CHEESE.",
                     137000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -260,7 +261,7 @@ public class FoodConfig {
                     "F00020",
                     "FT0002",
                     "Penne Boscaiola",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-boscaiola.jpg",
                     "Short pasta cooked with ham, mushrooms and creamy sauce.",
                     169000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -270,7 +271,7 @@ public class FoodConfig {
                     "F00021",
                     "FT0002",
                     "Penne Al Salmone",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-al-salmone.jpg",
                     "CREAMY SAUCE WITH SMOKED SALMON AND ONIONS.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -280,17 +281,18 @@ public class FoodConfig {
                     "F00022",
                     "FT0002",
                     "Penne 4 Formaggi",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/spaghetti/penne-4-formaggi.jpg",
                     "A medley of 4 different cheeses: Gorgonzola, Mozzarella, Parmesan, and Gouda.",
                     189000,
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+// Home Made Pasta (FT0003)
             Food lasagna = new Food(
                     "F00023",
                     "FT0003",
                     "Lasagna",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/lasagna.jpg",
                     "Italian lasagne with bolognese ragu sauce, parmesan cheese & white sauce,",
                     169000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -300,7 +302,7 @@ public class FoodConfig {
                     "F00024",
                     "FT0003",
                     "Fettuccine Contadina",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/fettuccine-contadina.jpg",
                     "Home-made flat pasta with bacon, mushrooms, and onions.",
                     169000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -310,7 +312,7 @@ public class FoodConfig {
                     "F00025",
                     "FT0003",
                     "Fettuccine Salmone",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/fettuccine-salmone.jpg",
                     "Homemade fettuccine with cream sauce, onions, and smoked salmon.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -320,7 +322,7 @@ public class FoodConfig {
                     "F00026",
                     "FT0003",
                     "Gnocchi Al Pomodoro",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/gnocchi-al-pomodoro.jpg",
                     "Home-made potato dumplings in tomato sauce.",
                     169000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -330,7 +332,7 @@ public class FoodConfig {
                     "F00027",
                     "FT0003",
                     "Gnocchi Gorgonzola",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/gnocchi-gorgonzola.jpg",
                     "Potatoes dumpings with gorgonzola cheese.",
                     189000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -340,7 +342,7 @@ public class FoodConfig {
                     "F00028",
                     "FT0003",
                     "Ravioli Gamberetti",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/ravioli-gamberetti.jpg",
                     "Ravioli stuffed with shrimps and cream cheese.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -350,17 +352,18 @@ public class FoodConfig {
                     "F00029",
                     "FT0003",
                     "Ravioli Salmone",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/homemade-pasta/ravioli-salmone.jpg",
                     "Ravioli stuffed with salmone and potatoes.",
                     189000,
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+// Pizza (FT0004)
             Food giantPizza42cm = new Food(
                     "F00030",
                     "FT0004",
                     "Giant Pizza (42cm)",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/giant-pizza-42cm.jpg",
                     "07 ingredients: Peperoni, chicken, French fried, seafood, traditional beef ragu, bacon, fresh Italian sausages, spinach with creamy sauce.",
                     429000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -370,7 +373,7 @@ public class FoodConfig {
                     "F00031",
                     "FT0004",
                     "Margherita",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/margherita.jpg",
                     "A classic pizza originating in Naples, Italy: Tomato sauce and mozzarella.",
                     98000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -380,7 +383,7 @@ public class FoodConfig {
                     "F00032",
                     "FT0004",
                     "Spinakopita",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/spinakopita.jpg",
                     "Spinach and mozzarella.",
                     129000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -390,7 +393,7 @@ public class FoodConfig {
                     "F00033",
                     "FT0004",
                     "4 Formaggi",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/4-formaggi.jpg",
                     "Mozzarella, gorgonzola, camembert, gouda; served with pure honey.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -400,7 +403,7 @@ public class FoodConfig {
                     "F00034",
                     "FT0004",
                     "Funghi",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/funghi.jpg",
                     "Mushrooms, ham and mozzarella.",
                     125000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -410,7 +413,7 @@ public class FoodConfig {
                     "F00035",
                     "FT0004",
                     "Tropicale",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/tropicale.jpg",
                     "Pineapple, mozzarella, ham and tomato sauce.",
                     125000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -420,7 +423,7 @@ public class FoodConfig {
                     "F00036",
                     "FT0004",
                     "Tonno Cipolla",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/tonno-cipolla.jpg",
                     "Tomoto sauce, mozzarella, canned tuna in oil and fresh onion.",
                     125000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -430,7 +433,7 @@ public class FoodConfig {
                     "F00037",
                     "FT0004",
                     "Romana",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/romana.jpg",
                     "Smoked bacon, mozzarella.",
                     125000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -440,7 +443,7 @@ public class FoodConfig {
                     "F00038",
                     "FT0004",
                     "Peperoni",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/peperoni.jpg",
                     "Italian sausages, mozzarella.",
                     135000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -450,7 +453,7 @@ public class FoodConfig {
                     "F00039",
                     "FT0004",
                     "Chicken BBQ",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/chicken-bbq.jpg",
                     "BBQ chicken, onion, mozzarella.",
                     139000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -460,7 +463,7 @@ public class FoodConfig {
                     "F00040",
                     "FT0004",
                     "Carbonara",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/carbonara.jpg",
                     "Smoked bacon, egg, creamy sauces and mozzarella.",
                     135000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -470,7 +473,7 @@ public class FoodConfig {
                     "F00041",
                     "FT0004",
                     "Pazza",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/pazza.jpg",
                     "Smoked bacon, ham, mushrooms, corn, olives.",
                     139000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -480,7 +483,7 @@ public class FoodConfig {
                     "F00042",
                     "FT0004",
                     "Napoli",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/napoli.jpg",
                     "Olives, anchovies in oil and mozzarella.",
                     135000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -490,7 +493,7 @@ public class FoodConfig {
                     "F00043",
                     "FT0004",
                     "Salsiccia",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/salsiccia.jpg",
                     "Fresh Italian sausage, bell pepper, spring onion.",
                     149000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -500,7 +503,7 @@ public class FoodConfig {
                     "F00044",
                     "FT0004",
                     "Bolognese",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/bolognese.jpg",
                     "Mozzarella, traditional beef ragu sauce.",
                     135000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -510,7 +513,7 @@ public class FoodConfig {
                     "F00045",
                     "FT0004",
                     "Salmone",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/salmone.jpg",
                     "Salmon, bell pepper, broccoli, milk cream, mozzarella.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -520,7 +523,7 @@ public class FoodConfig {
                     "F00046",
                     "FT0004",
                     "Seafood",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/seafood.jpg",
                     "Shrimp, quid, mozzarella.",
                     145000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -530,7 +533,7 @@ public class FoodConfig {
                     "F00047",
                     "FT0004",
                     "Parma Ham",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/parma-ham.jpg",
                     "Mozzarella, tomato sauce, Parma ham, Parmesan cheese and rucola.",
                     179000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -540,17 +543,18 @@ public class FoodConfig {
                     "F00048",
                     "FT0004",
                     "Il Calzone",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/pizza/il-calzone.jpg",
                     "Special pizza with cream cheese, Spicy Italia sausage, mushrooms and olives.",
                     189000,
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+// Main Courses (FT0005)
             Food grilledRibEyeSteak = new Food(
                     "F00049",
                     "FT0005",
                     "Grilled Rib-Eye Steak",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/main-courses/grilled-rib-eye-steak.jpg",
                     "Grilled New Zealand rib-eye beef, served with fries, salads, mushroom sauce or pepper sauce.",
                     389000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -560,7 +564,7 @@ public class FoodConfig {
                     "F00050",
                     "FT0005",
                     "Grilled Italian Sausages",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/main-courses/grilled-italian-sausages.jpg",
                     "Grilled Italian sausage, served with mashed potatoes and salad.",
                     199000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -570,7 +574,7 @@ public class FoodConfig {
                     "F00051",
                     "FT0005",
                     "BBQ Pork Ribs",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/main-courses/bbq-pork-ribs.jpg",
                     "BBQ pork ribs served with French fries and salad.",
                     199000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -580,7 +584,7 @@ public class FoodConfig {
                     "F00052",
                     "FT0005",
                     "Chicken Parmesan",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/main-courses/chicken-parmesan.jpg",
                     "Breaded chicken breast topped with tomato sauce, mozzarella and parmesan served with fries.",
                     145000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -590,17 +594,18 @@ public class FoodConfig {
                     "F00053",
                     "FT0005",
                     "Fritto Misto",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/main-courses/fritto-misto.jpg",
                     "Italian style deep fried shrimps and calamari, served with French fries.",
                     155000,
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
+// Dessert (FT0006)
             Food pannaCotta = new Food(
                     "F00054",
                     "FT0006",
                     "Panna Cotta",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/dessert/panna-cotta.jpg",
                     "Home made from fresh milk cream with passion fruit.",
                     59000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -610,7 +615,7 @@ public class FoodConfig {
                     "F00055",
                     "FT0006",
                     "Semifreddo",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/dessert/semifreddo.jpg",
                     "Home-made parfait (chilled cream) with almonds, honey and a touch of amaretto served with hot chocolate sauce.",
                     79000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -620,7 +625,7 @@ public class FoodConfig {
                     "F00056",
                     "FT0006",
                     "Tiramisu",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/dessert/tiramisu.jpg",
                     "A must, the real one with mascarpone, biscuits, espresso coffee and a drop of liquor.",
                     89000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -630,7 +635,7 @@ public class FoodConfig {
                     "F00057",
                     "FT0006",
                     "Chocolate Mousse",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/dessert/chocolate-mousse.jpg",
                     "Special Italian chocolate with fresh cream.",
                     59000,
                     Timestamp.valueOf(LocalDateTime.now())
@@ -640,7 +645,7 @@ public class FoodConfig {
                     "F00058",
                     "FT0006",
                     "Affogato Espresso",
-                    null,
+                    "https://ilmio.vn/uploads/fnb-menu/dessert/affogato-espresso.png",
                     "Vanilla ice cream with espresso.",
                     89000,
                     Timestamp.valueOf(LocalDateTime.now())
