@@ -80,14 +80,13 @@ public class SalaryService {
                     .mapToInt(vr -> vr.getViolation().getViolationFine())
                     .sum();
 
-//            int OTSalaryInWorkingDay = calculateOTSalary(salary.getEmpType().getBasicSalary(), ts.getOvertimeWorkingHours(),  ts.getWorkingDate());
-//            int salaryInWorkingDay = calculateSalary(salary.getEmpType().getBasicSalary(),  ts.getWorkingDate());
-
 
             salary.setTotalFine(totalFine);
 
 
-
+        }
+        for (Salary salary : salaryMap.values()) {
+            salary.setTotalSalary(salary.getTotalSalary() - salary.getTotalFine());
         }
         salaryRepo.saveAll(new ArrayList<>(salaryMap.values()));
     }
