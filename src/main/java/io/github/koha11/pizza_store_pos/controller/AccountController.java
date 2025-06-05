@@ -45,6 +45,7 @@ public class AccountController extends GenericController<Account>{
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody LoginRequest request) {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPwd())
         );
@@ -57,7 +58,6 @@ public class AccountController extends GenericController<Account>{
         } else {
             return new AuthResponse(0,"", 0);
         }
-//        return accountService.getAccount(request);
     }
 
     @PutMapping("/accounts")
