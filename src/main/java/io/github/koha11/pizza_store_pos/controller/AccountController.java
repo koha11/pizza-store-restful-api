@@ -61,7 +61,11 @@ public class AccountController extends GenericController<Account>{
         } else {
             return new AuthResponse(0,"", 0);
         }
-//        return accountService.getAccount(request);
+    }
+
+    @GetMapping("/get-info")
+    public AccountDTO getInfo() {
+        return accountService.getAccount();
     }
 
     @PutMapping("/accounts")

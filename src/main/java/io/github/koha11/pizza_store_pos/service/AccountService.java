@@ -8,6 +8,7 @@ import io.github.koha11.pizza_store_pos.entity.user.Role;
 import io.github.koha11.pizza_store_pos.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,9 +52,11 @@ public class AccountService extends GenericService<Account> implements UserDetai
         return mapper.accountToAccountDTO(account);
     };
 
-    public AccountDTO getAccountById(String id) {
-        Account account =  accountRepository.findById(id).orElse(null);
-        return mapper.accountToAccountDTO(account);
+    public AccountDTO getAccount() {
+        AccountDTO account = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        account.setPwd("");
+
+        return account;
     };
 
     public List<AccountDTO> getAccounts() {
