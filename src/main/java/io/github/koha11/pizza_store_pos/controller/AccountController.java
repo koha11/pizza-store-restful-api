@@ -37,6 +37,10 @@ public class AccountController extends GenericController<Account>{
     public List<AccountDTO> getAccounts() {
         return accountService.getAccounts();
     }
+    @GetMapping("/accounts/{id}")
+    public AccountDTO getAccount(@PathVariable String id) {
+        return accountService.getAccountById(id);
+    }
 
     @PostMapping("/accounts")
     public void addAccount(@RequestBody Account account) {
@@ -58,6 +62,11 @@ public class AccountController extends GenericController<Account>{
         } else {
             return new AuthResponse(0,"", 0);
         }
+    }
+
+    @GetMapping("/get-info")
+    public AccountDTO getInfo() {
+        return accountService.getAccount();
     }
 
     @PutMapping("/accounts")

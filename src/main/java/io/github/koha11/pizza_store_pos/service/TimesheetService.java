@@ -56,7 +56,9 @@ public class TimesheetService extends GenericService<Timesheet>{
 
         List<Timesheet> listOfTS = timesheetRepo.findAllByMonth(startDate, endDate);
 
-        return listOfTS.stream().sorted(Comparator.comparing(Timesheet::getWorkingDate)).map(timesheet -> mapper.timesheetToDTO(timesheet)).toList();
+        return listOfTS.stream().sorted(Comparator.comparing(Timesheet::getEmpId)
+                .thenComparing(Timesheet::getWorkingDate))
+                .map(timesheet -> mapper.timesheetToDTO(timesheet)).toList();
     }
 
     public List<Timesheet> getTimesheetOfEmp(String empId, LocalDate startDate, LocalDate endDate) {
