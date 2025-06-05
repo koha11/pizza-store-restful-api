@@ -35,7 +35,7 @@ public class EmployeeService extends GenericService<Employee>{
 
 
     public List<Employee> getEmployees(){
-        return employeeRepository.findAll().stream().filter(employee -> !employee.getEmpType().getEmpTypeId().equals(Role.ROLE_ADMIN.name())).toList();
+        return employeeRepository.findAll().stream().filter(employee -> !employee.getEmpType().getEmpTypeId().equals("ADMIN")).toList();
     }
 
     public void addEmployee(EmployeeRequest employee){
