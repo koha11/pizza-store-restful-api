@@ -18,7 +18,7 @@ public class ParamConfig {
     @Bean
     CommandLineRunner commandLineRunnerForConfigParam(JpaRepository<ConfigParameter, String> repo) {
         return args -> {
-            ConfigParameter param1 = new ConfigParameter("P00001", "Phụ thu tự động", "Tiền", "20000", true, Timestamp.valueOf(LocalDateTime.now()));
+            ConfigParameter param1 = new ConfigParameter("P00001", "Phụ thu tự động", "surcharge", "20000", true, Timestamp.valueOf(LocalDateTime.now()));
             ConfigParameter param2 = new ConfigParameter("P00002", "Lễ 30/4", "Holiday", "--04-30", true, Timestamp.valueOf(LocalDateTime.now()));
             ConfigParameter param3 = new ConfigParameter("P00003", "Lễ 1/5", "Holiday", "--05-01", true, Timestamp.valueOf(LocalDateTime.now()));
             ConfigParameter param4 = new ConfigParameter("P00004", "Lễ 2/9", "Holiday", "--09-02", true, Timestamp.valueOf(LocalDateTime.now()));
