@@ -23,4 +23,13 @@ public class ConfigParameterService extends GenericService<ConfigParameter> {
     public List<ConfigParameter> getConfigParameterByType(String type) {
         return repo.findAllByTpe(type);
     }
+
+
+    public void updateDefaultSurcharge(DefaultSurcharge ds) {
+        var param = getConfigParameterByType("surcharge").getFirst();
+        param.setIsParamActive(ds.isActive());
+        param.setParamValue(String.valueOf(ds.getValue()));
+
+        repo.save(param);
+    }
 }
