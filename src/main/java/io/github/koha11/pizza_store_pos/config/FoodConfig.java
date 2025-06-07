@@ -16,53 +16,46 @@ public class FoodConfig {
     @Bean
     CommandLineRunner commandLineRunnerForFood(FoodRepository foodRepo, FoodTypeRepository foodTypeRepo) {
         return args -> {
-//            FoodType pizza = new FoodType("FT0001", "Pizza", "https://ilmio.vn/uploads/fnb-menu/pizza/giant-pizza-size42cm.jpg", Timestamp.valueOf(LocalDateTime.now()));
-//
-//            FoodType desert = new FoodType("FT0002", "Desert", "https://ilmio.vn/uploads/fnb-menu/pizza/giant-pizza-size42cm.jpg", Timestamp.valueOf(LocalDateTime.now()));
-
-//            Food peperoni = new Food("F00001", "FT0001", "Peperoni", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-pepperoni.jpg","Italian sausages, mozzarella.", 135000, Timestamp.valueOf(LocalDateTime.now()));
-//
-//            Food margherita = new Food("F00002", "FT0002", "Margherita", "https://ilmio.vn/uploads/fnb-menu/pizza/pizza-margherita.jpg", "A classic pizza originating in Naples Italy: Tomato sauce and mozzarella.", 98000, Timestamp.valueOf(LocalDateTime.now()));
 
             FoodType appetizers = new FoodType(
                     "FT0001",
                     "APPETIZERS",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1721890181032-6d8873775492?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             FoodType spaghetti = new FoodType(
                     "FT0002",
                     "SPAGHETTI",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1732020429775-19e741f1e365?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             FoodType homeMadePasta = new FoodType(
                     "FT0003",
                     "HOME MADE PASTA",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1734627142066-fafa724436c0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8SE9NRSUyME1BREUlMjBQQVNUQXxlbnwwfHwwfHx8MA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             FoodType pizza = new FoodType(
                     "FT0004",
                     "PIZZA",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1730515692314-ba66a6869cc2?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             FoodType mainCourse = new FoodType(
                     "FT0005",
                     "MAIN COURSE",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1733981836398-44972fb99010?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
             FoodType dessert = new FoodType(
                     "FT0006",
                     "DESSERT",
-                    null,
+                    "https://plus.unsplash.com/premium_vector-1720795876073-a8611585c0b9?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                     Timestamp.valueOf(LocalDateTime.now())
             );
 
