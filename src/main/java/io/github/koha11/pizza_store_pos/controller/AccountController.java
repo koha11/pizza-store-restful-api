@@ -38,7 +38,6 @@ public class AccountController extends GenericController<Account>{
         return accountService.getAccounts();
     }
 
-
     @PostMapping("/accounts")
     public void addAccount(@RequestBody Account account) {
         accountService.create(account);

@@ -17,6 +17,7 @@ public class AccountConfig {
     CommandLineRunner commandLineRunnerForAccount(AccountRepository accountRepo) {
         return args -> {
             Account account1 = new Account("EMP001", "khoatran.96204@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
+
             Account account2 = new Account("EMP002", "abc@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
             Account account3 = new Account("EMP003", "test@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.ROLE_CASHIER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
             Account account4 = new Account("EMP004", "kasdomm@gmail.com", "$2a$10$cU9bDaDldS1xTaItT.w8PurjvMQRqr.hvhMunYnC72XyHqyF6Z.WS", Role.ROLE_SERVER, Timestamp.valueOf(LocalDateTime.now()), Timestamp.valueOf(LocalDateTime.now()));
