@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=build /app/target/pizza_store_pos-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
-ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75","-Dfile.encoding=UTF-8","-jar","/app.jar"]
+ENTRYPOINT ["java","-XX:+UseContainerSupport","-XX:MaxRAMPercentage=75","-Dfile.encoding=UTF-8","-jar","/app/app.jar"]
