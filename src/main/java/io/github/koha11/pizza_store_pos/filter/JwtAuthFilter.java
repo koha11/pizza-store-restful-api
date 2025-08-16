@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -30,18 +31,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String requestURI = request.getRequestURI();
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
 
+
         boolean hasToken = authHeader != null && authHeader.startsWith("Bearer ");
+        boolean isAllowWithoutToken = List.of("/auth/login", "/auth/register").contains(requestURI);
 
         // Neu ko co token
-        if (hasToken)
+        if (hasToken && !isAllowWithoutToken)
         {
             // Neu data duoc gui co auth header
             token = authHeader.substring(7);
             username = jwtService.extractUsername(token);
+
             // Neu co username
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -69,6 +74,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 //            response.sendRedirect("No token taken!");
 //        }
         // bat dau filter
+
         filterChain.doFilter(request, response);
     }
 }

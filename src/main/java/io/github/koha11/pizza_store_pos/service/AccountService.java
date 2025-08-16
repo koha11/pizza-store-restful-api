@@ -53,6 +53,7 @@ public class AccountService extends GenericService<Account> implements UserDetai
     };
 
     public AccountDTO getAccount() {
+        Object test = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AccountDTO account = (AccountDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         account.setPwd("");
 
