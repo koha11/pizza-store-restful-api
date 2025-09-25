@@ -28,4 +28,7 @@
 - Timekeeping and penalizing employees for violations on each working day
 - Calculate salaries based on working days, violations and holidays
 - Export salary, timekeeping and violation reports to Excel
+
 ### Demo
+[![Watch on YouTube](https://img.youtube.com/vi/-EEma1mbTtk/0.jpg)](https://www.youtube.com/watch?v=-EEma1mbTtk)
+
